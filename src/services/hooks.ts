@@ -83,7 +83,7 @@ const useMatchCountDown = (
 ) => {
   const [clock, setClock] = useState(getRelativeTime(MatchDate))
   useEffect(() => {
-    if (!TimeDefined || isMatchAvailable(MatchStatus)) return undefined
+    if (!TimeDefined || !isMatchAvailable(MatchStatus)) return undefined
     const { remainingTime } = clock
     const remainingMinutes = remainingTime / 60000
     let timeout: NodeJS.Timer
@@ -104,7 +104,9 @@ const useMatchCountDown = (
         setLive(true)
       }, (remainingMinutes - 65) * 60 * 1000)
     }
+
     const clockInterval = setInterval(() => {
+      remainingTime > 0 && console.log(MatchDate, MatchStatus)
       remainingTime > 0 && setClock(getRelativeTime(MatchDate))
     }, clockRefreshInterval)
     return () => {
