@@ -57,7 +57,6 @@ export const useLiveMatchData = (match: Match) => {
   const { IdMatch, IdCompetition, IdSeason, IdStage, MatchStatus, TimeDefined, Date: MatchDate } = match
   const [live, setLive] = useState(MatchStatus === 3)
   const [refreshInterval, setRefreshInterval] = useState(0)
-  const hasCountDown = TimeDefined && isMatchAvailable(MatchStatus)
   const { data: newMatchData } = useSWR<Match>(
     live ? [`live/football/${IdCompetition}/${IdSeason}/${IdStage}/${IdMatch}`, live, refreshInterval] : null,
     {
@@ -66,7 +65,7 @@ export const useLiveMatchData = (match: Match) => {
       dedupingInterval: refreshInterval
     }
   )
-  hasCountDown && useMatchCountDown(MatchDate, setLive, setRefreshInterval)
+  useMatchCountDown(TimeDefined, MatchStatus, MatchDate, setLive, setRefreshInterval)
   useEffect(() => {
     if (!newMatchData || newMatchData?.MatchStatus !== 0) return undefined
     setLive(false)
@@ -76,31 +75,34 @@ export const useLiveMatchData = (match: Match) => {
 }
 
 const useMatchCountDown = (
+  TimeDefined: boolean,
+  MatchStatus: number,
   MatchDate: string,
   setLive: (live: boolean) => void,
   setRefreshInterval: (interval: number) => void
 ) => {
   const [clock, setClock] = useState(getRelativeTime(MatchDate))
   useEffect(() => {
+    if (!TimeDefined || isMatchAvailable(MatchStatus)) return undefined
     const { remainingTime } = clock
     const remainingMinutes = remainingTime / 60000
     let timeout: NodeJS.Timer
     let clockRefreshInterval = 1000 // every second refresh timer
-    if (remainingMinutes < 5) {
+    if (remainingMinutes <= 5) {
       setLive(true)
       setRefreshInterval(SECONDS_TO_REFRESH * 1000)
-    } else if (remainingMinutes < 65) {
+    } else if (remainingMinutes <= 65) {
       setLive(true)
       clockRefreshInterval = 60 * 1000 // every minute refresh timer
       setRefreshInterval(10 * 60 * 1000) // refresh match data every 10 minutes
       timeout = setTimeout(() => {
         setRefreshInterval(SECONDS_TO_REFRESH * 1000)
-      }, (remainingMinutes - 4) * 60 * 1000)
+      }, (remainingMinutes - 5) * 60 * 1000)
     } else {
       clockRefreshInterval = 60 * 60 * 1000 // every hour refresh timer
       timeout = setTimeout(() => {
         setLive(true)
-      }, (remainingMinutes - 66) * 60 * 1000)
+      }, (remainingMinutes - 65) * 60 * 1000)
     }
     const clockInterval = setInterval(() => {
       remainingTime > 0 && setClock(getRelativeTime(MatchDate))
