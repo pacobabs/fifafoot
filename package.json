@@ -85,7 +85,8 @@
   "husky": {
     "hooks": {
       "pre-commit": "cross-env PRE_COMMIT=true lint-staged",
-      "pre-push": "yarn test-all"
+      "pre-push": "yarn test-all",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "repository": {
