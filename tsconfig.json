@@ -21,9 +21,16 @@
       "@store": ["src/store"],
       "@store/*": ["src/store/*"],
       "@utils": ["src/utils"],
-      "@reduce-devtools": ["@reduce-devtools"]
+      "@test/*": ["test/*"]
     }
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx", "gatsby-node-prod.ts", "gatsby-browser.tsx", "remotedev.d.ts", "remotedev-utils.d.ts"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "gatsby-node-prod.ts",
+    "gatsby-browser.tsx",
+    "remotedev.d.ts",
+    "remotedev-utils.d.ts"
+  ]
 }

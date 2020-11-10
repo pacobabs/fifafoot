@@ -21,8 +21,7 @@ export default {
           '@components': 'src/components',
           '@services': 'src/services',
           '@store': 'src/store',
-          '@utils': 'src/utils',
-          '@reduce-devtools': '@reduce-devtools'
+          '@utils': 'src/utils'
         }
       }
     },

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import store from '@services/store.json'
-import { Provider, useDevtools } from '@store'
+import { Provider } from '@store'
 
 type Props = {
   element: ReactNode
@@ -8,7 +8,6 @@ type Props = {
 
 const App = ({ element }: Props) => {
   console.count('APP')
-  useDevtools(store)
   return <Provider store={store}>{element}</Provider>
 }
 

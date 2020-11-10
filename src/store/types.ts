@@ -1,5 +1,5 @@
 import { Dispatch as ReactDispatch } from 'react'
-import { Country, Confederation, Competition, Season, Match, Team } from '@services/types'
+import { Country, Confederation, Competition, Season, Match, TeamMatch } from '@services/types'
 
 export type IStateContext = React.Context<State>
 
@@ -25,7 +25,7 @@ export type CompetitionSelector = {
 }
 
 export type TeamSelector = {
-  teams: Team[]
+  teams: TeamMatch[]
   myTeams: string[]
 }
 
@@ -59,8 +59,8 @@ export enum ActionTypes {
   setMatches = 'Matches/set',
   setMatch = 'Match/set',
   setTeams = 'Teams/set',
-  addTeam = 'Team/add',
-  removeTeam = 'Team/remove'
+  addTeam = 'TeamMatch/add',
+  removeTeam = 'TeamMatch/remove'
 }
 
 export type ActionCreators = {
@@ -76,7 +76,7 @@ export type ActionCreators = {
   setSeasons: (s: Season[]) => Action
   setMatches: (c: string, m: Match[]) => Action
   setMatch: (c: string, m: Match) => Action
-  setTeams: (t: Team[]) => Action
+  setTeams: (t: TeamMatch[]) => Action
   addTeam: (t: string) => Action
   removeTeam: (t: string) => Action
 }
@@ -117,7 +117,7 @@ type MatchesPayload = {
 }
 
 type TeamsPayload = {
-  [ActionTypes.setTeams]: Team[]
+  [ActionTypes.setTeams]: TeamMatch[]
   [ActionTypes.addTeam]: string
   [ActionTypes.removeTeam]: string
 }

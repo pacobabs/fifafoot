@@ -66,11 +66,51 @@ export type Match = {
   MatchTime: string
   Period: number
   Attendance: string
+  Stadium: {
+    Name: Name[]
+  }
   BallPossession: BallPossession
-  Away: MatchTeam
-  Home: MatchTeam
-  AwayTeam: MatchTeam
-  HomeTeam: MatchTeam
+  Away: TeamMatch
+  Home: TeamMatch
+  AwayTeam: TeamMatch
+  HomeTeam: TeamMatch
+}
+
+export type Standing = {
+  Position: number
+  Points: number
+  Played: number
+  Won: number
+  Drawn: number
+  Lost: number
+  For: number
+  Against: number
+  Team: Team
+}
+
+export type MatchEvents = {
+  IdMatch: string
+  IdCompetition: string
+  IdSeason: string
+  IdStage: string
+  Event: MatchEvent[]
+}
+
+export type MatchEvent = {
+  AwayGoals: 0
+  AwayPenaltyGoals: 0
+  EventDescription: Name[]
+  EventId: string
+  HomeGoals: number
+  HomePenaltyGoals: number
+  IdPlayer: string
+  IdTeam: string
+  MatchMinute: string
+  Period: number
+  PositionX: number
+  PositionY: number
+  Timestamp: string
+  Type: number
 }
 
 export type AllTeams = {
@@ -82,16 +122,18 @@ export type Team = {
   IdCountry: string
   IdCompetition: string
   IdSeason: string
-  TeamName: Name[]
+  Name: Name[]
 }
 
-export type MatchTeam = Team & {
+export type TeamMatch = Team & {
+  TeamName: Name[]
   TeamType: number
   Score: number
   Players: Player[]
   Goals: Goal[]
   Bookings: Booking[]
   Substitutions: Substitution[]
+  Coaches: Coach[]
 }
 
 export type Player = {
@@ -129,6 +171,12 @@ export type Booking = {
 export type BallPossession = {
   OverallAway: number
   OverallHome: number
+}
+
+export type Coach = {
+  IdCoach: string
+  IdCountry: string
+  Name: Name[]
 }
 
 export type GraphQLQuery = {

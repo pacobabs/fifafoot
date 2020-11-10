@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, Fragment } from 'react'
 import { isMatchCancelled } from '@utils'
-import { useLiveMatchesData } from '@services'
+import { useSearch, useLiveMatchesData } from '@services'
 import { useMatches, useTeams } from '@store/selectors'
 import LiveMatch from '@components/common/match'
+import CompetitionInfo from './competition-info'
 
 const VIEW = {
   ALL: 'ALL',
@@ -16,6 +17,8 @@ const Live = () => {
   const { myTeams } = useTeams()
   const [IdTeamFilter, setIdTeamFilter] = useState('')
   const loaded = matches['live'] !== undefined
+  const lastCompetition = useRef('')
+  const { term, search, find } = useSearch()
   useLiveMatchesData(loaded)
   return (
     <div className="live">
@@ -52,18 +55,34 @@ const Live = () => {
           </li>
         </ul>
       </nav>
+      <section>
+        <input placeholder="search..." onChange={(e) => search(e.target.value)} type="search" />
+      </section>
       {matches['live']?.map((match) => {
         const {
           IdMatch,
+          CompetitionName,
           MatchStatus,
           TimeDefined,
-          HomeTeam: { IdTeam: IdTeamHome },
-          AwayTeam: { IdTeam: IdTeamAway }
+          HomeTeam: { IdTeam: IdTeamHome, TeamName: HomeName },
+          AwayTeam: { IdTeam: IdTeamAway, TeamName: AwayName }
         } = match
         if (!TimeDefined || !isMatchCancelled(MatchStatus)) return
         if (view === VIEW.TEAM && IdTeamFilter && IdTeamHome !== IdTeamFilter && IdTeamAway !== IdTeamFilter)
           return null
-        return <LiveMatch key={IdMatch} match={match} />
+        if (
+          term &&
+          !find(CompetitionName[0].Description) &&
+          !find(HomeName[0].Description) &&
+          !find(AwayName[0].Description)
+        )
+          return null
+        return (
+          <Fragment key={IdMatch}>
+            <CompetitionInfo competition={CompetitionName[0].Description} lastCompetition={lastCompetition} />
+            <LiveMatch match={match} />
+          </Fragment>
+        )
       })}
     </div>
   )

@@ -1,3 +1,5 @@
+import { MatchEvent, Match } from '@services/types'
+
 export const normalize = (string: string) =>
   string
     .toLowerCase()
@@ -31,7 +33,7 @@ export const getLocaleMatchDay = (MatchDate: string) => {
   const moment = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
   const day =
     days >= -1 && days <= 1
-      ? capitalize(moment.format(days > 0 ? Math.round(days) : Math.trunc(days), 'day'))
+      ? capitalize(moment.format(days > 0 ? Math.floor(days) : Math.trunc(days), 'day'))
       : matchDate.toLocaleDateString([], dateFormat)
   return day
 }
@@ -66,7 +68,9 @@ export const getMatchStatus = (MatchStatus: number, MatchDate: string, TimeDefin
   }
 }
 
-export const isMatchAvailable = (MatchStatus: number) =>
+export const isMatchplayed = (MatchStatus: number) => MatchStatus === 0 || MatchStatus === 3
+
+export const isMatchPollable = (MatchStatus: number) =>
   MatchStatus !== 0 && MatchStatus !== 4 && MatchStatus !== 7 && MatchStatus !== 8
 
 export const isMatchCancelled = (MatchStatus: number) => MatchStatus !== 4 && MatchStatus !== 7 && MatchStatus !== 8
@@ -100,4 +104,60 @@ export const getRelativeTime = (matchDate: string) => {
     unit = 'year'
   }
   return { time, unit, remainingTime }
+}
+
+export const getMatchStats = (match: Match, events: MatchEvent[]) => {
+  const { AwayTeam, HomeTeam, BallPossession } = match
+  const teamStats = {
+    shots: 0,
+    blockedShots: 0,
+    fouls: 0,
+    offsides: 0,
+    corners: 0
+  }
+  const stats = {
+    [AwayTeam.IdTeam]: {
+      ...teamStats,
+      possession: BallPossession?.OverallAway,
+      yellowCards: AwayTeam.Bookings.filter(({ Card }) => Card === 1 || Card === 3).length,
+      redCards: AwayTeam.Bookings.filter(({ Card }) => Card === 2 || Card === 3).length
+    },
+    [HomeTeam.IdTeam]: {
+      ...teamStats,
+      possession: BallPossession?.OverallHome,
+      yellowCards: HomeTeam.Bookings.filter(({ Card }) => Card === 1 || Card === 3).length,
+      redCards: HomeTeam.Bookings.filter(({ Card }) => Card === 2 || Card === 3).length
+    }
+  }
+  events.map(({ Type, IdTeam }) => {
+    switch (Type) {
+      case 0:
+      case 41:
+      case 32:
+      case 33:
+      case 12: {
+        stats[IdTeam].shots += 1
+        return
+      }
+      case 15: {
+        stats[IdTeam].offsides += 1
+        return
+      }
+      case 16: {
+        stats[IdTeam].corners += 1
+        return
+      }
+      case 17: {
+        stats[IdTeam].blockedShots += 1
+        return
+      }
+      case 18: {
+        stats[IdTeam].fouls += 1
+        return
+      }
+      default:
+        return null
+    }
+  })
+  return stats
 }

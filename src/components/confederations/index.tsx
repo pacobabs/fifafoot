@@ -1,10 +1,9 @@
-import React, { useState, useCallback, ChangeEvent } from 'react'
-import debounce from 'lodash/debounce'
-import { normalize } from '@utils'
+import React, { useState } from 'react'
+import { useSearch } from '@services'
 import { useConfederations } from '@store/selectors'
 import { addConfederation, removeConfederation } from '@store/actions'
 import Star from '@components/common/star'
-import confederationImg from '@assets/images/shield.svg'
+import Image from '@components/common/image'
 
 const VIEW = {
   ALL: 'ALL',
@@ -15,16 +14,14 @@ const Confederations = () => {
   console.count('Confederations')
   const { confederations, myConfederations } = useConfederations()
   const [view, setView] = useState(VIEW.ALL)
-  const [search, setSearch] = useState('')
-  const onChange = (term: string) => setSearch(term)
-  const debounceSearch = useCallback(debounce(onChange, 133.3333333), [])
+  const { term, search, find } = useSearch()
   return (
     <>
       <nav>
         <ul>
           <li>
             <a onClick={() => setView(VIEW.FAVORITES)} className={view === VIEW.FAVORITES ? 'selected' : ''}>
-              FAVORITE CONFEDERATIONS ({myConfederations.length})
+              FAVORITE ({myConfederations.length})
             </a>
           </li>
           <li>
@@ -34,29 +31,21 @@ const Confederations = () => {
           </li>
         </ul>
       </nav>
-      <input placeholder="search..." onChange={(e) => debounceSearch(e.target.value)} type="search" />
+      <input placeholder="search..." onChange={(e) => search(e.target.value)} type="search" />
       <section>
-        {view === VIEW.FAVORITES && !myConfederations.length && !search ? (
+        {view === VIEW.FAVORITES && !myConfederations.length && !term ? (
           <div>Choose your favorite confederation in the all confederations section or search for one.</div>
         ) : (
           confederations.map(({ IdConfederation, Name }) => {
-            if (view === VIEW.FAVORITES && !myConfederations.includes(IdConfederation) && !search) return null
-            if (
-              search &&
-              !normalize(Name[0].Description).includes(normalize(search)) &&
-              !normalize(IdConfederation).includes(normalize(search))
-            )
-              return null
+            if (view === VIEW.FAVORITES && !myConfederations.includes(IdConfederation) && !term) return null
+            if (term && !find(Name[0].Description) && !find(IdConfederation)) return null
             return (
               <div key={IdConfederation} className="card">
                 <h1 title={Name[0].Description}>{IdConfederation}</h1>
-                <img
+                <Image
                   className="logo"
                   src={`https://api.fifa.com/api/v1/picture/confederations-sq-2/${IdConfederation}`}
-                  loading="lazy"
-                  onError={(e: ChangeEvent<HTMLImageElement>) => {
-                    e.target.src = confederationImg
-                  }}
+                  fallbackSrc="/images/shield.svg"
                 />
                 <Star
                   list={myConfederations}

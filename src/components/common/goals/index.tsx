@@ -1,13 +1,13 @@
 import React from 'react'
-import { MatchTeam } from '@services/types'
+import { TeamMatch } from '@services/types'
 import ballImg from '@assets/images/soccer-ball.svg'
 
 type Props = {
-  team: MatchTeam
-  opponent: MatchTeam
+  team: TeamMatch
+  opponent: TeamMatch
 }
 
-const getScorer = (Type: number, IdScorer: string, team: MatchTeam, opponent: MatchTeam) =>
+const getScorer = (Type: number, IdScorer: string, team: TeamMatch, opponent: TeamMatch) =>
   Type === 3 // Own Goal
     ? opponent.Players.find(({ IdPlayer }) => IdPlayer === IdScorer)
     : team.Players.find(({ IdPlayer }) => IdPlayer === IdScorer)
@@ -30,7 +30,7 @@ const TeamGoals = ({ team, opponent }: Props) => {
       {Object.entries(goals).map(([playerName, goals]) => {
         return (
           <p key={playerName}>
-            <img className="event" src={ballImg} /> {playerName} {goals.toString().replace(/,/g, ', ')}
+            {playerName} {goals.toString().replace(/,/g, ', ')}
           </p>
         )
       })}

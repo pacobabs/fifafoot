@@ -1,0 +1,531 @@
+body {
+  background: #0c314e;
+}
+
+header,
+footer {
+  background: #1a5685;
+  color: #fff;
+}
+
+header > div {
+  display: flex;
+  align-items: center;
+  height: 5.6875em;
+}
+
+header > div,
+main,
+footer {
+  margin: 0 auto;
+  max-width: 100em;
+}
+
+header > div,
+main > div,
+footer{
+  padding: 0.40625em;
+}
+
+main > div:nth-of-type(1),
+main > div:nth-of-type(3) {
+  display: none;
+  background: #2a6aa7;
+  background: #1a5685;
+  background: #1b5785;
+  background: #d2dee2;
+  background: #e8e8e8;
+  background: #377bbb;
+  background: #d7e5f1;
+  background: #7ca731;
+  background: #fef901;
+  background: #00e2fb;
+  background: #2073b0;
+}
+
+@media (min-width: 750px) {
+  /* laptop*/
+  main {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-gap: 0.125em;
+  }
+  main > div:nth-of-type(1) {
+    display: block;
+    grid-column: 1 / span 3;
+  }
+  main > div:nth-of-type(2) {
+    display: block;
+    grid-column: 4 / span 13;
+  }
+}
+
+@media (min-width: 960px) {
+  /* laptop*/
+  main {
+    grid-template-columns: repeat(24, 1fr);
+  }
+  main > div:nth-of-type(1) {
+    display: block;
+    grid-column: 1 / span 4;
+  }
+  main > div:nth-of-type(2) {
+    grid-column: 5 / span 15;
+  }
+  main > div:nth-of-type(3) {
+    display: block;
+    grid-column: 20 / span 5;
+  }
+}
+
+header h1 {
+  padding: 0 0.625em;
+}
+
+header .menu {
+  margin: 0.625em 0 0 auto;
+  margin-left: 1.625em;
+}
+
+header .menu a {
+  padding: 0.40625em 1.625em;
+}
+
+header .user {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+header .user a {
+  font-size: 95%;
+  padding: 0.40625em 0.8125em;
+  border: 1px solid #eee;
+}
+
+.cta {
+  background: #7ca731;
+}
+
+.left-nav span{
+  display: block;
+  background: #fff;
+  padding: 0 0.40625em;
+  border: 1px solid #0b4775;
+}
+
+span.nav-header {
+  background: #1b5785;
+  color: #fff;
+  padding: 0.40625em;
+  margin: 0.4375em 0;
+  border: 1px solid #2b6795;
+}
+
+.register {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4375em;
+}
+
+.register input,
+.register .cta {
+  margin: 0.8125em 0;
+}
+
+.register .cta {
+  display: block;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  padding: 0.4375em;
+}
+
+nav {
+  background: #1b5785;
+  color: #fff;
+}
+
+nav ul {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0.125em;
+  border-bottom: 0.203125em solid #aaa;
+}
+
+nav li {
+  padding: 0 0.203125em;
+  list-style: none;
+}
+
+nav li a {
+  position: relative;
+  display: block;
+  text-align: center;
+  line-height: 1.325em;
+  min-width: 5em;
+}
+
+.logo {
+  font-size: 200%;
+}
+
+.logo img {
+  display: inline-block;
+  width: 1em;
+  position: relative;
+  top: 0.1625em;
+}
+
+.selected::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 0.125em;
+  background: yellowgreen;
+}
+
+section {
+  display: flex;
+  overflow-x: auto;
+  padding: 0 0.8125em;
+  margin-bottom: 1.625em;
+  height: 21.125em;
+}
+
+input[type='search'] {
+  margin: 0.8125em;
+  width: 11.5em;
+}
+
+.card .logo {
+  background: #fff;
+  padding: 1em 0.40625em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  object-fit: contain;
+  position: absolute;
+  top: calc(50% - 2.03125em);
+  left: calc(50% - 2.03125em);
+  width: 4.0625em;
+  height: 5.6875em;
+}
+
+.teams {
+  background: #fff;
+}
+
+.teams section > div {
+  position: relative;
+  min-width: 8.5em;
+  min-height: 8.125em;
+  margin-right: 1.625em;
+  margin-bottom: 0.40625em;
+  padding: 0.8125em 0;
+}
+
+.teams section div > a {
+  position: absolute;
+  bottom: -0.203125em;
+  right: 0;
+}
+
+.live {
+  background: #eee;
+  min-height: 80vh;
+  padding-bottom: 0.0125em;
+}
+
+.live section {
+  height: auto;
+  justify-content: center;
+}
+
+.live section > div {
+  width: 100%;
+  max-width: 40em;
+}
+
+.live section > div.match {
+  background: #fff;
+  margin: 0.40625em 0;
+}
+
+.details {
+  margin-top: -2.234375em;
+}
+
+.live section > div.match > div,
+.live section > div.match > a {
+  display: flex;
+  justify-content: center;
+  padding: 0 0.8125em;
+}
+
+.live section > div.match > div.match-info {
+  flex-direction: column;
+}
+
+.matchday {
+  padding-top: 0;
+  font-weight: 900;
+}
+
+.matchdate {
+  padding-top: 0;
+  font-weight: 900;
+}
+
+.match {
+  position: relative;
+}
+
+.stadium {
+  margin-top: -1.625em;
+}
+
+.stadium > div {
+  background: #fff;
+  padding: 0.8125em;
+}
+
+.match .time,
+.match .competition {
+  position: absolute;
+  right: 0.8125em;
+  top: 1.8125em;
+  width: fit-content;
+}
+
+.match .competition {
+  left: 0.8125em;
+}
+
+.team {
+  position: relative;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.team .manager {
+  padding-top: 1.625em;
+  margin-top: auto;
+}
+
+.team-logo {
+  text-align: center;
+  margin: 6.5em 0 4.875em 0;
+}
+
+.team-logo h1 {
+  font-weight: 600;
+  margin: 0 auto;
+  max-width: 11.125em;
+}
+
+.team-logo img {
+  object-fit: contain;
+  display: inline-block;
+  width: 4.46875em;
+  height: 4.46875em;
+  padding: 0.203125em;
+}
+
+.team .score {
+  font-weight: 900;
+  font-size: 220%;
+  position: absolute;
+  top: 3.125em;
+  left: 85%;
+}
+
+.team.away .score {
+  left: auto;
+  right: 85%;
+}
+
+.team.away {
+  text-align: right;
+}
+
+.team .score::after {
+  content: '-';
+  position: absolute;
+  left: 1.25em;
+}
+.team.away .score::after {
+  content: '';
+}
+.team.away .score::before {
+  content: '-';
+  position: absolute;
+  right: 1.25em;
+}
+
+.team p {
+  width: fit-content;
+  position: relative;
+  display: flex;
+}
+
+.team.away p {
+  margin-left: auto;
+  flex-flow: row-reverse;
+}
+
+.team p span {
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+
+.team p span:nth-of-type(1),
+.team.away p span {
+  text-align: right;
+}
+
+.team.away p span {
+  margin-right: auto;
+  min-width: 1.5em;
+}
+
+.team p img.event,
+.team p img.flag {
+  display: inline-block;
+  width: 2em;
+  margin: 0 0.5em;
+  top: 0.1825em;
+  left: 90%;
+}
+
+.team p img.flag {
+  margin: 0 0.5em;
+}
+
+.team p img.event {
+  position: absolute;
+  top: -0.1825em;
+}
+
+.team.away p img.event {
+  left: -2.75em;
+}
+
+img.star {
+  width: 1.625em;
+}
+
+img.star.gray {
+  filter: contrast(0.74) grayscale(1) opacity(0.6);
+}
+
+.match.hidden {
+  position: absolute;
+  transform: translate3d(-99000px, 0, 0);
+}
+
+.match .timeline:nth-of-type(odd) {
+  background: #fafafa;
+}
+
+.match .standings p,
+.match .stats p,
+.match .timeline p {
+  width: 100%;
+  display: flex;
+  margin: 0;
+}
+
+.match .timeline > p {
+  border: 1px solid #eee;
+}
+
+.match .standings p span {
+  min-width: 2.25em;
+  text-align: right;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.match .standings p span,
+.match .timeline p span {
+  display: block;
+  height: 100%;
+  padding: 0.8125em 0.30625em;
+}
+
+.match .timeline p span {
+  padding: 0.8125em 0.30625em;
+}
+
+.match .standings p span:nth-of-type(1),
+.match .timeline p span:nth-of-type(1),
+.match .stats p span:nth-of-type(1) {
+  padding: 0.8125em 0.30625em 0.8125em 0;
+}
+
+.match .standings p span:nth-of-type(1) {
+  min-width: 1.25em;
+}
+
+.match .timeline p span:nth-of-type(1) {
+  width: 3.25em;
+  min-width: 3.25em;
+  text-align: center;
+  background: #eee;
+  padding: 0.30625em;
+  border: 1px solid #ccc;
+}
+
+.match .standings p span:nth-of-type(2),
+.match .stats p span:nth-of-type(2),
+.match .timeline p span:nth-of-type(2) {
+  text-align: left;
+  margin: auto;
+  padding-left: 0.40625em;
+  width: 100%;
+}
+
+.match .standings p span:nth-of-type(2) {
+  position: relative;
+  padding-left: 3em;
+}
+
+.match .stats p span:nth-of-type(2) {
+  text-align: center;
+  padding-left: 0;
+}
+
+.match .standings p span:nth-of-type(3),
+.match .stats p span:nth-of-type(3),
+.match .timeline p span:nth-of-type(3) {
+  margin-left: auto;
+}
+
+.match .stats p span:nth-of-type(3) {
+  padding: 0.8125em 0;
+}
+
+.match .timeline p span:nth-of-type(3) {
+  width: 2.625em;
+}
+
+.match .standings .inline-logo {
+  position: absolute;
+  top: 0.375em;
+  left: 0.25em;
+  width: 2.25em;
+}
+
+.match .info {
+  min-height: 30vh;
+  display: flex;
+  align-items: center;
+}

@@ -21,8 +21,8 @@ const VIEW = {
 const LiveMatch = ({ params = '' }: Props) => {
   const [view, setView] = useState(VIEW.LINEUPS)
   const [idCompetition, idSeason, idStage, idMatch] = params.split('/')
+  const { match, standings, events } = useMatchData(idCompetition, idSeason, idStage, idMatch)
   if (!idCompetition || !idSeason || !idStage || !idMatch) return <div className="live">No Match Found</div>
-  const match = useMatchData(idCompetition, idSeason, idStage, idMatch)
   return (
     <div className="live">
       {match ? (
@@ -58,9 +58,17 @@ const LiveMatch = ({ params = '' }: Props) => {
           </section>
           <section className="details">
             <Lineups match={match} hidden={view !== VIEW.LINEUPS} />
-            <Stats match={match} hidden={view !== VIEW.STATS} />
-            <Timeline match={match} hidden={view !== VIEW.TIMELINE} />
-            <Standings match={match} hidden={view !== VIEW.STANDINGS} />
+            <Stats match={match} events={events} hidden={view !== VIEW.STATS} />
+            <Timeline match={match} events={events} hidden={view !== VIEW.TIMELINE} />
+            <Standings standings={standings} hidden={view !== VIEW.STANDINGS} />
+          </section>
+          <section className="stadium">
+            <div>
+              <p>
+                <b>Stadium</b>
+              </p>
+              <p>{match.Stadium.Name[0].Description}</p>
+            </div>
           </section>
         </>
       ) : (

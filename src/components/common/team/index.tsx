@@ -1,13 +1,13 @@
-import React, { ChangeEvent } from 'react'
-import { MatchTeam } from '@services/types'
+import React from 'react'
+import { TeamMatch } from '@services/types'
 import TeamGoals from '@components/common/goals'
 // import Bookings from '@components/common/bookings'
 // import Substitutions from '@components/common/substitutions'
-import clubImg from '@assets/images/football-club.svg'
+import Image from '@components/common/image'
 
 type Props = {
-  team: MatchTeam
-  opponent: MatchTeam
+  team: TeamMatch
+  opponent: TeamMatch
   atHome: boolean
   showScore: boolean
 }
@@ -20,16 +20,13 @@ const LiveTeam = ({ team, opponent, atHome, showScore }: Props) => {
   return (
     <div className={`team ${atHome ? '' : 'away'} `}>
       <div className="team-logo">
-        <img
+        <Image
           src={
             team.TeamType === 0
               ? `https://api.fifa.com/api/v1/picture/teams-sq-3/${team.IdTeam}`
               : `https://api.fifa.com/api/v1/picture/flags-sq-3/${team.IdCountry}`
           }
-          loading="lazy"
-          onError={(e: ChangeEvent<HTMLImageElement>) => {
-            e.target.src = clubImg
-          }}
+          fallbackSrc="/images/football-club.svg"
         />
         <h1>{TeamName?.[0]?.Description}</h1>
       </div>

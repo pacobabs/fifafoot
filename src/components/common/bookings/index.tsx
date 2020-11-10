@@ -1,12 +1,12 @@
 import React from 'react'
-import { MatchTeam } from '@services/types'
+import { TeamMatch } from '@services/types'
 import yellowCardImg from '@assets/images/yellow-card-right.svg'
 import redCardImg from '@assets/images/red-card-right.svg'
 import yellowRedCardImg from '@assets/images/yellow-to-red-right.svg'
 
 type Props = {
-  team: MatchTeam
-  opponent: MatchTeam
+  team: TeamMatch
+  opponent: TeamMatch
 }
 
 const CARD = {
@@ -15,7 +15,7 @@ const CARD = {
   3: yellowRedCardImg
 } as { [key: number]: string }
 
-const getBooked = (IdBooked: string, team: MatchTeam) => team.Players.find(({ IdPlayer }) => IdPlayer === IdBooked)
+const getBooked = (IdBooked: string, team: TeamMatch) => team.Players.find(({ IdPlayer }) => IdPlayer === IdBooked)
 
 const Bookings = ({ team, opponent }: Props) => (
   <div

@@ -1,16 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import debounce from 'lodash/debounce'
 import useSWR from 'swr'
 import { fetcher } from './index'
-import { isMatchAvailable, getRelativeTime } from '@utils'
+import { isMatchPollable, getRelativeTime, normalize } from '@utils'
 import { useDispatch } from '@store'
 import { useCompetitions, useTeams } from '@store/selectors'
 import { setMatches, setMatch } from '@store/actions'
-import { Result, Match } from '@services/types'
+import { Result, Match, MatchEvents, Standing } from '@services/types'
 
 const SECONDS_TO_REFRESH = 10
 
+export const useSearch = () => {
+  const [term, setSearch] = useState('')
+  const onChange = (term: string) => setSearch(term)
+  const search = useCallback(debounce(onChange, 133.3333333), [])
+  const find = (name: string) => normalize(name).includes(normalize(term))
+  return { term, search, find }
+}
+
 export const useCalendarCompetitionData = (loaded: boolean, IdCompetition: string, IdSeason: string) => {
-  if (!IdCompetition && !IdSeason) return
   const dispatch = useDispatch()
   const { data } = useSWR<Result<Match>>(
     `calendar/matches?IdCompetition=${IdCompetition}&IdSeason=${IdSeason}&count=1000`,
@@ -44,12 +52,24 @@ export const useLiveMatchesData = (loaded: boolean) => {
 }
 
 export const useMatchData = (IdCompetition: string, IdSeason: string, IdStage: string, IdMatch: string) => {
-  const { data } = useSWR<Match>(`live/football/${IdCompetition}/${IdSeason}/${IdStage}/${IdMatch}`, {
+  const fetchOptions = {
     fetcher,
     revalidateOnFocus: false,
     revalidateOnReconnect: false
-  })
-  return data
+  }
+  const { data: match } = useSWR<Match>(
+    `live/football/${IdCompetition}/${IdSeason}/${IdStage}/${IdMatch}`,
+    fetchOptions
+  )
+  const { data: standings } = useSWR<Result<Standing>>(
+    `calendar/${IdCompetition}/${IdSeason}/${IdStage}/Standing`,
+    fetchOptions
+  )
+  const { data: events } = useSWR<MatchEvents>(
+    `timelines/${IdCompetition}/${IdSeason}/${IdStage}/${IdMatch}`,
+    fetchOptions
+  )
+  return { match, standings: standings ? standings.Results : [], events: events ? events.Event : [] }
 }
 
 export const useLiveMatchData = (match: Match) => {
@@ -83,7 +103,7 @@ const useMatchCountDown = (
 ) => {
   const [clock, setClock] = useState(getRelativeTime(MatchDate))
   useEffect(() => {
-    if (!TimeDefined || !isMatchAvailable(MatchStatus)) return undefined
+    if (!TimeDefined || !isMatchPollable(MatchStatus)) return undefined
     const { remainingTime } = clock
     const remainingMinutes = remainingTime / 60000
     let timeout: NodeJS.Timer

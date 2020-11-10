@@ -19,6 +19,7 @@ module.exports = {
   extends: [
     'last',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended'
@@ -69,10 +70,12 @@ module.exports = {
     ],
     'prefer-template': 'warn',
     'no-param-reassign': ['warn', { props: false }],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-use-before-define': ['error', { variables: false, functions: false, typedefs: false }],
     'no-debugger': PRE_COMMIT ? 'error' : 'off',
-    'no-console': PRE_COMMIT ? 'error' : 'off'
+    'no-console': PRE_COMMIT ? 'error' : 'off',
+    'react/react-in-jsx-scope': 'off'
   },
   settings: {
     react: {
