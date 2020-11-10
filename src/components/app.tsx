@@ -7,7 +7,7 @@ type Props = {
 }
 
 const App = ({ element }: Props) => {
-  console.log('APP')
+  console.log('APP test husky')
   return <Provider store={store}>{element}</Provider>
 }
 
