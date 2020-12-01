@@ -4352,7 +4352,11 @@ command-exists@^1.2.4:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.9.tgz#c50725af3808c8ab0260fd60b01fbfa25b954f69"
 
+<<<<<<< HEAD
 commander@^2.20.0, commander@^2.20.3, commander@^2.8.1:
+=======
+commander@^2.11.0, commander@^2.20.0, commander@^2.20.3:
+>>>>>>> 11b2433df631b9892b897bd9ba956900d6a9e5bc
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
 
@@ -5501,7 +5505,11 @@ elegant-spinner@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/elegant-spinner/-/elegant-spinner-1.0.1.tgz#db043521c95d7e303fd8f345bedc3349cfb0729e"
 
+<<<<<<< HEAD
 elliptic@^6.5.3:
+=======
+elliptic@^6.0.0, elliptic@^6.5.2:
+>>>>>>> 11b2433df631b9892b897bd9ba956900d6a9e5bc
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
   dependencies:
@@ -7548,6 +7556,7 @@ graphql-config@^3.0.2:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/graphql-config/-/graphql-config-3.1.0.tgz#91101f28b0ae524d01efde1f4cb13b710aea6d5d"
   dependencies:
+<<<<<<< HEAD
     "@endemolshinegroup/cosmiconfig-typescript-loader" "3.0.2"
     "@graphql-tools/graphql-file-loader" "^6.0.0"
     "@graphql-tools/json-file-loader" "^6.0.0"
@@ -7560,6 +7569,16 @@ graphql-config@^3.0.2:
     minimatch "3.0.4"
     string-env-interpolation "1.0.1"
     tslib "^2.0.0"
+=======
+    lodash "^4.17.4"
+    resolve-from "^4.0.0"
+
+graphql-playground-html@^1.6.19:
+  version "1.6.25"
+  resolved "https://registry.yarnpkg.com/graphql-playground-html/-/graphql-playground-html-1.6.25.tgz#2d8fa250cec4036a4f5b7f8ad069c86d6d64c95f"
+  dependencies:
+    xss "^1.0.6"
+>>>>>>> 11b2433df631b9892b897bd9ba956900d6a9e5bc
 
 graphql-playground-html@^1.6.29:
   version "1.6.29"
@@ -9684,9 +9703,15 @@ lodash.xorby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.xorby/-/lodash.xorby-4.7.0.tgz#9c19a6f9f063a6eb53dd03c1b6871799801463d7"
 
+<<<<<<< HEAD
 lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@~4.17.10:
   version "4.17.20"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.20.tgz"
+=======
+lodash@^4.11.1, lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@~4.17.12:
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+>>>>>>> 11b2433df631b9892b897bd9ba956900d6a9e5bc
 
 log-symbols@^1.0.2:
   version "1.0.2"
@@ -14705,6 +14730,7 @@ websocket-driver@>=0.5.1:
 websocket-extensions@>=0.1.1:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
+<<<<<<< HEAD
 
 websocket@1.0.32:
   version "1.0.32"
@@ -14716,6 +14742,8 @@ websocket@1.0.32:
     typedarray-to-buffer "^3.1.5"
     utf-8-validate "^5.0.2"
     yaeti "^0.0.6"
+=======
+>>>>>>> 11b2433df631b9892b897bd9ba956900d6a9e5bc
 
 whatwg-encoding@^1.0.5:
   version "1.0.5"
@@ -15021,9 +15049,22 @@ xss@^1.0.6:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
+<<<<<<< HEAD
 xstate@^4.11.0, xstate@^4.13.0, xstate@^4.9.1:
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.14.0.tgz#dd9f3f0af4acd04a01b3ad60d3d4c66c51ac1b5d"
+=======
+xss@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/xss/-/xss-1.0.7.tgz#a554cbd5e909324bd6893fb47fff441ad54e2a95"
+  dependencies:
+    commander "^2.20.3"
+    cssfilter "0.0.10"
+
+xstate@^4.9.1:
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.9.1.tgz#da883ae0993b129ba0b54592c59b069963b0fe0a"
+>>>>>>> 11b2433df631b9892b897bd9ba956900d6a9e5bc
 
 xtend@^4.0.0, xtend@^4.0.1, xtend@^4.0.2, xtend@~4.0.1:
   version "4.0.2"
