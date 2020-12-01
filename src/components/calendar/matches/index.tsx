@@ -30,13 +30,6 @@ const Calendar = ({ params = '' }: Props) => {
     lastMatchday.current = ''
     lastMatchdate.current = ''
   })
-  const count = 1
-  // if (matches[IdCompetition]) {
-  //   for (let i = 0; i < matches[IdCompetition].length; i++) {
-  //     count++
-  //     if (new Date(matches[IdCompetition][i].Date) > new Date()) break
-  //   }
-  // }
   useScrollLoader(topSpinnerRef, bottomSpinnerRef, matches[IdCompetition], setMatches, size, 1)
   return (
     <>
