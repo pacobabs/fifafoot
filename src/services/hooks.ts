@@ -4,21 +4,24 @@ import useSWR from 'swr'
 import { fetcher } from './index'
 import { isMatchPollable, getRelativeTime, normalize } from '@utils'
 import { useDispatch } from '@store'
-import { useCompetitions, useTeams } from '@store/selectors'
+import { useCompetitions, useTeams, useMatches } from '@store/selectors'
 import { setMatches, setMatch } from '@store/actions'
-import { Result, Match, MatchEvents, Standing } from '@services/types'
+import { Result, Competition, Match, MatchEvents, Standing } from '@services/types'
 
 const SECONDS_TO_REFRESH = 10
 
 export const useSearch = () => {
   const [term, setSearch] = useState('')
   const onChange = (term: string) => setSearch(term)
-  const search = useCallback(debounce(onChange, 133.3333333), [])
+  const search = useCallback(debounce(onChange, 66.6666666666), [])
   const find = (name: string) => normalize(name).includes(normalize(term))
   return { term, search, find }
 }
 
-export const useCalendarCompetitionData = (loaded: boolean, IdCompetition: string, IdSeason: string) => {
+export const useCalendarData = (type: string, selected: string) => {
+  const { matches } = useMatches()
+  const { IdCompetition = '', IdSeason = '' } = useCurrentSeasonInfo(type, selected)
+  const loaded = matches[IdCompetition] ? true : false
   const dispatch = useDispatch()
   const { data } = useSWR<Result<Match>>(
     `calendar/matches?IdCompetition=${IdCompetition}&IdSeason=${IdSeason}&count=1000`,
@@ -33,10 +36,13 @@ export const useCalendarCompetitionData = (loaded: boolean, IdCompetition: strin
   useEffect(() => {
     if (loaded || results.length === 0) return undefined
     dispatch(setMatches(IdCompetition, results))
-  }, [results])
+  }, [results, IdCompetition, dispatch, loaded, type, selected])
+  return { matches, IdCompetition }
 }
 
-export const useLiveMatchesData = (loaded: boolean) => {
+export const useLiveMatchesData = () => {
+  const { matches } = useMatches()
+  const loaded = matches['live'] ? true : false
   const dispatch = useDispatch()
   const { data } = useSWR<Result<Match>>(`live/football?count=1000`, {
     fetcher,
@@ -48,7 +54,8 @@ export const useLiveMatchesData = (loaded: boolean) => {
   useEffect(() => {
     if (loaded || results.length === 0) return undefined
     dispatch(setMatches('live', results))
-  }, [results])
+  }, [results, dispatch, loaded])
+  return { matches }
 }
 
 export const useMatchData = (IdCompetition: string, IdSeason: string, IdStage: string, IdMatch: string) => {
@@ -90,7 +97,7 @@ export const useLiveMatchData = (match: Match) => {
     if (!newMatchData || newMatchData?.MatchStatus !== 0) return undefined
     setLive(false)
     dispatch(setMatch('live', newMatchData))
-  }, [newMatchData])
+  }, [newMatchData, dispatch])
   return newMatchData || match
 }
 
@@ -139,14 +146,67 @@ const useMatchCountDown = (
 export const useCurrentSeasonInfo = (view: string, id: string) => {
   const { teams } = useTeams()
   const { competitions } = useCompetitions()
-  if (view === 'TEAM') {
+  if (id && view === 'TEAM') {
     const team = teams.find(({ IdTeam }) => id === IdTeam)
     return { IdCompetition: team?.IdCompetition, IdSeason: team?.IdSeason }
   }
-  if (view === 'COMPETITION') {
+  if (id && view === 'COMPETITION') {
     const competition = competitions.find(({ IdCompetition }) => id === IdCompetition)
     const season = teams.find(({ IdCompetition }) => IdCompetition === competition?.IdCompetition)
     return { IdCompetition: competition?.IdCompetition, IdSeason: season?.IdSeason }
   }
   return { IdCompetition: '', IdSeason: '' }
+}
+
+export const usePopularCompetitions = () => {
+  const { competitions } = useCompetitions()
+  return competitions.filter(({ IdMemberAssociation, Name }) => {
+    const premierLeague = IdMemberAssociation[0] === 'ENG' && Name[0].Description === 'Premier League'
+    const laLiga = IdMemberAssociation[0] === 'ESP' && Name[0].Description === 'LaLiga Santander'
+    const bundesliga = IdMemberAssociation[0] === 'GER' && Name[0].Description === 'Bundesliga'
+    const serieA = IdMemberAssociation[0] === 'ITA' && Name[0].Description === 'Serie A TIM'
+    const ligue1 = IdMemberAssociation[0] === 'FRA' && Name[0].Description === 'Ligue 1 Conforama'
+    const championsLeague = Name[0].Description === 'UEFA Champions League'
+    const europaLeague = Name[0].Description === 'UEFA Europa League'
+    return premierLeague || laLiga || bundesliga || serieA || ligue1 || championsLeague || europaLeague
+  })
+}
+
+export const VIEW = {
+  ALL: 'ALL',
+  POPULAR: 'POPULAR',
+  FAVORITES: 'FAVORITES',
+  TEAM: 'TEAM',
+  COMPETITION: 'COMPETITION'
+}
+
+export const useFilter = (params: string, populars: Competition[], live = false) => {
+  const { competitions, myCompetitions } = useCompetitions()
+  const { myTeams } = useTeams()
+  const [filterParam, typeParam, idParam] = params.split('/')
+  const filter = filterParam || (live ? VIEW.ALL : VIEW.POPULAR)
+  const selected = idParam || (live ? 'ALL' : getDefaultId(filter, populars, competitions, myCompetitions, myTeams))
+  const type = typeParam || (filter === VIEW.FAVORITES ? getDefaultType(myCompetitions) : VIEW.COMPETITION)
+  return { filter, type, selected }
+}
+
+const getDefaultId = (
+  filter: string,
+  populars: Competition[],
+  competitions: Competition[],
+  myCompetitions: string[],
+  myTeams: string[]
+) => {
+  switch (filter) {
+    case VIEW.ALL:
+      return competitions[0].IdCompetition
+    case VIEW.FAVORITES:
+      return myCompetitions[0] || myTeams[0]
+    default:
+      return populars[0].IdCompetition
+  }
+}
+
+const getDefaultType = (myCompetitions: string[]) => {
+  return myCompetitions.length ? VIEW.COMPETITION : VIEW.TEAM
 }

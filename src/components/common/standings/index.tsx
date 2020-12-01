@@ -10,56 +10,48 @@ type Props = {
 const Standings = ({ standings, hidden }: Props) => {
   if (standings.length === 0) {
     return (
-      <div className={`match ${hidden ? 'hidden' : ''}`}>
-        <div className="info">Standings are not available.</div>
+      <div className={`${hidden ? 'invisible' : 'visible'}`}>
+        <div className="">Standings are not available.</div>
       </div>
     )
   }
   return (
-    <div className={`match ${hidden ? 'hidden' : ''}`}>
-      <div>
-        <p>STANDINGS</p>
-      </div>
-      <div className="standings">
-        <p>
-          <span></span>
-          <span>Club</span>
-          <span></span>
-          <span>MP</span>
-          <span>W</span>
-          <span>D</span>
-          <span>L</span>
-          <span>GF</span>
-          <span>GA</span>
-          <span>GD</span>
-          <span>Pts</span>
-        </p>
-      </div>
-      <hr />
+    <div className={`px-2 bg-indigo-100 ${hidden ? 'invisible' : 'visible'}`}>
+      <p className="flex mt-2.5">
+        <span className="w-4"></span>
+        <span className="flex-grow pl-1">Club</span>
+        <span className="w-4 text-right">MP</span>
+        <span className="w-4 text-right">W</span>
+        <span className="w-4 text-right">D</span>
+        <span className="w-4 text-right">L</span>
+        <span className="w-4 text-right">GF</span>
+        <span className="w-4 text-right">GA</span>
+        <span className="w-4 text-right">GD</span>
+        <span className="w-4 text-right">Pts</span>
+      </p>
       {standings.map(({ Position, Points, Played, Won, Drawn, Lost, For, Against, Team }) => (
         <Fragment key={Team.IdTeam}>
-          <div className="standings">
-            <p>
-              <span>{Position}</span>
-              <span>
+          <p className="flex">
+            <span className="w-4">{Position}</span>
+            <span className="flex flex-grow gap-2">
+              <div className="relative w-6 h-6">
                 <Image
-                  className="inline-logo"
+                  className="absolute object-contain -mt-1"
                   src={`https://api.fifa.com/api/v1/picture/teams-sq-3/${Team.IdTeam}`}
                   fallbackSrc="/images/football-club.svg"
                 />
-                {Team.Name[0].Description}
-              </span>
-              <span>{Played}</span>
-              <span>{Won}</span>
-              <span>{Drawn}</span>
-              <span>{Lost}</span>
-              <span>{For}</span>
-              <span>{Against}</span>
-              <span>{For - Against}</span>
-              <span>{Points}</span>
-            </p>
-          </div>{' '}
-          <hr />
+              </div>
+              {Team.Name[0].Description}
+            </span>
+            <span className="w-4 text-right">{Played}</span>
+            <span className="w-4 text-right">{Won}</span>
+            <span className="w-4 text-right">{Drawn}</span>
+            <span className="w-4 text-right">{Lost}</span>
+            <span className="w-4 text-right">{For}</span>
+            <span className="w-4 text-right">{Against}</span>
+            <span className="w-4 text-right">{For - Against}</span>
+            <span className="w-4 text-right">{Points}</span>
+          </p>
         </Fragment>
       ))}
     </div>

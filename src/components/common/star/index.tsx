@@ -13,25 +13,13 @@ type Props = {
 const Star = ({ list, id, addAction, removeAction }: Props) => {
   const dispatch = useDispatch()
   return (
-    <>
-      {list.includes(id) ? (
-        <a
-          onClick={() => {
-            dispatch(removeAction(id))
-          }}
-        >
-          <img className="star" src={starImg} />
-        </a>
-      ) : (
-        <a
-          onClick={() => {
-            dispatch(addAction(id))
-          }}
-        >
-          <img className="star gray" src={starImg} />
-        </a>
-      )}
-    </>
+    <a
+      onClick={() => {
+        list.includes(id) ? dispatch(removeAction(id)) : dispatch(addAction(id))
+      }}
+    >
+      <img className={`w-3 h-3 mb-1 ${list.includes(id) ? '' : 'grayscale'}`} src={starImg} />
+    </a>
   )
 }
 export default Star

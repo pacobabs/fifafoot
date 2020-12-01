@@ -5,7 +5,7 @@ import Head from '@components/head'
 import LiveMatch from '@components/details'
 
 const SecondPage = () => (
-  <Layout path="/live/">
+  <Layout path="live">
     <Head title="Live" />
     <Router>
       <LiveMatch path="/live/*params" />

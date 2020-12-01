@@ -114,7 +114,7 @@ export type MatchEvent = {
 }
 
 export type AllTeams = {
-  teams: Team[]
+  teams: TeamMatch[]
 }
 
 export type Team = {

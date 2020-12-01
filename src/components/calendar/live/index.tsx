@@ -1,89 +1,95 @@
-import React, { useState, useRef, Fragment } from 'react'
+import React, { useState, useRef, Fragment, useEffect } from 'react'
 import { isMatchCancelled } from '@utils'
-import { useSearch, useLiveMatchesData } from '@services'
-import { useMatches, useTeams } from '@store/selectors'
+import { useSearch, useLiveMatchesData, usePopularCompetitions, useFilter, VIEW } from '@services'
 import LiveMatch from '@components/common/match'
 import CompetitionInfo from './competition-info'
+import Filters from '@components/common/filters'
+import Competitions from '@components/calendar/matches/competitions-list'
+import Teams from '@components/calendar/matches/teams-list'
 
-const VIEW = {
-  ALL: 'ALL',
-  TEAM: 'TEAM'
+type Props = {
+  path?: string
+  params?: string
 }
 
-const Live = () => {
+const Live = ({ params = '' }: Props) => {
   console.count('Live')
-  const [view, setView] = useState(VIEW.ALL)
-  const { matches } = useMatches()
-  const { myTeams } = useTeams()
-  const [IdTeamFilter, setIdTeamFilter] = useState('')
-  const loaded = matches['live'] !== undefined
+  const [liveMatch, setLiveMatch] = useState(false)
+  const populars = usePopularCompetitions()
+  const { filter, type, selected } = useFilter(params, populars, true)
   const lastCompetition = useRef('')
   const { term, search, find } = useSearch()
-  useLiveMatchesData(loaded)
+  const { matches } = useLiveMatchesData()
+  useEffect(() => {
+    lastCompetition.current = ''
+  })
   return (
-    <div className="live">
-      <nav>
-        <ul>
-          {matches['live']?.map((match) => {
-            const {
-              HomeTeam: { IdTeam: IdTeamHome, TeamName: HomeTeamName },
-              AwayTeam: { IdTeam: IdTeamAway, TeamName: AwayTeamName }
-            } = match
-            const homeIsFavoriteTeam = myTeams.includes(IdTeamHome)
-            const awayIsFavoriteTeam = myTeams.includes(IdTeamAway)
-            if (!homeIsFavoriteTeam && !awayIsFavoriteTeam) return null
-            const IdTeam = homeIsFavoriteTeam ? IdTeamHome : IdTeamAway
-            const TeamName = homeIsFavoriteTeam ? HomeTeamName : AwayTeamName
-            return (
-              <li key={IdTeam}>
-                <a
-                  onClick={() => {
-                    setView(VIEW.TEAM)
-                    setIdTeamFilter(IdTeam)
-                  }}
-                  className={view === VIEW.TEAM && IdTeamFilter === IdTeam ? 'selected' : ''}
-                >
-                  {TeamName[0].Description}
-                </a>
-              </li>
-            )
-          })}
-          <li>
-            <a onClick={() => setView(VIEW.ALL)} className={view === VIEW.ALL ? 'selected' : ''}>
-              ALL LIVE MATCHES
-            </a>
-          </li>
+    <div className="bg-gray-50">
+      <Filters
+        path="liveresults"
+        filter={filter}
+        type={type}
+        selected={selected}
+        term={term}
+        search={search}
+        live={true}
+        liveMatch={liveMatch}
+        setLiveMatch={setLiveMatch}
+      />
+      <nav className="h-8 overflow-x-scroll bg-indigo-600 contain-auto-x scrollbar">
+        <ul className="flex flex-wrap justify-center px-2 text-indigo-100 w-max gap-x-4">
+          <Competitions
+            path="liveresults"
+            selected={selected}
+            filter={filter}
+            populars={populars}
+            live={true}
+            term={term}
+            find={find}
+          />
+          {filter === VIEW.FAVORITES && (
+            <Teams path="liveresults" selected={selected} live={true} term={term} find={find} />
+          )}
         </ul>
       </nav>
-      <section>
-        <input placeholder="search..." onChange={(e) => search(e.target.value)} type="search" />
-      </section>
-      {matches['live']?.map((match) => {
-        const {
-          IdMatch,
-          CompetitionName,
-          MatchStatus,
-          TimeDefined,
-          HomeTeam: { IdTeam: IdTeamHome, TeamName: HomeName },
-          AwayTeam: { IdTeam: IdTeamAway, TeamName: AwayName }
-        } = match
-        if (!TimeDefined || !isMatchCancelled(MatchStatus)) return
-        if (view === VIEW.TEAM && IdTeamFilter && IdTeamHome !== IdTeamFilter && IdTeamAway !== IdTeamFilter)
-          return null
-        if (
-          term &&
-          !find(CompetitionName[0].Description) &&
-          !find(HomeName[0].Description) &&
-          !find(AwayName[0].Description)
-        )
-          return null
-        return (
-          <Fragment key={IdMatch}>
-            <CompetitionInfo competition={CompetitionName[0].Description} lastCompetition={lastCompetition} />
-            <LiveMatch match={match} />
-          </Fragment>
-        )
-      })}
+      <div className="contain-auto-y">
+        {matches['live']
+          ?.sort(({ Date: dateA, IdCompetition: idCompetitionA }, { Date: dateB, IdCompetition: idCompetitionB }) => {
+            for (let i = 0; i < populars.length; i++) {
+              if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionA) return -1
+              if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionB) return 1
+            }
+            return new Date(dateA) < new Date(dateB) ? -1 : 1
+          })
+          .map((match) => {
+            const {
+              IdMatch,
+              IdCompetition,
+              CompetitionName,
+              MatchStatus,
+              TimeDefined,
+              HomeTeam: { IdTeam: IdHome, TeamName: Home },
+              AwayTeam: { IdTeam: IdAway, TeamName: Away }
+            } = match
+            if (liveMatch && MatchStatus !== 3) return null
+            if (selected !== 'ALL' && IdCompetition !== selected && IdHome !== selected && IdAway !== selected)
+              return null
+            if (!TimeDefined || !isMatchCancelled(MatchStatus)) return null
+            if (
+              term &&
+              !find(CompetitionName[0].Description) &&
+              !find(Home[0].Description) &&
+              !find(Away[0].Description)
+            )
+              return null
+            return (
+              <Fragment key={IdMatch}>
+                <CompetitionInfo competition={CompetitionName[0].Description} lastCompetition={lastCompetition} />
+                <LiveMatch match={match} listView={true} />
+              </Fragment>
+            )
+          })}
+      </div>
     </div>
   )
 }

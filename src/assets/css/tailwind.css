@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .grayscale {
+    filter: grayscale(100%);
+  }
+  .selected {
+    @apply relative;
+  }
+  .selected:after {
+    content: '';
+    @apply absolute -bottom-0.5 block w-full h-0.5 bg-indigo-50;
+  }
+  @supports not (content-visibility: hidden) {
+    .invisible {
+      display: none;
+    }
+  }
+  @supports (content-visibility: hidden) {
+    .invisible {
+      visibility: visible;
+      content-visibility: hidden;
+      contain-intrinsic-size: 1500px 0px;
+    }
+    .visible {
+      content-visibility: visible;
+      contain: style layout paint;
+    }
+    .contain-auto-x {
+      content-visibility: auto;
+      contain-intrinsic-size: 5000px 120px;
+      max-width: 96vw;
+    }
+    .contain-auto-y {
+      content-visibility: auto;
+      contain-intrinsic-size: 1000px 5000px;
+      min-height: 96vh;
+    }
+  }
+  .text-legible {
+    max-width: 80ch;
+  }
+  @responsive {
+    .bg-full {
+      @apply relative;
+    }
+    .bg-full::before {
+      content: '';
+      @apply absolute block w-screen h-full;
+      background: inherit;
+      left: calc((100vw - 100%) / -2);
+      z-index: -1;
+    }
+    .text-xs {
+      font-size: 0.75em;
+      line-height: 2.17em;
+      padding-top: 0.75em;
+      margin-bottom: 1.42em;
+    }
+    .text-sm {
+      font-size: 0.875em;
+      line-height: 1.86em;
+      padding-top: 0.571em;
+      margin-bottom: 1.29em;
+    }
+    .text-base {
+      font-size: 1em;
+      line-height: 1.63em;
+      padding-top: 0.5em;
+      margin-bottom: 1.13em;
+    }
+    .text-lg {
+      font-size: 1.13em;
+      line-height: 1.44em;
+      padding-top: 0.389em;
+      margin-bottom: 1.06em;
+    }
+    .text-xl {
+      font-size: 1.25em;
+      line-height: 1.3em;
+      padding-top: 0.3em;
+      margin-bottom: 1em;
+    }
+    .text-2xl {
+      font-size: 1.5em;
+      line-height: 1.08em;
+      padding-top: 0.208em;
+      margin-bottom: 0.875em;
+    }
+    .text-3xl {
+      font-size: 1.88em;
+      line-height: 1.73em;
+      padding-top: 0.533em;
+      margin-bottom: 0.333em;
+    }
+    .text-4xl {
+      font-size: 2.25em;
+      line-height: 1.44em;
+      padding-top: 0.389em;
+      margin-bottom: 0.333em;
+    }
+    .text-5xl {
+      font-size: 3em;
+      line-height: 1.08em;
+      padding-top: 0.208em;
+      margin-bottom: 0.333em;
+    }
+    .text-6xl {
+      font-size: 3.75em;
+      line-height: 1em;
+      padding-top: 0.5em;
+      margin-bottom: 1.13em;
+    }
+    .text-7xl {
+      font-size: 4.5em;
+      line-height: 1.08em;
+      padding-top: 0.208em;
+      margin-bottom: 0.153em;
+    }
+    .text-8xl {
+      font-size: 6em;
+      line-height: 1.08em;
+      padding-top: 0.198em;
+      margin-bottom: 0.0729em;
+    }
+    .text-9xl {
+      font-size: 8em;
+      line-height: 1.02em;
+      padding-top: 0.164em;
+      margin-bottom: 0.0391em;
+    }
+  }
+  .font-logo {
+    --CASL: 1;
+    --slnt: -54;
+    word-spacing: -0.175em;
+    @apply font-black font-recursive;
+  }
+  .scrollbar::-webkit-scrollbar {
+    width: 0.8125em;
+    height: 0.8125em;
+  }
+  .scrollbar::-webkit-scrollbar-track {
+    @apply bg-indigo-100;
+  }
+
+  .scrollbar::-webkit-scrollbar-corner {
+    @apply bg-gray-900;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-indigo-400 rounded-sm;
+  }
+  .scrollbar:hover::-webkit-scrollbar-thumb,
+  .scrollbar:active::-webkit-scrollbar-thumb,
+  .scrollbar:focus::-webkit-scrollbar-thumb {
+    @apply bg-indigo-600;
+  }
+  .vr-debug {
+    background-image: linear-gradient(to bottom, rgb(32, 130, 225) 1px, transparent 1px);
+    background-size: 100% 26px;
+  }
+  .vr-debug *:hover {
+    @apply bg-opacity-25;
+  }
+}
+
+@layer base {
+  :root {
+    /* Start with axis defaults. Exclude weight, which is better controlled via the usual font-weight CSS property */
+    --MONO: 0; /* Monospace    */
+    --CASL: 0; /* Casual       */
+    --slnt: 0; /* Upright      */
+    --CRSV: 0.5; /* Auto Cursive */
+    --vr-baseline: 1.6;
+  }
+  *,
+  *:before,
+  *:after {
+    line-height: 1.63em;
+    font-variation-settings: 'MONO' var(--MONO), 'CASL' var(--CASL), 'slnt' var(--slnt), 'CRSV' var(--CRSV);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  html {
+    font-size: 16px;
+    line-height: var(--vr-baseline);
+  }
+
+  body {
+    @apply overflow-x-hidden font-crimson scrollbar;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-recursive;
+  }
+
+  h1 {
+    font-size: 3.19em;
+    line-height: 1.02em;
+    padding-top: 0.176em;
+    margin-bottom: 0.333em;
+  }
+
+  h2 {
+    font-size: 2.38em;
+    line-height: 1.37em;
+    padding-top: 0.342em;
+    margin-bottom: 0.342em;
+  }
+
+  h3 {
+    font-size: 1.75em;
+    line-height: 1.86em;
+    padding-top: 0.571em;
+    margin-bottom: 0.357em;
+  }
+
+  h4 {
+    font-size: 1.31em;
+    line-height: 1.24em;
+    padding-top: 0.286em;
+    margin-bottom: 0.952em;
+  }
+
+  p {
+    font-size: 1em;
+    line-height: 1.63em;
+    padding-top: 0.5em;
+    margin-bottom: 1.13em;
+  }
+
+  a {
+    @apply cursor-pointer;
+  }
+}

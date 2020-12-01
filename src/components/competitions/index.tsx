@@ -1,66 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSearch } from '@services'
-import { useCompetitions } from '@store/selectors'
-import { addCompetition, removeCompetition } from '@store/actions'
-import Star from '@components/common/star'
-import Image from '@components/common/image'
-
-const VIEW = {
-  ALL: 'ALL',
-  FAVORITES: 'FAVORITES'
-}
+import Search from '@components/common/search'
+import CompetitionsList from './competitions-list'
 
 const Competitions = () => {
   console.count('Competitions')
-  const { competitions, myCompetitions } = useCompetitions()
-  const [view, setView] = useState(VIEW.ALL)
   const { term, search, find } = useSearch()
   return (
-    <>
-      <nav>
-        <ul>
-          <li>
-            <a onClick={() => setView(VIEW.FAVORITES)} className={view === VIEW.FAVORITES ? 'selected' : ''}>
-              FAVORITE ({myCompetitions.length})
-            </a>
-          </li>
-          <li>
-            <a onClick={() => setView(VIEW.ALL)} className={view === VIEW.ALL ? 'selected' : ''}>
-              ALL COMPETITITONS
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <input placeholder="search..." onChange={(e) => search(e.target.value)} type="search" />
-      <section>
-        {view === VIEW.FAVORITES && !myCompetitions.length && !term ? (
-          <div>Choose your favorite competition in the all competitions section or search for one.</div>
-        ) : (
-          competitions.map(({ IdCompetition, IdMemberAssociation, Name }) => {
-            if (view === VIEW.FAVORITES && !myCompetitions.includes(IdCompetition) && !term) return null
-            if (term && !find(Name[0].Description)) return null
-            return (
-              <div key={IdCompetition} className="card">
-                <h1>
-                  {IdMemberAssociation[0]} - {Name[0].Description}
-                </h1>
-                <Image
-                  className="logo"
-                  src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
-                  fallbackSrc="/images/shield.svg"
-                />
-                <Star
-                  list={myCompetitions}
-                  id={IdCompetition}
-                  addAction={addCompetition}
-                  removeAction={removeCompetition}
-                />
-              </div>
-            )
-          })
-        )}
-      </section>
-    </>
+    <div className="pt-1">
+      <div className="text-indigo-50 font-bold bg-gradient-to-r from-indigo-400 via-indigo-500 to-indigo-600 px-1 pt-1 mb-1 pb-0.5 font-recursive">
+        COMPETITIONS
+      </div>
+      <Search term={term} search={search} />
+      <div className="flex h-20 gap-8 py-1 overflow-x-scroll contain-auto-x scrollbar">
+        <CompetitionsList term={term} find={find} />
+      </div>
+    </div>
   )
 }
 export default Competitions

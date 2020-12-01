@@ -13,29 +13,41 @@ const Timeline = ({ match, events, hidden }: Props) => {
   const { MatchStatus } = match
   if (!isMatchplayed(MatchStatus)) {
     return (
-      <div className={`match ${hidden ? 'hidden' : ''}`}>
-        <div className="info">No timeline yet.</div>
+      <div className={`${hidden ? 'invisible' : 'visible'}`}>
+        <div className="">No timeline yet.</div>
       </div>
     )
   }
   return (
-    <div className={`match ${hidden ? 'hidden' : ''}`}>
+    <div className={`mt-2.5 flex flex-col bg-indigo-50 ${hidden ? 'invisible' : 'visible'}`}>
       {events
         .filter(({ Type }) => Type !== 14)
         .map(({ EventId, IdTeam, MatchMinute, EventDescription }) => {
           if (!EventDescription[0]?.Description) return
           return (
-            <div className="timeline" key={EventId}>
-              <p>
-                <span>
-                  {MatchMinute}
-                  {IdTeam ? <TeamLogo team={match.HomeTeam.IdTeam === IdTeam ? match.HomeTeam : match.AwayTeam} /> : ''}
-                </span>
-                <span>{EventDescription[0]?.Description}</span>
-                <span>
-                  {IdTeam ? <TeamLogo team={match.HomeTeam.IdTeam === IdTeam ? match.HomeTeam : match.AwayTeam} /> : ''}
-                </span>
-              </p>
+            <div className="flex justify-around h-8" key={EventId}>
+              <span className="flex flex-col items-center w-10 bg-gray-100">
+                {MatchMinute}
+                {IdTeam ? (
+                  <TeamLogo
+                    className="w-4 h-4 -mt-0.5"
+                    team={match.HomeTeam.IdTeam === IdTeam ? match.HomeTeam : match.AwayTeam}
+                  />
+                ) : (
+                  ''
+                )}
+              </span>
+              <span className="flex-grow px-1 bg-white">{EventDescription[0]?.Description}</span>
+              <span className="w-8 py-1 pl-2 bg-gray-100">
+                {IdTeam ? (
+                  <TeamLogo
+                    className="w-4 h-4"
+                    team={match.HomeTeam.IdTeam === IdTeam ? match.HomeTeam : match.AwayTeam}
+                  />
+                ) : (
+                  ''
+                )}
+              </span>
             </div>
           )
         })}

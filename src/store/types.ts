@@ -1,4 +1,4 @@
-import { Dispatch as ReactDispatch } from 'react'
+import { Dispatch as ReactDispatch, SetStateAction } from 'react'
 import { Country, Confederation, Competition, Season, Match, TeamMatch } from '@services/types'
 
 export type IStateContext = React.Context<State>
@@ -43,6 +43,8 @@ export type State = CountrySelector &
   TeamSelector &
   SeasonSelector &
   MatchSelector
+
+export type SetFilterStateAction = ReactDispatch<SetStateAction<string>>
 
 // actions
 export enum ActionTypes {

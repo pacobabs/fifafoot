@@ -1,4 +1,12 @@
 {
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "css.customData": [".vscode/css_custom_data.json"],
+  "html-css-class-completion.remoteStyleSheets": ["https://unpkg.com/tailwindcss@2.0.0/dist/tailwind.min.css"],
+  "html-css-class-completion.includeGlobPattern": "**/*.{css,tsx}",
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "javascript"
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "emmet.triggerExpansionOnTab": true
 }

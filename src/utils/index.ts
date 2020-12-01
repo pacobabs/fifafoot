@@ -17,10 +17,13 @@ export const isSameDay = (d1: Date, d2: Date) => {
   return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate()
 }
 
-export const getLocaleMatchDayTime = (MatchDate: string) => {
+export const getLocaleMatchTime = (MatchDate: string) => {
   const matchDate = new Date(MatchDate)
-  const time = matchDate.toLocaleTimeString([], hourFormat)
-  return `${getLocaleMatchDay(MatchDate)}, ${time}`
+  return matchDate.toLocaleTimeString([], hourFormat).replace('24', '00')
+}
+
+export const getLocaleMatchDayTime = (MatchDate: string) => {
+  return `${getLocaleMatchDay(MatchDate)} - ${getLocaleMatchTime(MatchDate)}`
 }
 
 export const getLocaleMatchDay = (MatchDate: string) => {
@@ -78,7 +81,7 @@ export const isMatchCancelled = (MatchStatus: number) => MatchStatus !== 4 && Ma
 export const getRelativeTime = (matchDate: string) => {
   const remainingTime = new Date(matchDate).getTime() - Date.now() // milliseconds
   let time = remainingTime / 1000
-  let unit = 'second'
+  let unit = 'second' as Intl.RelativeTimeFormatUnit
   if (Math.abs(time) > 60) {
     time /= 60
     unit = 'minute'
@@ -106,15 +109,16 @@ export const getRelativeTime = (matchDate: string) => {
   return { time, unit, remainingTime }
 }
 
+const teamStats = {
+  shots: 0,
+  blockedShots: 0,
+  fouls: 0,
+  offsides: 0,
+  corners: 0
+}
+
 export const getMatchStats = (match: Match, events: MatchEvent[]) => {
   const { AwayTeam, HomeTeam, BallPossession } = match
-  const teamStats = {
-    shots: 0,
-    blockedShots: 0,
-    fouls: 0,
-    offsides: 0,
-    corners: 0
-  }
   const stats = {
     [AwayTeam.IdTeam]: {
       ...teamStats,
@@ -135,6 +139,7 @@ export const getMatchStats = (match: Match, events: MatchEvent[]) => {
       case 41:
       case 32:
       case 33:
+        return
       case 12: {
         stats[IdTeam].shots += 1
         return

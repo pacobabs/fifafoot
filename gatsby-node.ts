@@ -7,5 +7,13 @@ export default () => ({
       page.matchPath = '/live/*'
       createPage(page)
     }
+    if (page.path.match(/^\/liveresults/)) {
+      page.matchPath = '/liveresults/*'
+      createPage(page)
+    }
+    if (page.path.match(/^\/calendar/)) {
+      page.matchPath = '/calendar/*'
+      createPage(page)
+    }
   }
 })

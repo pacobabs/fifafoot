@@ -5,7 +5,7 @@ import Live from '@components/calendar/live'
 
 const LivePage = () => {
   return (
-    <Layout path="/live/">
+    <Layout path="live">
       <Head title="Live Matches" />
       <Live />
     </Layout>

@@ -1,40 +1,39 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { ChangeEvent, useRef } from 'react'
 
 type Props = {
   src: string
   fallbackSrc?: string
   className?: string
+  style?: Record<string, unknown>
 }
 
-const Image = ({ src, fallbackSrc = '', className = '' }: Props) => {
-  const [loaded, setLoaded] = useState(false)
+const Image = ({ src, fallbackSrc = '', className = '', style = {} }: Props) => {
+  const fallbackRef = useRef<HTMLImageElement | null>(null)
   return (
     <>
       {fallbackSrc ? (
-        <img
-          className={className}
-          style={{ position: 'absolute' }}
-          {...(loaded && { style: { display: 'none' } })}
-          src={fallbackSrc}
-        />
+        <img ref={fallbackRef} className={`absolute ${className}`} style={{ ...style, opacity: 0 }} src={fallbackSrc} />
       ) : null}
       <img
-        style={{ opacity: 0 }}
+        style={style}
         className={className}
-        onLoad={(e: ChangeEvent<HTMLImageElement>) => {
-          setLoaded(true)
-          e.target.style.animation = 'opacity 600ms easeIn'
-          e.target.style.opacity = '1'
+        onLoad={() => {
+          if (fallbackRef.current) {
+            fallbackRef.current.style.display = 'none'
+          }
         }}
         src={src}
         loading="lazy"
         onError={(e: ChangeEvent<HTMLImageElement>) => {
-          if (!fallbackSrc) {
-            e.target.style.display = 'none'
-            return
+          e.target.style.display = 'none'
+          if (fallbackRef.current) {
+            if (!fallbackSrc) {
+              fallbackRef.current.style.display = 'none'
+            } else {
+              fallbackRef.current.style.opacity = '1'
+              fallbackRef.current.style.position = 'static'
+            }
           }
-          e.target.src = fallbackSrc
-          setLoaded(false)
         }}
       />
     </>

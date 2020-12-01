@@ -1,5 +1,5 @@
 import React from 'react'
-import Lineup from '@components/common/lineup'
+import Lineup from './lineup'
 import { Match } from '@services/types'
 
 type Props = {
@@ -10,21 +10,15 @@ type Props = {
 const Lineups = ({ match, hidden }: Props) => {
   const { MatchStatus, AwayTeam, HomeTeam } = match
   return (
-    <div className={`match ${hidden ? 'hidden' : ''}`}>
-      <div>
-        {match.AwayTeam.Players.length && match.AwayTeam.Players.length ? (
-          <>
-            <div className="team">
-              <Lineup team={HomeTeam} matchStatus={MatchStatus} />
-            </div>
-            <div className="team away">
-              <Lineup team={AwayTeam} matchStatus={MatchStatus} />
-            </div>
-          </>
-        ) : (
-          <div className="info">No Line ups yet.</div>
-        )}
-      </div>
+    <div className={`px-2 ${hidden ? 'invisible' : 'visible'}`}>
+      {match.AwayTeam.Players.length && match.AwayTeam.Players.length ? (
+        <div className="flex">
+          <Lineup team={HomeTeam} matchStatus={MatchStatus} />
+          <Lineup team={AwayTeam} away={true} matchStatus={MatchStatus} />
+        </div>
+      ) : (
+        <div className="">No Line ups yet.</div>
+      )}
     </div>
   )
 }

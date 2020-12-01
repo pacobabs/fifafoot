@@ -1,13 +1,15 @@
 import React from 'react'
+import { Router } from '@reach/router'
 import Layout from '@components/layout'
 import Head from '@components/head'
 import Calendar from '@components/calendar/matches'
-import { PageProps } from 'gatsby'
 
-const SecondPage = ({ path }: PageProps) => (
-  <Layout path={path}>
+const SecondPage = () => (
+  <Layout path="calendar">
     <Head title="Calendar" />
-    <Calendar />
+    <Router>
+      <Calendar path="/calendar/*params" />
+    </Router>
   </Layout>
 )
 

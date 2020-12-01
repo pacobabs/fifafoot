@@ -1,14 +1,48 @@
-import React, { ReactNode } from 'react'
-import store from '@services/store.json'
-import { Provider } from '@store'
+// import React, { ReactNode } from 'react'
+// import useData from '@services/data'
+// import { Provider } from '@store'
+// import { GraphQLQuery } from '@services/types'
 
-type Props = {
-  element: ReactNode
-}
+// type Props = {
+//   element: ReactNode
+// }
 
-const App = ({ element }: Props) => {
-  console.log('APP test husky')
-  return <Provider store={store}>{element}</Provider>
-}
+// const store = {
+//   countries: [],
+//   confederations: [],
+//   competitions: [],
+//   seasons: [],
+//   matches: {},
+//   teams: [],
+//   myCountries: [],
+//   myConfederations: [],
+//   myCompetitions: [],
+//   myTeams: []
+// }
 
-export default App
+// const App = ({ element }: Props) => {
+//   console.count('APP')
+//   const {
+//     allCountries: { countries },
+//     allConfederations: { confederations },
+//     allCompetitions: { competitions },
+//     allSeasons: { seasons },
+//     allTeams: { teams }
+//   } = useData<GraphQLQuery>()
+//   return (
+//     <Provider
+//       store={{
+//         ...store,
+//         countries,
+//         confederations,
+//         competitions,
+//         seasons,
+//         teams
+//       }}
+//     >
+//       {element}
+//     </Provider>
+//   )
+// }
+
+// export default App

@@ -1,13 +1,22 @@
 import React from 'react'
 import Layout from '@components/layout'
 import Head from '@components/head'
+import Countries from '@components/countries'
+import Confederations from '@components/confederations'
+import Competitions from '@components/competitions'
 import Teams from '@components/teams'
-import { PageProps } from 'gatsby'
+import Favorites from '@components/favorites'
 
-const SecondPage = ({ path }: PageProps) => (
-  <Layout path={path}>
+const SecondPage = () => (
+  <Layout path="teams">
     <Head title="Teams" />
-    <Teams />
+    <div className="bg-indigo-50">
+      <Favorites />
+      <Confederations />
+      <Countries />
+      <Competitions />
+      <Teams />
+    </div>
   </Layout>
 )
 

@@ -1,7 +1,7 @@
 export default {
   siteMetadata: {
     title: `Live Foot`,
-    description: `No need.`,
+    description: ``,
     author: `@pacobabs`
   },
   plugins: [
@@ -25,6 +25,7 @@ export default {
         }
       }
     },
+    `gatsby-plugin-postcss`,
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`

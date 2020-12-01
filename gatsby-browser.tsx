@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import Root from '@components/app'
+import Root from '@components/app-dev'
 
 type Props = {
   element: ReactNode

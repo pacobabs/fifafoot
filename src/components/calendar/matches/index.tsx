@@ -1,82 +1,88 @@
-import React, { useState, useRef, Fragment } from 'react'
-import { useCurrentSeasonInfo, useCalendarCompetitionData } from '@services'
-import { useCompetitions, useMatches, useTeams } from '@store/selectors'
-import CalendarMatch from '@components/common/match'
+import React, { useState, useEffect, useRef } from 'react'
+import { useCalendarData, usePopularCompetitions, useFilter, VIEW, useSearch } from '@services'
+import Match from '@components/common/match'
+import Filters from '@components/common/filters'
+import Competitions from './competitions-list'
+import Teams from './teams-list'
 import MatchDateInfo from './matchdate-info'
 import MatchDayInfo from './matchday-info'
-import { Link } from 'gatsby'
+import useScrollLoader from '@components/common/loader'
+import { Match as MatchType } from '@services/types'
 
-const VIEW = {
-  TEAM: 'TEAM',
-  COMPETITION: 'COMPETITION'
+type Props = {
+  path: string
+  params?: string
 }
 
-const Calendar = () => {
+const Calendar = ({ params = '' }: Props) => {
   console.count('Calendar')
-  const { competitions, myCompetitions } = useCompetitions()
-  const { teams, myTeams } = useTeams()
-  const defaultId = myTeams[0] || myCompetitions[0] || ''
-  const defaultView = myTeams[0] ? VIEW.TEAM : myCompetitions[0] ? VIEW.COMPETITION : ''
-  const [state, setState] = useState({ view: defaultView, id: defaultId })
-  const { IdCompetition = '', IdSeason = '' } = useCurrentSeasonInfo(state.view, state.id)
-  const { matches } = useMatches()
-  const loaded = matches[IdCompetition] !== undefined
+  const { term, search, find } = useSearch()
+  const [visibleMatches, setMatches] = useState<MatchType[]>([])
+  const topSpinnerRef = useRef<HTMLDivElement | null>(null)
+  const bottomSpinnerRef = useRef<HTMLDivElement | null>(null)
+  const populars = usePopularCompetitions()
+  const { filter, type, selected } = useFilter(params, populars)
   const lastMatchday = useRef('')
   const lastMatchdate = useRef('')
-  useCalendarCompetitionData(loaded, IdCompetition, IdSeason)
+  const { matches, IdCompetition } = useCalendarData(type, selected)
+  const size = 200
+  useEffect(() => {
+    lastMatchday.current = ''
+    lastMatchdate.current = ''
+  })
+  const count = 1
+  // if (matches[IdCompetition]) {
+  //   for (let i = 0; i < matches[IdCompetition].length; i++) {
+  //     count++
+  //     if (new Date(matches[IdCompetition][i].Date) > new Date()) break
+  //   }
+  // }
+  useScrollLoader(topSpinnerRef, bottomSpinnerRef, matches[IdCompetition], setMatches, size, 1)
   return (
-    <div className="live">
-      <nav>
-        <ul>
-          {teams.map(({ IdTeam, TeamName }) => {
-            if (!myTeams.includes(IdTeam)) return null
-            return (
-              <li key={IdTeam}>
-                <a
-                  onClick={() => {
-                    setState({ id: IdTeam, view: VIEW.TEAM })
-                  }}
-                  className={state.view === VIEW.TEAM && state.id === IdTeam ? 'selected' : ''}
-                >
-                  {TeamName[0].Description}
-                </a>
-              </li>
-            )
-          })}
-          {competitions.map(({ IdCompetition, Name }) => {
-            if (!myCompetitions.includes(IdCompetition)) return null
-            return (
-              <li key={IdCompetition}>
-                <a
-                  onClick={() => {
-                    setState({ id: IdCompetition, view: VIEW.COMPETITION })
-                  }}
-                  className={state.view === VIEW.COMPETITION && state.id === IdCompetition ? 'selected' : ''}
-                >
-                  {Name[0].Description}
-                </a>
-              </li>
-            )
-          })}
+    <>
+      <Filters path="calendar" filter={filter} type={type} selected={selected} term={term} search={search} />
+      <nav className="h-8 overflow-x-scroll bg-indigo-600 contain-auto-x scrollbar">
+        <ul className="flex flex-wrap justify-center px-2 text-indigo-100 w-max gap-x-4">
+          <Competitions
+            path="calendar"
+            selected={selected}
+            filter={filter}
+            populars={populars}
+            term={term}
+            find={find}
+          />
+          {filter === VIEW.FAVORITES && <Teams path="calendar" selected={selected} term={term} find={find} />}
         </ul>
       </nav>
-      {state.id === '' ? (
-        <section>
-          <div>Choose your favorites to view the calendar</div>
-        </section>
-      ) : (
-        matches[IdCompetition]?.map((match) => {
-          if (state.view === VIEW.TEAM && match.Home.IdTeam !== state.id && match.Away.IdTeam !== state.id) return null
+      <div className="relative flex flex-col items-center pb-3 contain-auto-y">
+        <div
+          ref={topSpinnerRef}
+          className="absolute top-0 hidden w-4 h-4 border-t-2 border-b-2 border-indigo-700 rounded-full animate-spin"
+        ></div>
+        {visibleMatches.map((match) => {
+          if (type === VIEW.TEAM && match.Home.IdTeam !== selected && match.Away.IdTeam !== selected) return null
+          if (
+            term &&
+            !find(match.CompetitionName[0].Description) &&
+            !find(match.Home.TeamName[0].Description) &&
+            !find(match.Away.TeamName[0].Description)
+          )
+            return null
           return (
-            <Fragment key={match.IdMatch}>
+            <div className="w-full" key={match.IdMatch}>
               <MatchDayInfo MatchDay={match.MatchDay} lastMatchday={lastMatchday} />
               <MatchDateInfo MatchDate={match.Date} lastMatchdate={lastMatchdate} />
-              <CalendarMatch match={match} />
-            </Fragment>
+              <Match match={match} listView={true} />
+            </div>
           )
-        })
-      )}
-    </div>
+        })}
+        <div
+          ref={bottomSpinnerRef}
+          className="absolute hidden w-4 h-4 mb-2 border-t-2 border-b-2 border-indigo-700 rounded-full -bottom-1 animate-spin"
+        ></div>
+      </div>
+    </>
   )
 }
+
 export default Calendar
