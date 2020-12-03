@@ -26,7 +26,7 @@ const Live = ({ params = '' }: Props) => {
   })
   const matcheslist = matches.live
   return (
-    <div className="bg-gray-50">
+    <>
       <Filters
         path="liveresults"
         filter={filter}
@@ -87,7 +87,11 @@ const Live = ({ params = '' }: Props) => {
                 return null
               return (
                 <Fragment key={IdMatch}>
-                  <CompetitionInfo competition={CompetitionName[0].Description} lastCompetition={lastCompetition} />
+                  <CompetitionInfo
+                    idCompetition={IdCompetition}
+                    competition={CompetitionName[0].Description}
+                    lastCompetition={lastCompetition}
+                  />
                   <LiveMatch match={match} listView={true} />
                 </Fragment>
               )
@@ -96,7 +100,7 @@ const Live = ({ params = '' }: Props) => {
           <Spinner />
         )}
       </>
-    </div>
+    </>
   )
 }
 export default Live

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import Image from '@components/common/image'
 import { Standing } from '@services/types'
+import ballImg from '@assets/images/soccer-ball.svg'
 
 type Props = {
   standings: Standing[]
@@ -10,8 +11,9 @@ type Props = {
 const Standings = ({ standings, hidden }: Props) => {
   if (standings.length === 0) {
     return (
-      <div className={`${hidden ? 'hidden' : ''}`}>
-        <div className="">Standings are not available.</div>
+      <div className={`${hidden ? 'hidden' : 'flex items-center justify-center h-64 gap-1'}`}>
+        <img src={ballImg} className="w-4 h-4 -mt-0.5 opacity-70 grayscale" />
+        <span>Standings are not available.</span>
       </div>
     )
   }
@@ -37,7 +39,11 @@ const Standings = ({ standings, hidden }: Props) => {
               <span className="relative w-6 h-6">
                 <Image
                   className="absolute object-contain -mt-1"
-                  src={`https://api.fifa.com/api/v1/picture/teams-sq-3/${Team.IdTeam}`}
+                  src={
+                    Team.TeamType === 1
+                      ? `https://api.fifa.com/api/v1/picture/flags-sq-3/${Team.IdCountry}`
+                      : `https://api.fifa.com/api/v1/picture/teams-sq-3/${Team.IdTeam}`
+                  }
                   fallbackSrc="/images/football-club.svg"
                 />
               </span>

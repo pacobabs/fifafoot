@@ -12,9 +12,26 @@ type Props = {
 
 const LiveMatch = ({ match, listView = false }: Props) => {
   const liveMatch = useLiveMatchData(match)
-  const { IdMatch, Date: MatchDate, MatchTime, MatchStatus, Period, TimeDefined } = liveMatch
+  const {
+    IdMatch,
+    Date: MatchDate,
+    MatchTime,
+    MatchStatus,
+    Period,
+    TimeDefined,
+    FirstHalfExtraTime,
+    SecondHalfExtraTime
+  } = liveMatch
+  const extraTime =
+    Period === 3
+      ? FirstHalfExtraTime
+        ? `(+${FirstHalfExtraTime})`
+        : ''
+      : SecondHalfExtraTime
+      ? `(+${SecondHalfExtraTime})`
+      : ''
   const showScore = MatchStatus === 0 || MatchStatus === 3
-  const matchTime = TimeDefined && Period !== 10 ? MatchTime : null
+  const matchTime = TimeDefined && Period !== 10 && Period !== 4 ? (MatchTime ? MatchTime + extraTime : null) : null
   const halfTime = MatchStatus === 3 && Period === 4 ? 'HALF TIME' : null
   const Home = liveMatch.Home || liveMatch.HomeTeam
   const Away = liveMatch.Away || liveMatch.AwayTeam
@@ -23,7 +40,6 @@ const LiveMatch = ({ match, listView = false }: Props) => {
       key={IdMatch}
       className={`flex flex-col mb-0.5 ${listView ? 'h-16' : ''}`}
       to={`/live/${match.IdCompetition}/${match.IdSeason}/${match.IdStage}/${match.IdMatch}`}
-      // onClick={(e) => e.preventDefault()}
     >
       <div className={`flex gap-0.5 px-1 bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 justify-between`}>
         <span className="px-1 text-gray-800 bg-gray-100 rounded-xl">

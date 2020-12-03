@@ -1,6 +1,7 @@
 import React from 'react'
 import Lineup from './lineup'
 import { Match } from '@services/types'
+import ballImg from '@assets/images/soccer-ball.svg'
 
 type Props = {
   match: Match
@@ -17,7 +18,10 @@ const Lineups = ({ match, hidden }: Props) => {
           <Lineup team={AwayTeam} away={true} matchStatus={MatchStatus} />
         </div>
       ) : (
-        <div className="">No Line ups yet.</div>
+        <div className="flex items-center justify-center h-64 gap-1">
+          <img src={ballImg} className="w-4 h-4 -mt-0.5 opacity-70 grayscale" />
+          <span>Lineups are not available.</span>
+        </div>
       )}
     </div>
   )

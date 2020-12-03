@@ -22,9 +22,9 @@ const VIEW = {
 }
 
 const LiveMatch = ({ params = '' }: Props) => {
-  const [view, setView] = useState(VIEW.LINEUPS)
   const [idCompetition, idSeason, idStage, idMatch] = params.split('/')
   const { match, standings, events } = useMatchData(idCompetition, idSeason, idStage, idMatch)
+  const [view, setView] = useState(VIEW.LINEUPS)
   if (!match || !idCompetition || !idSeason || !idStage || !idMatch) return <Spinner />
   const Home = match.Home || match.HomeTeam
   const Away = match.Away || match.AwayTeam
@@ -64,7 +64,9 @@ const LiveMatch = ({ params = '' }: Props) => {
       <Timeline match={match} events={events} hidden={view !== VIEW.TIMELINE} />
       <Standings standings={standings} hidden={view !== VIEW.STANDINGS} />
       {match.Stadium.Name[0] && (
-        <span className="block px-2 py-4 font-bold text-indigo-900">Stadium {match.Stadium.Name[0].Description}</span>
+        <span className="block px-2 py-4 font-bold text-center text-indigo-900">
+          Stadium {match.Stadium.Name[0].Description}
+        </span>
       )}
     </div>
   )

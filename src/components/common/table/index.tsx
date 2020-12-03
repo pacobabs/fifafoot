@@ -1,11 +1,11 @@
 import React from 'react'
 import { useCountries } from '@store/selectors'
-import { usePopularCompetitions } from '@services'
+import { usePopularTeams } from '@services'
 import Image from '@components/common/image'
 import { Link } from 'gatsby'
 
 const Table = () => {
-  const populars = usePopularCompetitions()
+  const populars = usePopularTeams()
   const { countries } = useCountries()
   return (
     <div className="sm:col-start-1 sm:col-span-2 md:col-start-11 md:col-span-2 md:row-start-2 md:row-end-4">
@@ -13,17 +13,21 @@ const Table = () => {
         TOP TEAMS
       </div>
       <ul className="flex flex-col bg-indigo-100 pb-0.5 ">
-        {populars.map(({ IdCompetition, Name }) => (
-          <li className="bg-gray-50" key={IdCompetition}>
-            <Link to={`/calendar/POPULAR/COMPETITION/${IdCompetition}`} className="flex gap-1 px-1 border-b-2">
-              <div className="relative w-4 h-4">
+        {populars.map(({ IdTeam, IdCountry, TeamType, TeamName }) => (
+          <li className="bg-gray-50" key={IdTeam}>
+            <Link to={`/calendar/POPULAR/TEAM/${IdTeam}`} className="flex gap-1 px-1 border-b-2">
+              <div className="relative w-4 h-4 -mt-0.5">
                 <Image
                   className="inline-block w-4 h-4 py-0.5 object-contain"
-                  src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
-                  fallbackSrc="/images/shield.svg"
+                  src={
+                    TeamType === 1
+                      ? `https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`
+                      : `https://api.fifa.com/api/v1/picture/teams-sq-3/${IdTeam}`
+                  }
+                  fallbackSrc="/images/football-club.svg"
                 />
               </div>
-              {Name[0].Description}
+              {TeamName[0].Description}
             </Link>
           </li>
         ))}

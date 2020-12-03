@@ -16,7 +16,7 @@ const TeamsList = ({ term, find, favorites = false }: Props) => {
   const { myCompetitions } = useCompetitions()
   return (
     <>
-      {teams.map(({ IdTeam, IdCompetition, TeamName }) => {
+      {teams.map(({ IdTeam, IdCountry, TeamType, IdCompetition, TeamName }) => {
         if (term.length >= 3 && !find(TeamName[0].Description)) return null
         if (term && term.length < 3 && !myTeams.includes(IdTeam)) return null
         if (!term && !myCompetitions.includes(IdCompetition) && !myTeams.includes(IdTeam)) return null
@@ -27,7 +27,11 @@ const TeamsList = ({ term, find, favorites = false }: Props) => {
             <div className="relative object-contain w-8 h-8">
               <Image
                 className="w-8 h-8"
-                src={`https://api.fifa.com/api/v1/picture/teams-sq-3/${IdTeam}`}
+                src={
+                  TeamType === 1
+                    ? `https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`
+                    : `https://api.fifa.com/api/v1/picture/teams-sq-3/${IdTeam}`
+                }
                 fallbackSrc="/images/football-club.svg"
               />
             </div>

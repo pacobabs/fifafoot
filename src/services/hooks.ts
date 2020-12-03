@@ -172,6 +172,20 @@ export const usePopularCompetitions = () => {
   })
 }
 
+export const usePopularTeams = () => {
+  const { teams } = useTeams()
+  return teams.filter(({ IdTeam }) => {
+    const liv = IdTeam === '27959'
+    const barca = IdTeam === '1903416'
+    const real = IdTeam === '30504'
+    const bayern = IdTeam === '1914810'
+    const psg = IdTeam === '33191'
+    const juve = IdTeam === '31085'
+    const city = IdTeam === '33337'
+    return liv || barca || real || juve || bayern || psg || city
+  })
+}
+
 export const VIEW = {
   ALL: 'ALL',
   POPULAR: 'POPULAR',

@@ -3,6 +3,7 @@ import { Link } from 'gatsby'
 import { VIEW } from '@services'
 import { useCompetitions } from '@store/selectors'
 import { Competition } from '@services/types'
+import Image from '@components/common/image'
 
 type Props = {
   path: string
@@ -34,8 +35,15 @@ const Competitions = ({ path, selected, filter, populars, term, find, live = fal
           <li key={IdCompetition}>
             <Link
               to={`/${path}/${filter}/${VIEW.COMPETITION}/${IdCompetition}`}
-              className={id === IdCompetition ? 'selected' : ''}
+              className={`flex gap-1 ${id === IdCompetition ? 'selected' : ''}`}
             >
+              <div className="relative w-4 h-4 rounded-full bg-indigo-50">
+                <Image
+                  className="inline-block object-contain w-4 h-4 pb-0.5"
+                  src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
+                  fallbackSrc="/images/football-club.svg"
+                />
+              </div>
               {Name[0].Description}
             </Link>
           </li>

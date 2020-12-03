@@ -74,6 +74,8 @@ export type Match = {
   Home: TeamMatch
   AwayTeam: TeamMatch
   HomeTeam: TeamMatch
+  FirstHalfExtraTime: number | null
+  SecondHalfExtraTime: number | null
 }
 
 export type Standing = {
@@ -123,11 +125,11 @@ export type Team = {
   IdCompetition: string
   IdSeason: string
   Name: Name[]
+  TeamType: number
 }
 
 export type TeamMatch = Team & {
   TeamName: Name[]
-  TeamType: number
   Score: number
   Players: Player[]
   Goals: Goal[]

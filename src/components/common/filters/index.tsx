@@ -43,10 +43,10 @@ const Filters = ({ path, filter, type, selected, term, search, live = false, liv
           Favorites
         </Link>
       </div>
-      <div className=" bg-indigo-700 pb-0 pl-0.5 sm:pl-1 flex justify-between px-2 py-1">
-        <Search term={term} search={search} className="text-indigo-100 bg-indigo-700" />
+      <div className=" bg-indigo-700 pl-0.5 sm:pl-1 flex justify-between px-2 py-1">
+        <Search search={search} className="text-indigo-100 bg-indigo-700" />
         {setLiveMatch && (
-          <button className="flex items-center gap-1 outline-none" onClick={() => setLiveMatch((live) => !live)}>
+          <button className="flex items-center gap-1 focus:outline-none" onClick={() => setLiveMatch((live) => !live)}>
             <span
               className={`flex items-center  w-4 h-2 border-pink-100 rounded-full cursor-pointer ${
                 liveMatch ? 'justify-end bg-pink-500' : 'justify-start bg-indigo-300'

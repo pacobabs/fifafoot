@@ -1,6 +1,7 @@
 import React from 'react'
 import { isMatchplayed } from '@utils'
 import TeamLogo from '@components/common/team-logo'
+import ballImg from '@assets/images/soccer-ball.svg'
 import { Match, MatchEvent } from '@services/types'
 
 type Props = {
@@ -13,8 +14,9 @@ const Timeline = ({ match, events, hidden }: Props) => {
   const { MatchStatus } = match
   if (!isMatchplayed(MatchStatus)) {
     return (
-      <div className={`${hidden ? 'hidden' : ''}`}>
-        <div className="">No timeline yet.</div>
+      <div className={`${hidden ? 'hidden' : 'flex items-center justify-center h-64 gap-1'}`}>
+        <img src={ballImg} className="w-4 h-4 -mt-0.5 opacity-70 grayscale" />
+        <span>Timeline is not available.</span>
       </div>
     )
   }

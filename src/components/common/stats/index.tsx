@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react'
 import { isMatchplayed, getMatchStats } from '@utils'
 import { Match, MatchEvent } from '@services/types'
 import TeamLogo from '@components/common/team-logo'
+import ballImg from '@assets/images/soccer-ball.svg'
 
 type Props = {
   match: Match
@@ -25,8 +26,9 @@ const Stats = ({ match, events, hidden }: Props) => {
   } = match
   if (!isMatchplayed(MatchStatus)) {
     return (
-      <div className={`${hidden ? 'hidden' : ''}`}>
-        <div className="">No Stats yet.</div>
+      <div className={`${hidden ? 'hidden' : 'flex items-center justify-center h-64 gap-1'}`}>
+        <img src={ballImg} className="w-4 h-4 -mt-0.5 opacity-70 grayscale" />
+        <span>Stats are not available.</span>
       </div>
     )
   }
