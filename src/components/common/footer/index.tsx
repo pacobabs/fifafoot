@@ -1,11 +1,12 @@
 import React from 'react'
+import logo from '@assets/images/logo.svg'
 
 const Footer = () => {
   return (
     <footer className="flex flex-col px-1 bg-indigo-900 lg:bg-full sm:col-start-3 sm:col-span-10 md:col-start-1 md:col-span-12">
       <div className="flex flex-col justify-between pt-4 md:flex-row">
         <div>
-          <p className="text-lg text-indigo-100 font-logo">LIVE FOOT</p>
+          <img src={logo} className="block w-24 h-4 mt-1 mb-4 -ml-1" />
           <p className="pr-8 -mt-4 text-sm text-indigo-100 text-legible">live foot.</p>
         </div>
         <div>

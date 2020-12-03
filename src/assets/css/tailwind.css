@@ -5,7 +5,74 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .banner {
+    position: relative;
+    height: 100%;
+    text-align: center;
+    text-shadow: 1px 1px;
+    color: #fff;
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 77px;
+  }
+  .banner .image-overlay {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    opacity: 0.3;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    top: 0;
+  }
+  .banner .squares-wrapper {
+    background: #4e54c8;
+    background: -webkit-gradient(linear, right top, left top, from(#3182d5), to(#4e54c8));
+    background: linear-gradient(to left, #3182d5, #4e54c8);
+    width: 100%;
+    height: 100%;
+  }
+  .banner .squares {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  .banner .squares li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-animation: animate 25s linear infinite;
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+  }
+  @keyframes animate {
+    0% {
+      -webkit-transform: translateY(0) rotate(0deg);
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.85;
+      border-radius: 50%;
+    }
+    100% {
+      -webkit-transform: translateY(-1000px) rotate(720deg);
+      transform: translateY(-1000px) rotate(720deg);
+      opacity: 0;
+      border-radius: 100%;
+    }
+  }
+}
+
 @layer utilities {
+  .max-w {
+    max-width: 96vw;
+  }
   .grayscale {
     filter: grayscale(100%);
   }
@@ -15,32 +82,6 @@
   .selected:after {
     content: '';
     @apply absolute -bottom-0.5 block w-full h-0.5 bg-indigo-50;
-  }
-  @supports not (content-visibility: hidden) {
-    .invisible {
-      display: none;
-    }
-  }
-  @supports (content-visibility: hidden) {
-    .invisible {
-      visibility: visible;
-      content-visibility: hidden;
-      contain-intrinsic-size: 1500px 0px;
-    }
-    .visible {
-      content-visibility: visible;
-      contain: style layout paint;
-    }
-    .contain-auto-x {
-      content-visibility: auto;
-      contain-intrinsic-size: 5000px 120px;
-      max-width: 96vw;
-    }
-    .contain-auto-y {
-      content-visibility: auto;
-      contain-intrinsic-size: 1000px 5000px;
-      min-height: 96vh;
-    }
   }
   .text-legible {
     max-width: 80ch;

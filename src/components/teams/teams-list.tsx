@@ -20,7 +20,7 @@ const TeamsList = ({ term, find, favorites = false }: Props) => {
         if (term.length >= 3 && !find(TeamName[0].Description)) return null
         if (term && term.length < 3 && !myTeams.includes(IdTeam)) return null
         if (!term && !myCompetitions.includes(IdCompetition) && !myTeams.includes(IdTeam)) return null
-        if (favorites && !myTeams.includes(IdTeam)) return null
+        if (favorites && term.length < 3 && !myTeams.includes(IdTeam)) return null
         return (
           <div key={IdTeam} className="flex flex-col items-center">
             <Star list={myTeams} id={IdTeam} addAction={addTeam} removeAction={removeTeam} />

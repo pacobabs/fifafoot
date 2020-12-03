@@ -21,7 +21,7 @@ const LiveMatch = ({ match, listView = false }: Props) => {
   return (
     <Link
       key={IdMatch}
-      className="flex flex-col mb-0.5"
+      className={`flex flex-col mb-0.5 ${listView ? 'h-16' : ''}`}
       to={`/live/${match.IdCompetition}/${match.IdSeason}/${match.IdStage}/${match.IdMatch}`}
       // onClick={(e) => e.preventDefault()}
     >

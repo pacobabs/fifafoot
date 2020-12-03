@@ -16,7 +16,7 @@ const Search = ({ term, search, className = '' }: Props) => {
         placeholder="Search..."
       />
       {!term && (
-        <span className="absolute top-0 right-0 text-gray-200">
+        <span className="absolute top-0 text-gray-200 -right-4">
           <svg
             className="w-3 h-3 mt-0.5 fill-current"
             id="Capa_1"

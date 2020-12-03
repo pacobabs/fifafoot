@@ -22,9 +22,9 @@ const LiveTeam = ({ team, atHome, showScore, listView }: Props) => {
           listView ? `sm:-mt-1 sm:gap-4 ${atHome ? 'sm:flex-row-reverse sm:pr-4' : 'sm:flex-row sm:pl-4'}` : ''
         }`}
       >
-        <div className="relative w-8 h-8">
+        <div className="relative w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8">
           <Image
-            className="object-contain w-8 h-8"
+            className="object-contain w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
             src={
               team.TeamType === 0
                 ? `https://api.fifa.com/api/v1/picture/teams-sq-3/${team.IdTeam}`

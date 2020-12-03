@@ -6,6 +6,7 @@ import CompetitionInfo from './competition-info'
 import Filters from '@components/common/filters'
 import Competitions from '@components/calendar/matches/competitions-list'
 import Teams from '@components/calendar/matches/teams-list'
+import Spinner from '@components/common/spinner'
 
 type Props = {
   path?: string
@@ -23,6 +24,7 @@ const Live = ({ params = '' }: Props) => {
   useEffect(() => {
     lastCompetition.current = ''
   })
+  const matcheslist = matches.live
   return (
     <div className="bg-gray-50">
       <Filters
@@ -36,7 +38,7 @@ const Live = ({ params = '' }: Props) => {
         liveMatch={liveMatch}
         setLiveMatch={setLiveMatch}
       />
-      <nav className="h-8 overflow-x-scroll bg-indigo-600 contain-auto-x scrollbar">
+      <nav className="h-8 overflow-x-scroll bg-indigo-600 max-w scrollbar">
         <ul className="flex flex-wrap justify-center px-2 text-indigo-100 w-max gap-x-4">
           <Competitions
             path="liveresults"
@@ -52,44 +54,48 @@ const Live = ({ params = '' }: Props) => {
           )}
         </ul>
       </nav>
-      <div className="contain-auto-y">
-        {matches['live']
-          ?.sort(({ Date: dateA, IdCompetition: idCompetitionA }, { Date: dateB, IdCompetition: idCompetitionB }) => {
-            for (let i = 0; i < populars.length; i++) {
-              if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionA) return -1
-              if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionB) return 1
-            }
-            return new Date(dateA) < new Date(dateB) ? -1 : 1
-          })
-          .map((match) => {
-            const {
-              IdMatch,
-              IdCompetition,
-              CompetitionName,
-              MatchStatus,
-              TimeDefined,
-              HomeTeam: { IdTeam: IdHome, TeamName: Home },
-              AwayTeam: { IdTeam: IdAway, TeamName: Away }
-            } = match
-            if (liveMatch && MatchStatus !== 3) return null
-            if (selected !== 'ALL' && IdCompetition !== selected && IdHome !== selected && IdAway !== selected)
-              return null
-            if (!TimeDefined || !isMatchCancelled(MatchStatus)) return null
-            if (
-              term &&
-              !find(CompetitionName[0].Description) &&
-              !find(Home[0].Description) &&
-              !find(Away[0].Description)
-            )
-              return null
-            return (
-              <Fragment key={IdMatch}>
-                <CompetitionInfo competition={CompetitionName[0].Description} lastCompetition={lastCompetition} />
-                <LiveMatch match={match} listView={true} />
-              </Fragment>
-            )
-          })}
-      </div>
+      <>
+        {matcheslist ? (
+          matcheslist
+            .sort(({ Date: dateA, IdCompetition: idCompetitionA }, { Date: dateB, IdCompetition: idCompetitionB }) => {
+              for (let i = 0; i < populars.length; i++) {
+                if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionA) return -1
+                if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionB) return 1
+              }
+              return new Date(dateA) < new Date(dateB) ? -1 : 1
+            })
+            .map((match) => {
+              const {
+                IdMatch,
+                IdCompetition,
+                CompetitionName,
+                MatchStatus,
+                TimeDefined,
+                HomeTeam: { IdTeam: IdHome, TeamName: Home },
+                AwayTeam: { IdTeam: IdAway, TeamName: Away }
+              } = match
+              if (liveMatch && MatchStatus !== 3) return null
+              if (selected !== 'ALL' && IdCompetition !== selected && IdHome !== selected && IdAway !== selected)
+                return null
+              if (!TimeDefined || !isMatchCancelled(MatchStatus)) return null
+              if (
+                term &&
+                !find(CompetitionName[0].Description) &&
+                !find(Home[0].Description) &&
+                !find(Away[0].Description)
+              )
+                return null
+              return (
+                <Fragment key={IdMatch}>
+                  <CompetitionInfo competition={CompetitionName[0].Description} lastCompetition={lastCompetition} />
+                  <LiveMatch match={match} listView={true} />
+                </Fragment>
+              )
+            })
+        ) : (
+          <Spinner />
+        )}
+      </>
     </div>
   )
 }

@@ -10,13 +10,13 @@ type Props = {
 const Standings = ({ standings, hidden }: Props) => {
   if (standings.length === 0) {
     return (
-      <div className={`${hidden ? 'invisible' : 'visible'}`}>
+      <div className={`${hidden ? 'hidden' : ''}`}>
         <div className="">Standings are not available.</div>
       </div>
     )
   }
   return (
-    <div className={`px-2 bg-indigo-100 ${hidden ? 'invisible' : 'visible'}`}>
+    <div className={`px-2 bg-indigo-100 ${hidden ? 'hidden' : ''}`}>
       <p className="flex mt-2.5">
         <span className="w-4"></span>
         <span className="flex-grow pl-1">Club</span>
@@ -34,13 +34,13 @@ const Standings = ({ standings, hidden }: Props) => {
           <p className="flex">
             <span className="w-4">{Position}</span>
             <span className="flex flex-grow gap-2">
-              <div className="relative w-6 h-6">
+              <span className="relative w-6 h-6">
                 <Image
                   className="absolute object-contain -mt-1"
                   src={`https://api.fifa.com/api/v1/picture/teams-sq-3/${Team.IdTeam}`}
                   fallbackSrc="/images/football-club.svg"
                 />
-              </div>
+              </span>
               {Team.Name[0].Description}
             </span>
             <span className="w-4 text-right">{Played}</span>

@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { isMatchplayed, getMatchStats } from '@utils'
 import { Match, MatchEvent } from '@services/types'
+import TeamLogo from '@components/common/team-logo'
 
 type Props = {
   match: Match
@@ -17,19 +18,26 @@ const Row = ({ children }: RowProps) => <p className="flex flex-row justify-betw
 const Stats = ({ match, events, hidden }: Props) => {
   const {
     MatchStatus,
+    AwayTeam,
+    HomeTeam,
     AwayTeam: { IdTeam: IdAway },
     HomeTeam: { IdTeam: IdHome }
   } = match
   if (!isMatchplayed(MatchStatus)) {
     return (
-      <div className={`${hidden ? 'invisible' : 'visible'}`}>
+      <div className={`${hidden ? 'hidden' : ''}`}>
         <div className="">No Stats yet.</div>
       </div>
     )
   }
   const stats = getMatchStats(match, events)
   return (
-    <div className={`flex flex-col mt-3 px-2 bg-indigo-100 ${hidden ? 'invisible' : 'visible'}`}>
+    <div className={`flex flex-col mt-3 px-2 bg-indigo-100 ${hidden ? 'hidden' : ''}`}>
+      <Row>
+        <TeamLogo team={HomeTeam} className="w-4 h-4 -ml-1 sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
+        <span />
+        <TeamLogo team={AwayTeam} className="w-4 h-4 -mr-1 sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
+      </Row>
       <Row>
         <span>{stats[IdHome].shots}</span>
         <span>Total shots</span>

@@ -12,7 +12,7 @@ const Confederations = () => {
         CONFEDERATIONS
       </div>
       <Search term={term} search={search} />
-      <div className="flex h-20 gap-8 py-1 overflow-x-scroll contain-auto-x scrollbar">
+      <div className="flex h-20 gap-8 py-1 overflow-x-scroll scrollbar">
         <ConfederationsList term={term} find={find} />
       </div>
     </div>
