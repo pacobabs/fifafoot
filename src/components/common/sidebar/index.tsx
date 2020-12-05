@@ -15,7 +15,10 @@ const Sidebar = () => {
       <ul className="flex flex-col bg-indigo-100 pb-0.5 ">
         {populars.map(({ IdCompetition, Name }) => (
           <li className="bg-gray-50" key={IdCompetition}>
-            <Link to={`/calendar/POPULAR/COMPETITION/${IdCompetition}`} className="flex gap-1 px-1 border-b-2">
+            <Link
+              to={`/calendar/POPULAR/COMPETITION/${IdCompetition}`}
+              className="flex gap-1 px-1 ring-1 ring-inset ring-gray-200"
+            >
               <div className="relative w-4 h-4">
                 <Image
                   className="inline-block w-4 h-4 py-0.5 object-contain"
@@ -35,7 +38,7 @@ const Sidebar = () => {
         {competitions.slice(0, 23).map(({ IdCompetition, Name }) => (
           <Link
             to={`/calendar/ALL/COMPETITION/${IdCompetition}`}
-            className="flex gap-1 px-1 border-b-2 bg-gray-50"
+            className="flex gap-1 px-1 ring-1 ring-inset ring-gray-200 bg-gray-50"
             key={IdCompetition}
           >
             <div className="relative w-4 h-4">

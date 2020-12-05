@@ -7,6 +7,7 @@ import Filters from '@components/common/filters'
 import Competitions from '@components/calendar/matches/competitions-list'
 import Teams from '@components/calendar/matches/teams-list'
 import Spinner from '@components/common/spinner'
+import { setMatches } from '@store/actions'
 
 type Props = {
   path?: string
@@ -19,11 +20,17 @@ const Live = ({ params = '' }: Props) => {
   const populars = usePopularCompetitions()
   const { filter, type, selected } = useFilter(params, populars, true)
   const lastCompetition = useRef('')
+  const currentDay = useRef(new Date().getDay())
   const { term, search, find } = useSearch()
-  const { matches } = useLiveMatchesData()
   useEffect(() => {
+    const today = new Date().getDay()
+    if (currentDay.current !== today) {
+      currentDay.current = today
+      setMatches('live', [])
+    }
     lastCompetition.current = ''
   })
+  const { matches } = useLiveMatchesData()
   const matcheslist = matches.live
   return (
     <>

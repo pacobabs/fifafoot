@@ -49,8 +49,16 @@ const LiveMatch = ({ match, listView = false }: Props) => {
               : getLocaleMatchDayTime(MatchDate)
             : getLocaleMatchDay(MatchDate)}
         </span>
-        <span className={`${matchTime ? 'text-pink-700 font-bold' : 'text-gray-500 px-1 bg-gray-100 rounded-xl'}`}>
+        <span className={`flex ${matchTime ? 'text-pink-700 font-bold' : 'text-gray-500 px-1 bg-gray-100 rounded-xl'}`}>
           {halfTime || matchTime || getMatchStatus(MatchStatus, MatchDate, TimeDefined)}
+          {MatchStatus === 3 && !halfTime && (
+            <div className="relative inline-block mt-0.5 mr-2 livenow">
+              <div className="absolute w-3 h-3 border-4 rounded-full"></div>
+              <div className="absolute w-3 h-3 border-4 rounded-full"></div>
+              <div className="absolute w-3 h-3 border-4 rounded-full"></div>
+              <div className="absolute w-3 h-3 border-4 rounded-full"></div>
+            </div>
+          )}
         </span>
       </div>
 

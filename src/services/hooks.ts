@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useMemo, useState, useCallback } from 'react'
 import debounce from 'lodash/debounce'
 import useSWR from 'swr'
 import { fetcher } from './index'
-import { isMatchPollable, getRelativeTime, normalize } from '@utils'
+import { isMatchplayed, isMatchPollable, getRelativeTime, normalize } from '@utils'
 import { useDispatch } from '@store'
 import { useCompetitions, useTeams, useMatches } from '@store/selectors'
 import { setMatches, setMatch } from '@store/actions'
@@ -32,7 +32,7 @@ export const useCalendarData = (type: string, selected: string) => {
       revalidateOnReconnect: false
     }
   )
-  const results = data?.Results ?? []
+  const results = useMemo(() => data?.Results ?? [], [data])
   useEffect(() => {
     if (loaded || results.length === 0) return undefined
     dispatch(setMatches(IdCompetition, results))
@@ -42,7 +42,7 @@ export const useCalendarData = (type: string, selected: string) => {
 
 export const useLiveMatchesData = () => {
   const { matches } = useMatches()
-  const loaded = matches['live'] ? true : false
+  const loaded = matches.live?.length ? true : false
   const dispatch = useDispatch()
   const { data } = useSWR<Result<Match>>(`live/football?count=1000`, {
     fetcher,
@@ -50,7 +50,7 @@ export const useLiveMatchesData = () => {
     revalidateOnFocus: false,
     revalidateOnReconnect: false
   })
-  const results = data?.Results ?? []
+  const results = useMemo(() => data?.Results ?? [], [data])
   useEffect(() => {
     if (loaded || results.length === 0) return undefined
     dispatch(setMatches('live', results))
@@ -83,7 +83,7 @@ export const useLiveMatchData = (match: Match) => {
   const dispatch = useDispatch()
   const { IdMatch, IdCompetition, IdSeason, IdStage, MatchStatus, TimeDefined, Date: MatchDate } = match
   const [live, setLive] = useState(MatchStatus === 3)
-  const [refreshInterval, setRefreshInterval] = useState(0)
+  const [refreshInterval, setRefreshInterval] = useState(SECONDS_TO_REFRESH * 1000)
   const { data: newMatchData } = useSWR<Match>(
     live ? [`live/football/${IdCompetition}/${IdSeason}/${IdStage}/${IdMatch}`, live, refreshInterval] : null,
     {
@@ -92,12 +92,13 @@ export const useLiveMatchData = (match: Match) => {
       dedupingInterval: refreshInterval
     }
   )
-  useMatchCountDown(TimeDefined, MatchStatus, MatchDate, setLive, setRefreshInterval)
+  useMatchCountDown(TimeDefined, MatchStatus, MatchDate, live, setLive, setRefreshInterval)
   useEffect(() => {
-    if (!newMatchData || newMatchData?.MatchStatus !== 0) return undefined
-    setLive(false)
-    dispatch(setMatch('live', newMatchData))
-  }, [newMatchData, dispatch])
+    if (!newMatchData) return
+    if (newMatchData.MatchStatus !== match.MatchStatus) {
+      dispatch(setMatch('live', newMatchData))
+    }
+  }, [newMatchData, dispatch, match.MatchStatus])
   return newMatchData || match
 }
 
@@ -105,42 +106,44 @@ const useMatchCountDown = (
   TimeDefined: boolean,
   MatchStatus: number,
   MatchDate: string,
+  live: boolean,
   setLive: (live: boolean) => void,
   setRefreshInterval: (interval: number) => void
 ) => {
   const [clock, setClock] = useState(getRelativeTime(MatchDate))
   useEffect(() => {
-    if (!TimeDefined || !isMatchPollable(MatchStatus)) return undefined
+    if (live || !TimeDefined || !isMatchPollable(MatchStatus)) return
     const { remainingTime } = clock
     const remainingMinutes = remainingTime / 60000
+    let interval = 1000
     let timeout: NodeJS.Timer
-    let clockRefreshInterval = 1000 // every second refresh timer
     if (remainingMinutes <= 5) {
       setLive(true)
-      setRefreshInterval(SECONDS_TO_REFRESH * 1000)
-    } else if (remainingMinutes <= 65) {
+      setRefreshInterval(1 * 60 * 1000)
+      timeout = setTimeout(() => {
+        setRefreshInterval(SECONDS_TO_REFRESH * 1000)
+      }, (remainingMinutes - 1) * 60 * 1000)
+    } else if (remainingMinutes <= 60) {
       setLive(true)
-      clockRefreshInterval = 60 * 1000 // every minute refresh timer
-      setRefreshInterval(10 * 60 * 1000) // refresh match data every 10 minutes
+      setRefreshInterval(10 * 60 * 1000)
+      interval = 60 * 1000
       timeout = setTimeout(() => {
         setRefreshInterval(SECONDS_TO_REFRESH * 1000)
       }, (remainingMinutes - 5) * 60 * 1000)
     } else {
-      clockRefreshInterval = 60 * 60 * 1000 // every hour refresh timer
+      interval = 60 * 60 * 1000
       timeout = setTimeout(() => {
         setLive(true)
-      }, (remainingMinutes - 65) * 60 * 1000)
+      }, (remainingMinutes - 60) * 60 * 1000)
     }
-
     const clockInterval = setInterval(() => {
-      remainingTime > 0 && console.log(MatchDate, MatchStatus)
-      remainingTime > 0 && setClock(getRelativeTime(MatchDate))
-    }, clockRefreshInterval)
+      setClock(getRelativeTime(MatchDate))
+    }, interval)
     return () => {
       timeout && clearTimeout(timeout)
       clearInterval(clockInterval)
     }
-  }, [])
+  }, [live, TimeDefined, MatchStatus, MatchDate, setLive, setRefreshInterval, clock])
 }
 
 export const useCurrentSeasonInfo = (view: string, id: string) => {

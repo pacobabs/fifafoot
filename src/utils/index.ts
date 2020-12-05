@@ -33,7 +33,7 @@ export const getLocaleMatchDay = (MatchDate: string) => {
   const dateFormat = { ...dayFormat, ...yearOptions }
   const dayInMs = 1000 * 60 * 60 * 24
   const days = (matchDate.getTime() - Date.now()) / dayInMs
-  const moment = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
+  const moment = new Intl.RelativeTimeFormat('en', { numeric: 'auto', style: 'short' })
   const day =
     days >= -1 && days <= 1
       ? capitalize(moment.format(days > 0 ? Math.floor(days) : Math.trunc(days), 'day'))
@@ -46,12 +46,13 @@ export const getMatchStatus = (MatchStatus: number, MatchDate: string, TimeDefin
     case 0: {
       return 'FULL TIME'
     }
+    case 12:
     case 1: {
       // 'MATCH YET TO START'
       if (!TimeDefined) return ''
-      const moment = new Intl.RelativeTimeFormat()
+      const moment = new Intl.RelativeTimeFormat('en', { numeric: 'auto', style: 'short' })
       const { time, unit } = getRelativeTime(MatchDate)
-      return time < 0 ? 'STARTING SOON' : capitalize(moment.format(Math.round(time), unit))
+      return time <= 0 ? 'STARTING SOON' : capitalize(moment.format(Math.round(time), unit))
     }
     case 3: {
       return 'MATCH LIVE'
@@ -65,9 +66,6 @@ export const getMatchStatus = (MatchStatus: number, MatchDate: string, TimeDefin
     case 8: {
       return 'CANCELLED'
     }
-    case 12: {
-      return 'LINEUPS'
-    }
   }
 }
 
@@ -79,30 +77,30 @@ export const isMatchPollable = (MatchStatus: number) =>
 export const isMatchCancelled = (MatchStatus: number) => MatchStatus !== 4 && MatchStatus !== 7 && MatchStatus !== 8
 
 export const getRelativeTime = (matchDate: string) => {
-  const remainingTime = new Date(matchDate).getTime() - Date.now() // milliseconds
+  const remainingTime = Math.max(0, new Date(matchDate).getTime() - Date.now()) // milliseconds
   let time = remainingTime / 1000
   let unit = 'second' as Intl.RelativeTimeFormatUnit
-  if (Math.abs(time) > 60) {
+  if (time > 60) {
     time /= 60
     unit = 'minute'
   } else return { time, unit, remainingTime }
-  if (Math.abs(time) > 60) {
+  if (time > 60) {
     time /= 60
     unit = 'hour'
   } else return { time, unit, remainingTime }
-  if (Math.abs(time) > 24) {
+  if (time > 24) {
     time /= 24
     unit = 'day'
   } else return { time, unit, remainingTime }
-  if (Math.abs(time) > 7) {
+  if (time > 7) {
     time /= 7
     unit = 'week'
   } else return { time, unit, remainingTime }
-  if (Math.abs(time) > 4) {
+  if (time > 4) {
     time /= 4
     unit = 'month'
   } else return { time, unit, remainingTime }
-  if (Math.abs(time) > 12) {
+  if (time > 12) {
     time /= 12
     unit = 'year'
   }

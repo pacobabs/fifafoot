@@ -26,9 +26,9 @@ const CompetitionsList = ({ term, find, favorites = false }: Props) => {
               addAction={addCompetition}
               removeAction={removeCompetition}
             />
-            <div className="relative object-contain w-8 h-8">
+            <div className="relative w-8 h-8">
               <Image
-                className="w-8 h-8"
+                className="w-8 h-8  object-contain"
                 src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
                 fallbackSrc="/images/shield.svg"
               />

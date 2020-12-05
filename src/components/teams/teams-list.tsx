@@ -24,9 +24,9 @@ const TeamsList = ({ term, find, favorites = false }: Props) => {
         return (
           <div key={IdTeam} className="flex flex-col items-center">
             <Star list={myTeams} id={IdTeam} addAction={addTeam} removeAction={removeTeam} />
-            <div className="relative object-contain w-8 h-8">
+            <div className="relative w-8 h-8">
               <Image
-                className="w-8 h-8"
+                className="object-contain w-8 h-8"
                 src={
                   TeamType === 1
                     ? `https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`

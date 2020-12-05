@@ -19,7 +19,7 @@ const Standings = ({ standings, hidden }: Props) => {
   }
   return (
     <div className={`px-2 bg-indigo-100 ${hidden ? 'hidden' : ''}`}>
-      <p className="flex mt-2.5">
+      <p className="flex gap-2 mt-2.5">
         <span className="w-4"></span>
         <span className="flex-grow pl-1">Club</span>
         <span className="w-4 text-right">MP</span>
@@ -33,7 +33,7 @@ const Standings = ({ standings, hidden }: Props) => {
       </p>
       {standings.map(({ Position, Points, Played, Won, Drawn, Lost, For, Against, Team }) => (
         <Fragment key={Team.IdTeam}>
-          <p className="flex">
+          <p className="flex gap-2">
             <span className="w-4">{Position}</span>
             <span className="flex flex-grow gap-2">
               <span className="relative w-6 h-6">

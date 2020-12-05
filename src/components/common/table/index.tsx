@@ -15,7 +15,7 @@ const Table = () => {
       <ul className="flex flex-col bg-indigo-100 pb-0.5 ">
         {populars.map(({ IdTeam, IdCountry, TeamType, TeamName }) => (
           <li className="bg-gray-50" key={IdTeam}>
-            <Link to={`/calendar/POPULAR/TEAM/${IdTeam}`} className="flex gap-1 px-1 border-b-2">
+            <Link to={`/calendar/POPULAR/TEAM/${IdTeam}`} className="flex gap-1 px-1 ring-1 ring-inset ring-gray-200">
               <div className="relative w-4 h-4 -mt-0.5">
                 <Image
                   className="inline-block w-4 h-4 py-0.5 object-contain"
@@ -37,7 +37,7 @@ const Table = () => {
       </div>
       <ul className="flex flex-col bg-indigo-100 pb-0.5 ">
         {countries.slice(0, 27).map(({ IdCountry, Name }) => (
-          <Link to="/teams" className="flex gap-1 px-1 border-b-2 bg-gray-50" key={IdCountry}>
+          <Link to="/teams" className="flex gap-1 px-1 ring-1 ring-inset ring-gray-200 bg-gray-50" key={IdCountry}>
             <div className="relative w-4 h-4">
               <Image
                 className="inline-block w-4 h-4 py-0.5 object-contain"

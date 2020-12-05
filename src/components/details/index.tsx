@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMatchData } from '@services'
-import Match from '@components/common/match'
+import LiveMatch from '@components/common/match'
 import Lineups from '@components/common/lineups'
 import Stats from '@components/common/stats'
 import Timeline from '@components/common/timeline'
@@ -8,6 +8,8 @@ import Standings from '@components/common/standings'
 import TeamGoals from '@components/common/goals'
 import Bookings from '@components/common/bookings'
 import Spinner from '@components/common/spinner'
+import { useCompetitions, useCountries } from '@store/selectors'
+import Image from '@components/common/image'
 
 type Props = {
   path?: string
@@ -21,18 +23,44 @@ const VIEW = {
   STANDINGS: 'STANDINGS'
 }
 
-const LiveMatch = ({ params = '' }: Props) => {
+const Match = ({ params = '' }: Props) => {
   const [idCompetition, idSeason, idStage, idMatch] = params.split('/')
   const { match, standings, events } = useMatchData(idCompetition, idSeason, idStage, idMatch)
-  const [view, setView] = useState(VIEW.LINEUPS)
+  const [view, setView] = useState(match?.MatchStatus === 3 ? VIEW.STATS : VIEW.LINEUPS)
+  const { competitions } = useCompetitions()
+  const { countries } = useCountries()
   if (!match || !idCompetition || !idSeason || !idStage || !idMatch) return <Spinner />
   const Home = match.Home || match.HomeTeam
   const Away = match.Away || match.AwayTeam
   const hasGoals = Home.Goals?.length > 0 || Away.Goals?.length > 0
   const hasBookings = Home.Bookings?.length > 0 || Away.Bookings?.length > 0
+  const competition = competitions.find((c) => c.IdCompetition === idCompetition)
+  const country = countries.find((c) => c.IdCountry === competition?.IdMemberAssociation[0])
   return (
     <div className="bg-indigo-100">
-      <Match match={match} />
+      <div className="px-1 py-0.5 font-bold uppercase font-recursive bg-gradient-to-r from-indigo-600 via-indigo-300 to-indigo-600 text-indigo-50 text-center relative">
+        <div className="absolute w-4 h-4 left-2 top-0.5 bg-indigo-50">
+          <Image
+            className="inline-block object-contain w-4 h-4 pb-0.5"
+            src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${idCompetition}`}
+            fallbackSrc="/images/football-club.svg"
+          />
+        </div>
+        {match.CompetitionName[0].Description} - {country?.Name}{' '}
+        <Image
+          className="inline-block object-contain w-4 h-4"
+          src={`https://api.fifa.com/api/v1/picture/flags-sq-3/${country?.IdCountry}`}
+          fallbackSrc="/images/globe.svg"
+        />
+        <div className="absolute w-4 h-4 top-0.5 right-2 bg-indigo-50">
+          <Image
+            className="inline-block object-contain w-4 h-4 pb-0.5"
+            src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${idCompetition}`}
+            fallbackSrc="/images/football-club.svg"
+          />
+        </div>
+      </div>
+      <LiveMatch match={match} />
       {hasGoals && <TeamGoals home={Home} away={Away} />}
       {hasBookings && <Bookings home={Home} away={Away} />}
       <nav>
@@ -71,4 +99,4 @@ const LiveMatch = ({ params = '' }: Props) => {
     </div>
   )
 }
-export default LiveMatch
+export default Match

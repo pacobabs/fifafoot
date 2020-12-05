@@ -1,5 +1,5 @@
 import { Action, ActionTypes as _ } from '@store/types'
-import { Country, Confederation, Competition, Season, Match, Team } from '@services/types'
+import { Country, Confederation, Competition, Season, Match, TeamMatch } from '@services/types'
 
 export const setCountries = (countries: Country[]): Action => ({
   type: _.setCountries,
@@ -61,7 +61,7 @@ export const setSeasons = (seasons: Season[]): Action => ({
   payload: seasons
 })
 
-export const setTeams = (teams: Team[]): Action => ({
+export const setTeams = (teams: TeamMatch[]): Action => ({
   type: _.setTeams,
   payload: teams
 })
