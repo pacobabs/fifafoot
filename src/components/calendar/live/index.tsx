@@ -6,7 +6,6 @@ import Filters from '@components/common/filters'
 import Competitions from '@components/calendar/matches/competitions-list'
 import Teams from '@components/calendar/matches/teams-list'
 import Spinner from '@components/common/spinner'
-import { setMatches } from '@store/actions'
 
 type Props = {
   path?: string
@@ -14,7 +13,6 @@ type Props = {
 }
 
 const Live = ({ params = '' }: Props) => {
-  console.count('Live')
   const [liveMatch, setLiveMatch] = useState(false)
   const populars = usePopularCompetitions()
   const { filter, type, selected } = useFilter(params, populars, true)
@@ -28,7 +26,7 @@ const Live = ({ params = '' }: Props) => {
     }
     lastCompetition.current = ''
   })
-  const { matches } = useLiveMatchesData()
+  const { matches } = useLiveMatchesData(currentDay.current)
   const matcheslist = matches.live
   return (
     <>
@@ -85,7 +83,7 @@ const Live = ({ params = '' }: Props) => {
                 HomeTeam: { IdTeam: IdHome, TeamName: Home },
                 AwayTeam: { IdTeam: IdAway, TeamName: Away }
               } = match
-              if (liveMatch && MatchStatus !== 3) return null
+              const hidden = liveMatch && MatchStatus !== 3
               if (selected !== 'ALL' && IdCompetition !== selected && IdHome !== selected && IdAway !== selected)
                 return null
               if (!TimeDefined) return null
@@ -102,8 +100,9 @@ const Live = ({ params = '' }: Props) => {
                     idCompetition={IdCompetition}
                     competition={CompetitionName[0].Description}
                     lastCompetition={lastCompetition}
+                    hidden={hidden}
                   />
-                  <LiveMatch match={match} listView={true} />
+                  <LiveMatch match={match} listView={true} hidden={hidden} />
                 </Fragment>
               )
             })

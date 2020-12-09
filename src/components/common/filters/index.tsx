@@ -23,7 +23,7 @@ const VIEW = {
 const Filters = ({ path, filter, type, selected, term, search, live = false, liveMatch, setLiveMatch }: Props) => {
   return (
     <>
-      <div className="pt-0.5 bg-indigo-500 pb-0 flex justify-center gap-2 font-crimson">
+      <div className="pt-0.5 bg-indigo-500 pb-0 flex justify-center gap-2">
         <Link
           to={`/${path}/${VIEW.ALL}/${type}/${live ? 'ALL' : selected}`}
           className={`text-indigo-50 ${filter === VIEW.ALL ? 'selected' : ''}`}

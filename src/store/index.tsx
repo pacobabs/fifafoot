@@ -13,7 +13,6 @@ type Props = {
 const reducer = wrapWithDevtools(rootReducer)
 
 const AppProvider = ({ state, children }: Props) => {
-  console.count('PROVIDER')
   const [store, dispatch] = createStore(reducer, state)
   initDevtools(store, dispatch, { actionCreators })
   return (

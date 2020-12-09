@@ -13,7 +13,6 @@ type Props = {
 }
 
 const ConfederationsList = ({ term, find, favorites = false }: Props) => {
-  console.count('Confederations')
   const { confederations, myConfederations } = useConfederations()
   return (
     <>
@@ -39,7 +38,7 @@ const ConfederationsList = ({ term, find, favorites = false }: Props) => {
                 fallbackSrc={fallbackImg}
               />
             </div>
-            <span className="block text-center min-w-max">{IdConfederation}</span>
+            <span className="block text-center text-indigo-600 min-w-max font-inter">{IdConfederation}</span>
           </div>
         )
       })}

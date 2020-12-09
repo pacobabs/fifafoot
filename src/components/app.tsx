@@ -21,7 +21,6 @@
 // }
 
 // const App = ({ element }: Props) => {
-//   console.count('APP')
 //   const {
 //     allCountries: { countries },
 //     allConfederations: { confederations },

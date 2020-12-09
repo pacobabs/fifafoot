@@ -15,10 +15,12 @@ import { Link } from 'gatsby'
 type Props = {
   match: Match
   listView?: boolean
+  hidden?: boolean
 }
 
-const LiveMatch = ({ match, listView = false }: Props) => {
+const LiveMatch = ({ match, listView = false, hidden = false }: Props) => {
   const liveMatch = useLiveMatchData(match)
+  if (hidden) return null
   const {
     IdMatch,
     Date: MatchDate,

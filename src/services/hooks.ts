@@ -40,9 +40,9 @@ export const useCalendarData = (type: string, selected: string) => {
   return { matches, IdCompetition }
 }
 
-export const useLiveMatchesData = () => {
+export const useLiveMatchesData = (day: number) => {
   const { matches } = useMatches()
-  const loaded = matches.live?.length ? true : false
+  const loaded = matches.live?.length && day === new Date().getDay() ? true : false
   const dispatch = useDispatch()
   const { data } = useSWR<Result<Match>>(`live/football?count=1000`, {
     fetcher,
@@ -99,7 +99,6 @@ export const useLiveMatchData = (match: Match) => {
       dispatch(setMatch('live', newMatchData))
     }
   }, [newMatchData, dispatch, match.MatchStatus])
-  console.log(match, 'ne')
   return newMatchData || match
 }
 
@@ -140,7 +139,6 @@ const useMatchCountDown = (
     const clockInterval = setInterval(() => {
       setClock(getRelativeTime(MatchDate))
       remainingMinutes <= 0 && clearClockInterval()
-      console.log('clock ticking')
     }, interval)
     const clearClockInterval = () => clearInterval(clockInterval)
     return () => {

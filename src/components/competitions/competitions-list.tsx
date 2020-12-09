@@ -12,7 +12,6 @@ type Props = {
 }
 
 const CompetitionsList = ({ term, find, favorites = false }: Props) => {
-  console.count('Competitions')
   const { competitions, myCompetitions } = useCompetitions()
   return (
     <>
@@ -34,8 +33,8 @@ const CompetitionsList = ({ term, find, favorites = false }: Props) => {
                 fallbackSrc={fallbackImg}
               />
             </div>
-            <span className="block text-center min-w-max">
-              {IdMemberAssociation[0]} - {Name[0].Description}
+            <span className="block text-center min-w-max font-inter text-indigo-600">
+              {IdMemberAssociation[0] ? `${IdMemberAssociation[0]} -` : ''} {Name[0].Description}
             </span>
           </div>
         )

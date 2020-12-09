@@ -12,7 +12,6 @@ type Props = {
 }
 
 const CountriesList = ({ term, find, favorites = false }: Props) => {
-  console.count('Countries')
   const { countries, myCountries } = useCountries()
   return (
     <>
@@ -24,12 +23,12 @@ const CountriesList = ({ term, find, favorites = false }: Props) => {
             <Star list={myCountries} id={IdCountry} addAction={addCountry} removeAction={removeCountry} />
             <div className="relative w-8 h-8">
               <Image
-                className="w-8 h-8 object-contain"
+                className="object-contain w-8 h-8"
                 src={`https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`}
                 fallbackSrc={fallbackGlobeImg}
               />
             </div>
-            <span className="block text-center min-w-max">{Name}</span>
+            <span className="block text-center text-indigo-600 min-w-max font-inter">{Name}</span>
           </div>
         )
       })}

@@ -4,11 +4,10 @@ import Search from '@components/common/search'
 import CountriesList from './countries-list'
 
 const Countries = () => {
-  console.count('Countries')
   const { term, search, find } = useSearch()
   return (
     <div className="pt-1">
-      <div className="text-indigo-50 font-bold bg-gradient-to-r from-indigo-400 via-indigo-500 to-indigo-600 px-1 pt-1 mb-1 pb-0.5 font-recursive">
+      <div className="text-indigo-50 font-bold bg-gradient-to-r from-indigo-400 via-indigo-500 to-indigo-600 px-1 pt-1 mb-1 pb-0.5 font-recursive  font-cursive font-casual">
         COUNTRIES
       </div>
       <Search search={search} />

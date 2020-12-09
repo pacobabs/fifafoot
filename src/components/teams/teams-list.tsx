@@ -12,7 +12,6 @@ type Props = {
 }
 
 const TeamsList = ({ term, find, favorites = false }: Props) => {
-  console.count('TEAMS')
   const { teams, myTeams } = useTeams()
   const { myCompetitions } = useCompetitions()
   return (
@@ -36,7 +35,7 @@ const TeamsList = ({ term, find, favorites = false }: Props) => {
                 fallbackSrc={fallbackImg}
               />
             </div>
-            <span className="block text-center min-w-max">{TeamName[0].Description}</span>
+            <span className="block text-center text-indigo-600 min-w-max font-inter">{TeamName[0].Description}</span>
           </div>
         )
       })}

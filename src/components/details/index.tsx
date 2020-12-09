@@ -40,7 +40,7 @@ const Match = ({ params = '' }: Props) => {
   const country = countries.find((c) => c.IdCountry === competition?.IdMemberAssociation[0])
   return (
     <div className="border-l border-r bg-indigo-50">
-      <div className="px-1 py-0.5 font-bold uppercase font-recursive bg-gradient-to-r from-indigo-600 via-indigo-300 to-indigo-600 text-indigo-50 text-center relative">
+      <div className="px-1 py-0.5 font-bold uppercase font-recursive font-casual font-cursive bg-gradient-to-r from-indigo-600 via-indigo-300 to-indigo-600 text-indigo-50 text-center relative">
         <div className="absolute w-4 h-4 left-2 top-0.5 bg-indigo-50">
           <Image
             className="inline-block object-contain w-4 h-4 pb-0.5"
@@ -66,7 +66,7 @@ const Match = ({ params = '' }: Props) => {
       {hasGoals && <TeamGoals home={Home} away={Away} />}
       {hasBookings && <Bookings home={Home} away={Away} />}
       <nav>
-        <ul className="flex justify-around bg-indigo-500 text-indigo-50">
+        <ul className="flex justify-around bg-indigo-500 text-indigo-50 font-recursive font-casual font-cursive">
           <li>
             <a onClick={() => setView(VIEW.TIMELINE)} className={view === VIEW.TIMELINE ? 'selected' : ''}>
               TIMELINE

@@ -14,7 +14,6 @@ type Props = {
 }
 
 const Calendar = ({ params = '' }: Props) => {
-  console.count('Calendar')
   const { term, search, find } = useSearch()
   const populars = usePopularCompetitions()
   const { filter, type, selected } = useFilter(params, populars)

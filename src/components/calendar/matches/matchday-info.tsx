@@ -9,7 +9,7 @@ const MatchDayInfo = ({ MatchDay, lastMatchday }: Props) => {
   if (lastMatchday.current === MatchDay) return null
   lastMatchday.current = MatchDay
   return (
-    <div className="px-1 py-0.5 font-bold font-recursive text-indigo-900 bg-indigo-100 text-center">
+    <div className="px-1 py-0.5 font-bold font-inter text-indigo-900 bg-indigo-100 text-center">
       MATCHDAY {MatchDay}
     </div>
   )

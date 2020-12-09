@@ -97,6 +97,18 @@
 }
 
 @layer utilities {
+  .font-cursive {
+    --CRSV: 1;
+  }
+  .font-casual {
+    --CASL: 1;
+  }
+  .font-mono {
+    --MONO: 1;
+  }
+  .font-slant-1 {
+    --slnt: -6;
+  }
   .max-w {
     max-width: 96vw;
   }
@@ -104,7 +116,7 @@
     filter: grayscale(100%);
   }
   .selected {
-    @apply relative;
+    @apply relative font-slant-1;
   }
   .selected:after {
     content: '';
@@ -203,12 +215,6 @@
       margin-bottom: 0.0391em;
     }
   }
-  .font-logo {
-    --CASL: 1;
-    --slnt: -54;
-    word-spacing: -0.175em;
-    @apply font-black font-recursive;
-  }
   .scrollbar::-webkit-scrollbar {
     width: 0.8125em;
     height: 0.8125em;
@@ -244,7 +250,7 @@
     --MONO: 0; /* Monospace    */
     --CASL: 0; /* Casual       */
     --slnt: 0; /* Upright      */
-    --CRSV: 0.5; /* Auto Cursive */
+    --CRSV: 0; /* Auto Cursive */
     --vr-baseline: 1.6;
   }
   *,

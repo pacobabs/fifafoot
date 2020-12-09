@@ -10,7 +10,7 @@ const Sidebar = () => {
   const populars = usePopularCompetitions()
   return (
     <div className="sm:col-start-1 sm:col-span-3 md:col-span-2 sm:row-start-3 md:row-start-2 md:row-end-4">
-      <div className="text-indigo-50 text-center font-bold bg-gradient-to-r from-indigo-400 via-indigo-500 to-indigo-600 px-1 pt-1 pb-0.5 font-recursive">
+      <div className="text-indigo-50 text-center font-bold bg-gradient-to-r from-indigo-400 via-indigo-500 to-indigo-600 px-1 pt-1 pb-0.5 font-recursive font-cursive font-casual font-slant-1">
         TOP TOURNAMENTS
       </div>
       <ul className="flex flex-col bg-indigo-100 pb-0.5 ">
@@ -18,7 +18,7 @@ const Sidebar = () => {
           <li className="bg-gray-50" key={IdCompetition}>
             <Link
               to={`/calendar/POPULAR/COMPETITION/${IdCompetition}`}
-              className="flex gap-1 px-1 ring-1 ring-inset ring-gray-200"
+              className="flex gap-1 px-1 text-indigo-500 ring-1 ring-inset ring-gray-200"
             >
               <div className="relative w-4 h-4">
                 <Image
@@ -32,14 +32,14 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <div className="hidden sm:block text-indigo-50 text-center font-bold bg-gradient-to-r from-indigo-400 via-indigo-500 to-indigo-600 px-1 pt-1 pb-0.5 font-recursive">
+      <div className="hidden sm:block text-indigo-50 text-center font-bold bg-gradient-to-r from-indigo-400 via-indigo-500 to-indigo-600 px-1 pt-1 pb-0.5 font-recursive font-cursive font-casual font-slant-1">
         ALL TOURNAMENTS
       </div>
       <ul className="hidden sm:flex flex-col bg-indigo-100 pb-0.5 ">
         {competitions.slice(0, 23).map(({ IdCompetition, Name }) => (
           <Link
             to={`/calendar/ALL/COMPETITION/${IdCompetition}`}
-            className="flex gap-1 px-1 ring-1 ring-inset ring-gray-200 bg-gray-50"
+            className="flex gap-1 px-1 text-indigo-500 ring-1 ring-inset ring-gray-200 bg-gray-50"
             key={IdCompetition}
           >
             <div className="relative w-4 h-4">

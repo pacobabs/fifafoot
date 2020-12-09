@@ -33,13 +33,15 @@ const LiveTeam = ({ team, atHome, showScore, listView }: Props) => {
           />
         </div>
         <span
-          className={`font-medium text-center ${listView ? `sm:h-4 ${atHome ? 'sm:text-right' : 'sm:text-left'}` : ''}`}
+          className={`font-medium font-inter text-center text-sm text-indigo-800 ${
+            listView ? `sm:h-4 ${atHome ? 'sm:text-right' : 'sm:text-left'}` : ''
+          }`}
         >
           {TeamName?.[0]?.Description}
         </span>
       </div>
       <span
-        className={`bg-gray-100 font-recursive h-6 inline-flex mt-1.5 text-lg w-6 ${
+        className={`bg-gray-100 font-inter h-6 inline-flex mt-1.5 text-lg w-6 ${
           atHome ? 'pl-3 pr-1text-right rounded-l-3xl' : 'pr-3 pl-1 rounded-r-3xl'
         } ${showScore ? 'opacity-100' : 'opacity-0'}`}
       >
