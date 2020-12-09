@@ -21,7 +21,7 @@ const Lineup = ({ team, matchStatus, away }: Props) => {
         <br />
         {team.Players.filter(({ Status }) => Status === 1).map(({ IdPlayer, ShirtNumber, PlayerName }) => {
           const PlayerOff = team.Substitutions.find(({ IdPlayerOff }) => IdPlayerOff === IdPlayer) ? (
-            <img className="inline-block" src={subOutImg} />
+            <img className="inline-block" alt="substituted out" src={subOutImg} />
           ) : (
             ''
           )
@@ -41,7 +41,7 @@ const Lineup = ({ team, matchStatus, away }: Props) => {
             </p>
             {team.Players.filter(({ Status }) => Status === 2).map(({ IdPlayer, ShirtNumber, PlayerName }) => {
               const PlayerOn = team.Substitutions.find(({ IdPlayerOn }) => IdPlayerOn === IdPlayer) ? (
-                <img src={subInImg} />
+                <img src={subInImg} alt="substituted in" />
               ) : (
                 ''
               )
@@ -66,6 +66,7 @@ const Lineup = ({ team, matchStatus, away }: Props) => {
             <span className="relative w-4 h-4">
               <Image
                 className="absolute mt-0.5 object-contain"
+                alt="country flag"
                 src={`https://api.fifa.com/api/v1/picture/flags-sq-1/${team.Coaches[0]?.IdCountry}`}
               />
             </span>

@@ -26,7 +26,7 @@ const Calendar = ({ params = '' }: Props) => {
   })
   const matchesList = matches[IdCompetition]
   return (
-    <>
+    <div className="border-l border-r">
       <Filters path="calendar" filter={filter} type={type} selected={selected} term={term} search={search} />
       <nav className="h-8 overflow-x-scroll bg-indigo-600 max-w scrollbar">
         <ul className="flex flex-wrap justify-center px-2 text-indigo-100 w-max gap-x-4">
@@ -41,9 +41,10 @@ const Calendar = ({ params = '' }: Props) => {
           {filter === VIEW.FAVORITES && <Teams path="calendar" selected={selected} term={term} find={find} />}
         </ul>
       </nav>
-      <div className="relative flex flex-col items-center pb-3 border-l border-r">
+      <div className="relative flex flex-col items-center pb-3">
         {matchesList ? (
           matchesList.map((match) => {
+            if (match.Home === null || match.Away === null) return null
             if (type === VIEW.TEAM && match.Home.IdTeam !== selected && match.Away.IdTeam !== selected) return null
             if (
               term &&
@@ -64,7 +65,7 @@ const Calendar = ({ params = '' }: Props) => {
           <Spinner />
         )}
       </div>
-    </>
+    </div>
   )
 }
 

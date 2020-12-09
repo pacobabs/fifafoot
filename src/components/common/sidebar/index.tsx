@@ -24,6 +24,7 @@ const Sidebar = () => {
                 <Image
                   className="inline-block w-4 h-4 py-0.5 object-contain"
                   src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
+                  alt={Name[0].Description}
                   fallbackSrc={fallbackImg}
                 />
               </div>
@@ -46,6 +47,7 @@ const Sidebar = () => {
               <Image
                 className="inline-block w-4 h-4 py-0.5 object-contain"
                 src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
+                alt={Name[0].Description}
                 fallbackSrc={fallbackImg}
               />
             </div>

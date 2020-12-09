@@ -49,8 +49,8 @@ export const getMatchStatus = (MatchStatus: number, MatchDate: string, TimeDefin
     case 12:
     case 1: {
       // 'MATCH YET TO START'
-      if (!TimeDefined) return ''
-      const moment = new Intl.RelativeTimeFormat('en', { numeric: 'auto', style: 'short' })
+      if (!TimeDefined) return 'No time'
+      const moment = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
       const { time, unit } = getRelativeTime(MatchDate)
       return time <= 0 ? 'STARTING SOON' : capitalize(moment.format(Math.round(time), unit))
     }

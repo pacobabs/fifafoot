@@ -2,19 +2,27 @@ import React, { ChangeEvent, useRef } from 'react'
 
 type Props = {
   src: string
+  alt: string
   fallbackSrc?: string
   className?: string
   style?: Record<string, unknown>
 }
 
-const Image = ({ src, fallbackSrc = '', className = '', style = {} }: Props) => {
+const Image = ({ src, alt, fallbackSrc = '', className = '', style = {} }: Props) => {
   const fallbackRef = useRef<HTMLImageElement | null>(null)
   return (
     <>
       {fallbackSrc ? (
-        <img ref={fallbackRef} className={`absolute ${className}`} style={{ ...style, opacity: 0 }} src={fallbackSrc} />
+        <img
+          alt={alt}
+          ref={fallbackRef}
+          className={`absolute ${className}`}
+          style={{ ...style, opacity: 0 }}
+          src={fallbackSrc}
+        />
       ) : null}
       <img
+        alt={alt}
         style={style}
         className={className}
         onLoad={() => {

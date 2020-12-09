@@ -18,7 +18,7 @@ const Star = ({ list, id, addAction, removeAction }: Props) => {
         list.includes(id) ? dispatch(removeAction(id)) : dispatch(addAction(id))
       }}
     >
-      <img className={`w-3 h-3 mb-1 ${list.includes(id) ? '' : 'grayscale'}`} src={starImg} />
+      <img className={`w-3 h-3 mb-1 ${list.includes(id) ? '' : 'grayscale'}`} src={starImg} alt="favorite" />
     </a>
   )
 }

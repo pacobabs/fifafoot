@@ -30,6 +30,7 @@ const CompetitionsList = ({ term, find, favorites = false }: Props) => {
               <Image
                 className="object-contain w-8 h-8"
                 src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
+                alt={Name[0].Description}
                 fallbackSrc={fallbackImg}
               />
             </div>

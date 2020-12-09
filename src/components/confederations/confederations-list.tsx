@@ -35,6 +35,7 @@ const ConfederationsList = ({ term, find, favorites = false }: Props) => {
                     ? fifa
                     : `https://api.fifa.com/api/v1/picture/confederations-sq-2/${IdConfederation}`
                 }
+                alt={IdConfederation}
                 fallbackSrc={fallbackImg}
               />
             </div>

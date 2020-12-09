@@ -29,6 +29,7 @@ const Table = () => {
                       ? `https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`
                       : `https://api.fifa.com/api/v1/picture/teams-sq-3/${IdTeam}`
                   }
+                  alt={TeamName[0].Description}
                   fallbackSrc={fallbackImg}
                 />
               </div>
@@ -51,6 +52,7 @@ const Table = () => {
               <Image
                 className="inline-block w-4 h-4 py-0.5 object-contain"
                 src={`https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`}
+                alt={Name}
                 fallbackSrc={fallbackGlobeImg}
               />
             </div>

@@ -29,6 +29,7 @@ const LiveTeam = ({ team, atHome, showScore, listView }: Props) => {
                 ? `https://api.fifa.com/api/v1/picture/teams-sq-3/${team.IdTeam}`
                 : `https://api.fifa.com/api/v1/picture/flags-sq-3/${team.IdCountry}`
             }
+            alt={TeamName?.[0]?.Description}
             fallbackSrc={fallbackImg}
           />
         </div>

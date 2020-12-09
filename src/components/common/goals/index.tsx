@@ -36,7 +36,7 @@ const TeamGoals = ({ home, away }: Props) => {
           )
         })}
       </div>
-      {hasGoals && <img src={ballImg} />}
+      {hasGoals && <img src={ballImg} alt="goals" />}
       <div className="flex flex-col w-1/2 text-right">
         {Object.entries(awayGoals).map(([playerName, goals]) => {
           return (

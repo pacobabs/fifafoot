@@ -35,6 +35,7 @@ const Teams = ({ path, selected, term, find, live = false }: Props) => {
                       ? `https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`
                       : `https://api.fifa.com/api/v1/picture/teams-sq-3/${IdTeam}`
                   }
+                  alt={TeamName[0].Description}
                   fallbackSrc={fallbackImg}
                 />
               </div>

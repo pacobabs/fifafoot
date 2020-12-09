@@ -29,7 +29,7 @@ const Live = ({ params = '' }: Props) => {
   const { matches } = useLiveMatchesData(currentDay.current)
   const matcheslist = matches.live
   return (
-    <>
+    <div className="border-l border-r">
       <Filters
         path="liveresults"
         filter={filter}
@@ -110,7 +110,7 @@ const Live = ({ params = '' }: Props) => {
           <Spinner />
         )}
       </>
-    </>
+    </div>
   )
 }
 export default Live

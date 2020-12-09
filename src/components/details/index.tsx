@@ -45,6 +45,7 @@ const Match = ({ params = '' }: Props) => {
           <Image
             className="inline-block object-contain w-4 h-4 pb-0.5"
             src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${idCompetition}`}
+            alt={match.CompetitionName[0].Description}
             fallbackSrc={fallbackImg}
           />
         </div>
@@ -52,12 +53,14 @@ const Match = ({ params = '' }: Props) => {
         <Image
           className="inline-block object-contain w-4 h-4"
           src={`https://api.fifa.com/api/v1/picture/flags-sq-3/${country?.IdCountry}`}
+          alt={country?.Name || ''}
           fallbackSrc={fallbackGlobeImg}
         />
         <div className="absolute w-4 h-4 top-0.5 right-2 bg-indigo-50">
           <Image
             className="inline-block object-contain w-4 h-4 pb-0.5"
             src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${idCompetition}`}
+            alt={match.CompetitionName[0].Description}
             fallbackSrc={fallbackImg}
           />
         </div>

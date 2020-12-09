@@ -34,7 +34,7 @@ const Ads = () => {
             })}
           </ul>
         </div>
-        <img src={grass} className="object-cover image-overlay" />
+        <img src={grass} alt="grass" className="object-cover image-overlay" />
         <div className="absolute bottom-3 left-16 sm:left-1/3 lg:left-40">
           <span className="mr-2 text-xs text-indigo-100 font-recursive">Advertise on this site</span>
           <button className="top-0 px-2 py-1 bg-indigo-500 border border-indigo-200 rounded-lg focus:outline-none active:ouline-none font-recursive font-casual text-indigo-50">

@@ -16,6 +16,7 @@ const TeamLogo = ({ team, className = '' }: Props) => (
         ? `https://api.fifa.com/api/v1/picture/teams-sq-3/${team.IdTeam}`
         : `https://api.fifa.com/api/v1/picture/flags-sq-3/${team.IdCountry}`
     }
+    alt={team.Name ? team.Name[0].Description : team.TeamName[0].Description}
     fallbackSrc={fallbackImg}
   />
 )

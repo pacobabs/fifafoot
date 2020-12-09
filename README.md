@@ -1,9 +1,12 @@
-
 <h1 align="center">
   FIFA FOOT
 </h1>
 
 Calendar and Live Matches from FIFA.
+
+## DEMO
+
+<a href="https://livefoot.netlify.com" target="_blank">Demo app here</a>
 
 ## 🚀 Quick start
 
@@ -12,8 +15,8 @@ Calendar and Live Matches from FIFA.
     Navigate into your project directory and install it.
 
     ```shell
-    # Install wtih npm
-    npm install
+    # Install wtih yarn
+    yarn install
     ```
 
 2.  **Start developing.**
@@ -22,5 +25,5 @@ Calendar and Live Matches from FIFA.
 
     ```shell
     # run the dev server
-    npm run dev
+    yarn dev
     ```

@@ -18,6 +18,7 @@ const MatchDateInfo = ({ idCompetition, competition, lastCompetition, hidden }: 
         <Image
           className="inline-block object-contain w-4 h-4 pb-0.5"
           src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${idCompetition}`}
+          alt={competition}
           fallbackSrc={fallbackImg}
         />
       </div>
@@ -26,6 +27,7 @@ const MatchDateInfo = ({ idCompetition, competition, lastCompetition, hidden }: 
         <Image
           className="inline-block object-contain w-4 h-4 pb-0.5"
           src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${idCompetition}`}
+          alt={competition}
           fallbackSrc={fallbackImg}
         />
       </div>

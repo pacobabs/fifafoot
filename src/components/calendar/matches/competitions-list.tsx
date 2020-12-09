@@ -42,6 +42,7 @@ const Competitions = ({ path, selected, filter, populars, term, find, live = fal
                 <Image
                   className="inline-block object-contain w-4 h-4 pb-0.5"
                   src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
+                  alt={Name[0].Description}
                   fallbackSrc={fallbackImg}
                 />
               </div>

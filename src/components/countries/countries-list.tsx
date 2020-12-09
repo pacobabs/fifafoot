@@ -25,6 +25,7 @@ const CountriesList = ({ term, find, favorites = false }: Props) => {
               <Image
                 className="object-contain w-8 h-8"
                 src={`https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`}
+                alt={Name}
                 fallbackSrc={fallbackGlobeImg}
               />
             </div>
