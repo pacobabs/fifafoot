@@ -34,7 +34,7 @@ const Stats = ({ match, events, hidden }: Props) => {
   }
   const stats = getMatchStats(match, events)
   return (
-    <div className={`flex flex-col mt-3 px-2 bg-indigo-100 ${hidden ? 'hidden' : ''}`}>
+    <div className={`flex flex-col mt-3 px-2 ${hidden ? 'hidden' : ''}`}>
       <Row>
         <TeamLogo team={HomeTeam} className="w-4 h-4 -ml-1 sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
         <span />

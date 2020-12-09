@@ -11,11 +11,11 @@ const SecondPage = () => (
   <Layout path="teams">
     <Head title="Teams" />
     <div className="bg-indigo-50">
-      <Favorites />
       <Confederations />
       <Countries />
       <Competitions />
       <Teams />
+      <Favorites />
     </div>
   </Layout>
 )

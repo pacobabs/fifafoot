@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import store from '@services/store.json'
+import state from '@services/store.json'
 import { Provider } from '@store'
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 }
 
 const App = ({ element }: Props) => {
-  return <Provider store={store}>{element}</Provider>
+  return <Provider state={state}>{element}</Provider>
 }
 
 export default App

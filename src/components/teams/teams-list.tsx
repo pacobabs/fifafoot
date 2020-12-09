@@ -3,6 +3,7 @@ import { useTeams, useCompetitions } from '@store/selectors'
 import { addTeam, removeTeam } from '@store/actions'
 import Star from '@components/common/star'
 import Image from '@components/common/image'
+import fallbackImg from '@assets/images/football-club.svg'
 
 type Props = {
   term: string
@@ -32,7 +33,7 @@ const TeamsList = ({ term, find, favorites = false }: Props) => {
                     ? `https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`
                     : `https://api.fifa.com/api/v1/picture/teams-sq-3/${IdTeam}`
                 }
-                fallbackSrc="/images/football-club.svg"
+                fallbackSrc={fallbackImg}
               />
             </div>
             <span className="block text-center min-w-max">{TeamName[0].Description}</span>

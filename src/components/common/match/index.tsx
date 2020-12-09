@@ -1,5 +1,12 @@
 import React from 'react'
-import { getLocaleMatchTime, getLocaleMatchDayTime, getMatchStatus, getLocaleMatchDay } from '@utils'
+import {
+  isMatchPollable,
+  getRelativeTime,
+  getLocaleMatchTime,
+  getLocaleMatchDayTime,
+  getMatchStatus,
+  getLocaleMatchDay
+} from '@utils'
 import { useLiveMatchData } from '@services'
 import LiveTeam from '@components/common/team'
 import { Match } from '@services/types'
@@ -22,6 +29,7 @@ const LiveMatch = ({ match, listView = false }: Props) => {
     FirstHalfExtraTime,
     SecondHalfExtraTime
   } = liveMatch
+  const { time } = getRelativeTime(MatchDate)
   const extraTime =
     Period === 3
       ? FirstHalfExtraTime
@@ -31,7 +39,12 @@ const LiveMatch = ({ match, listView = false }: Props) => {
       ? `(+${SecondHalfExtraTime})`
       : ''
   const showScore = MatchStatus === 0 || MatchStatus === 3
-  const matchTime = TimeDefined && Period !== 10 && Period !== 4 ? (MatchTime ? MatchTime + extraTime : null) : null
+  const matchTime =
+    time <= 0 && TimeDefined && Period !== 10 && Period !== 4
+      ? MatchTime && isMatchPollable(MatchStatus)
+        ? MatchTime + extraTime
+        : null
+      : null
   const halfTime = MatchStatus === 3 && Period === 4 ? 'HALF TIME' : null
   const Home = liveMatch.Home || liveMatch.HomeTeam
   const Away = liveMatch.Away || liveMatch.AwayTeam
@@ -65,7 +78,7 @@ const LiveMatch = ({ match, listView = false }: Props) => {
       <div className={`flex px-1 bg-gray-50 ${listView ? 'py-2 sm:pt-2 sm:pb-0' : 'py-4'}`}>
         <LiveTeam team={Home} opponent={Away} atHome={true} showScore={showScore} listView={listView} />
         <span
-          className={`border-b-4 border-t-2 font-black font-recursive h-6 mt-1.5 px-2 text-indigo-200 pt-0.5 border-gray-100 bg-gray-200`}
+          className={`border-b-4 border-t-2 font-black font-recursive h-6 mt-1.5 px-2 text-gray-300 pt-0.5 border-gray-100 bg-gray-100`}
         >
           -
         </span>

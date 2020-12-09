@@ -3,6 +3,8 @@ import { useConfederations } from '@store/selectors'
 import { addConfederation, removeConfederation } from '@store/actions'
 import Star from '@components/common/star'
 import Image from '@components/common/image'
+import fallbackImg from '@assets/images/trophy.svg'
+import fifa from '@assets/images/fifa.svg'
 
 type Props = {
   term: string
@@ -28,9 +30,13 @@ const ConfederationsList = ({ term, find, favorites = false }: Props) => {
             />
             <div className="relative w-8 h-8">
               <Image
-                className="w-8 h-8 object-contain"
-                src={`https://api.fifa.com/api/v1/picture/confederations-sq-2/${IdConfederation}`}
-                fallbackSrc="/images/shield.svg"
+                className="object-contain w-8 h-8"
+                src={
+                  IdConfederation === 'FIFA'
+                    ? fifa
+                    : `https://api.fifa.com/api/v1/picture/confederations-sq-2/${IdConfederation}`
+                }
+                fallbackSrc={fallbackImg}
               />
             </div>
             <span className="block text-center min-w-max">{IdConfederation}</span>

@@ -88,6 +88,7 @@ export type Standing = {
   For: number
   Against: number
   Team: Team
+  Group: Name[]
 }
 
 export type MatchEvents = {

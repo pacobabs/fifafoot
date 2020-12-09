@@ -1,14 +1,6 @@
 import { Dispatch as ReactDispatch, SetStateAction } from 'react'
 import { Country, Confederation, Competition, Season, Match, TeamMatch } from '@services/types'
 
-export type IStateContext = React.Context<State>
-
-export type IDispatchContext = React.Context<Dispatch>
-
-export type Dispatch = ReactDispatch<Action>
-
-export type Selector = (state: State) => State[keyof State]
-
 export type CountrySelector = {
   countries: Country[]
   myCountries: string[]

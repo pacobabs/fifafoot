@@ -3,6 +3,7 @@ import { Link } from 'gatsby'
 import { VIEW } from '@services'
 import { useTeams } from '@store/selectors'
 import Image from '@components/common/image'
+import fallbackImg from '@assets/images/football-club.svg'
 
 type Props = {
   path: string
@@ -34,7 +35,7 @@ const Teams = ({ path, selected, term, find, live = false }: Props) => {
                       ? `https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`
                       : `https://api.fifa.com/api/v1/picture/teams-sq-3/${IdTeam}`
                   }
-                  fallbackSrc="/images/football-club.svg"
+                  fallbackSrc={fallbackImg}
                 />
               </div>
               {TeamName[0].Description}

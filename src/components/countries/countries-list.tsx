@@ -3,6 +3,7 @@ import { useCountries } from '@store/selectors'
 import { addCountry, removeCountry } from '@store/actions'
 import Star from '@components/common/star'
 import Image from '@components/common/image'
+import fallbackGlobeImg from '@assets/images/globe.svg'
 
 type Props = {
   term: string
@@ -25,7 +26,7 @@ const CountriesList = ({ term, find, favorites = false }: Props) => {
               <Image
                 className="w-8 h-8 object-contain"
                 src={`https://api.fifa.com/api/v1/picture/flags-sq-3/${IdCountry}`}
-                fallbackSrc="/images/globe.svg"
+                fallbackSrc={fallbackGlobeImg}
               />
             </div>
             <span className="block text-center min-w-max">{Name}</span>

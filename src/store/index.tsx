@@ -1,35 +1,26 @@
-import React, { useContext, useReducer, ReactNode } from 'react'
-import { createContext } from 'use-context-selection'
+import React, { ReactNode } from 'react'
+import { createStore, Provider, useDispatch } from 'react-reduce-hooks'
 import { initDevtools, wrapWithDevtools } from 'reduce-devtools-extension'
 import rootReducer from './reducers'
 import * as actionCreators from './actions'
-import { IStateContext, State, IDispatchContext, Dispatch } from './types'
+import { State } from './types'
 
 type Props = {
-  store: State
+  state: State
   children: ReactNode
 }
 
-const StateContext: IStateContext = createContext<undefined | State>(undefined)
-
-const DispatchContext: IDispatchContext = createContext<undefined | Dispatch>(undefined)
-
 const reducer = wrapWithDevtools(rootReducer)
 
-const Provider = (props: Props) => {
+const AppProvider = ({ state, children }: Props) => {
   console.count('PROVIDER')
-  const { store, children } = props
-  const [state, dispatch] = useReducer(reducer, store)
+  const [store, dispatch] = createStore(reducer, state)
   initDevtools(store, dispatch, { actionCreators })
   return (
-    <StateContext.Provider value={state}>
-      <DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>
-    </StateContext.Provider>
+    <Provider store={store} dispatch={dispatch}>
+      {children}
+    </Provider>
   )
 }
 
-const useDispatch = () => {
-  return useContext(DispatchContext)
-}
-
-export { Provider, StateContext as Context, useDispatch }
+export { AppProvider as Provider, useDispatch }

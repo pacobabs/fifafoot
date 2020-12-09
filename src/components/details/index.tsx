@@ -10,6 +10,8 @@ import Bookings from '@components/common/bookings'
 import Spinner from '@components/common/spinner'
 import { useCompetitions, useCountries } from '@store/selectors'
 import Image from '@components/common/image'
+import fallbackImg from '@assets/images/football-club.svg'
+import fallbackGlobeImg from '@assets/images/globe.svg'
 
 type Props = {
   path?: string
@@ -26,7 +28,7 @@ const VIEW = {
 const Match = ({ params = '' }: Props) => {
   const [idCompetition, idSeason, idStage, idMatch] = params.split('/')
   const { match, standings, events } = useMatchData(idCompetition, idSeason, idStage, idMatch)
-  const [view, setView] = useState(match?.MatchStatus === 3 ? VIEW.STATS : VIEW.LINEUPS)
+  const [view, setView] = useState(VIEW.LINEUPS)
   const { competitions } = useCompetitions()
   const { countries } = useCountries()
   if (!match || !idCompetition || !idSeason || !idStage || !idMatch) return <Spinner />
@@ -37,26 +39,26 @@ const Match = ({ params = '' }: Props) => {
   const competition = competitions.find((c) => c.IdCompetition === idCompetition)
   const country = countries.find((c) => c.IdCountry === competition?.IdMemberAssociation[0])
   return (
-    <div className="bg-indigo-100">
+    <div className="border-l border-r bg-indigo-50">
       <div className="px-1 py-0.5 font-bold uppercase font-recursive bg-gradient-to-r from-indigo-600 via-indigo-300 to-indigo-600 text-indigo-50 text-center relative">
         <div className="absolute w-4 h-4 left-2 top-0.5 bg-indigo-50">
           <Image
             className="inline-block object-contain w-4 h-4 pb-0.5"
             src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${idCompetition}`}
-            fallbackSrc="/images/football-club.svg"
+            fallbackSrc={fallbackImg}
           />
         </div>
         {match.CompetitionName[0].Description} - {country?.Name}{' '}
         <Image
           className="inline-block object-contain w-4 h-4"
           src={`https://api.fifa.com/api/v1/picture/flags-sq-3/${country?.IdCountry}`}
-          fallbackSrc="/images/globe.svg"
+          fallbackSrc={fallbackGlobeImg}
         />
         <div className="absolute w-4 h-4 top-0.5 right-2 bg-indigo-50">
           <Image
             className="inline-block object-contain w-4 h-4 pb-0.5"
             src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${idCompetition}`}
-            fallbackSrc="/images/football-club.svg"
+            fallbackSrc={fallbackImg}
           />
         </div>
       </div>

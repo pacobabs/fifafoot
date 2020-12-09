@@ -66,15 +66,15 @@ export const getMatchStatus = (MatchStatus: number, MatchDate: string, TimeDefin
     case 8: {
       return 'CANCELLED'
     }
+    case 99: {
+      return 'STOPPED'
+    }
   }
 }
 
 export const isMatchplayed = (MatchStatus: number) => MatchStatus === 0 || MatchStatus === 3
 
-export const isMatchPollable = (MatchStatus: number) =>
-  MatchStatus !== 0 && MatchStatus !== 4 && MatchStatus !== 7 && MatchStatus !== 8
-
-export const isMatchCancelled = (MatchStatus: number) => MatchStatus !== 4 && MatchStatus !== 7 && MatchStatus !== 8
+export const isMatchPollable = (MatchStatus: number) => MatchStatus === 1 || MatchStatus === 3 || MatchStatus === 12
 
 export const getRelativeTime = (matchDate: string) => {
   const remainingTime = Math.max(0, new Date(matchDate).getTime() - Date.now()) // milliseconds

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import logo from '@assets/images/logo.svg'
+import appStore from '@assets/images/App Store.svg'
+import playStore from '@assets/images/Play Store.svg'
 
 type Props = {
   path: string
@@ -14,7 +16,7 @@ const Header = ({ path }: Props) => {
           <img src={logo} className="absolute w-24 h-4 lg:w-32 lg:h-6 md:mt-1 lg:mt-2" />
         </div>
       </Link>
-      <div className="flex flex-wrap flex-grow justify-center text-sm gap-1 md:text-base mt-2.5 text-yellow-50 sm:gap-2 lg:gap-3 sm:flex-row font-recursive uppercase font-bold">
+      <div className="flex flex-wrap flex-grow justify-center text-sm gap-1 md:text-base mt-2.5 md:ml-16 lg:ml-0 text-yellow-50 sm:gap-2 lg:gap-3 sm:flex-row font-recursive font-semibold">
         <Link to="/" className={`md:text-base md:block ${path === 'live' ? 'selected' : ''}`}>
           Live Scores
         </Link>
@@ -25,9 +27,9 @@ const Header = ({ path }: Props) => {
           Tournaments
         </Link>
       </div>
-      <div className="flex gap-1 ml-8 mr-6 text-indigo-100">
-        <span>Login |</span>
-        <span>Register</span>
+      <div className="flex gap-1 mr-2">
+        <img src={playStore} className="object-contain w-12 h-4" />
+        <img src={appStore} className="object-contain w-12 h-4" />
       </div>
     </header>
   )

@@ -42,7 +42,7 @@ const Calendar = ({ params = '' }: Props) => {
           {filter === VIEW.FAVORITES && <Teams path="calendar" selected={selected} term={term} find={find} />}
         </ul>
       </nav>
-      <div className="relative flex flex-col items-center pb-3">
+      <div className="relative flex flex-col items-center pb-3 border-l border-r">
         {matchesList ? (
           matchesList.map((match) => {
             if (type === VIEW.TEAM && match.Home.IdTeam !== selected && match.Away.IdTeam !== selected) return null

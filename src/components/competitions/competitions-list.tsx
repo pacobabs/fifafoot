@@ -3,6 +3,7 @@ import { useCompetitions } from '@store/selectors'
 import { addCompetition, removeCompetition } from '@store/actions'
 import Star from '@components/common/star'
 import Image from '@components/common/image'
+import fallbackImg from '@assets/images/trophy.svg'
 
 type Props = {
   term: string
@@ -28,9 +29,9 @@ const CompetitionsList = ({ term, find, favorites = false }: Props) => {
             />
             <div className="relative w-8 h-8">
               <Image
-                className="w-8 h-8  object-contain"
+                className="object-contain w-8 h-8"
                 src={`https://api.fifa.com/api/v1/picture/competitions-sq-3/${IdCompetition}`}
-                fallbackSrc="/images/shield.svg"
+                fallbackSrc={fallbackImg}
               />
             </div>
             <span className="block text-center min-w-max">

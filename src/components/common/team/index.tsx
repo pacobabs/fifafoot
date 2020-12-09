@@ -1,8 +1,7 @@
 import React from 'react'
 import { TeamMatch } from '@services/types'
-// import Bookings from '@components/common/bookings'
-// import Substitutions from '@components/common/substitutions'
 import Image from '@components/common/image'
+import fallbackImg from '@assets/images/football-club.svg'
 
 type Props = {
   team: TeamMatch
@@ -30,7 +29,7 @@ const LiveTeam = ({ team, atHome, showScore, listView }: Props) => {
                 ? `https://api.fifa.com/api/v1/picture/teams-sq-3/${team.IdTeam}`
                 : `https://api.fifa.com/api/v1/picture/flags-sq-3/${team.IdCountry}`
             }
-            fallbackSrc="/images/football-club.svg"
+            fallbackSrc={fallbackImg}
           />
         </div>
         <span
@@ -40,8 +39,8 @@ const LiveTeam = ({ team, atHome, showScore, listView }: Props) => {
         </span>
       </div>
       <span
-        className={`bg-gray-200 font-recursive h-6 inline-flex mt-1.5 text-lg w-6 ${
-          atHome ? 'pl-3 pr-1text-right' : 'pr-3 pl-1'
+        className={`bg-gray-100 font-recursive h-6 inline-flex mt-1.5 text-lg w-6 ${
+          atHome ? 'pl-3 pr-1text-right rounded-l-3xl' : 'pr-3 pl-1 rounded-r-3xl'
         } ${showScore ? 'opacity-100' : 'opacity-0'}`}
       >
         {showScore ? Score : ''}

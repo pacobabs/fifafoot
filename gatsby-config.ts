@@ -1,7 +1,7 @@
 export default {
   siteMetadata: {
     title: `Live Foot`,
-    description: ``,
+    description: `Live matches results. All game from all countries via the FIFA API.`,
     author: `@pacobabs`
   },
   plugins: [

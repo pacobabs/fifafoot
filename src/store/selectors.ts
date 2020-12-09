@@ -1,8 +1,6 @@
-import { useContextSelection } from 'use-context-selection'
-import { Context } from './index'
+import { useSelector } from 'react-reduce-hooks'
 import { Competition, Team } from '@services/types'
 import {
-  Selector,
   CountrySelector,
   ConfederationSelector,
   CompetitionSelector,
@@ -12,21 +10,21 @@ import {
 } from './types'
 
 export const useCountries = (): CountrySelector => {
-  const countries = useContextSelector((state) => state.countries)
-  const myCountries = useContextSelector((state) => state.myCountries)
+  const countries = useSelector((state) => state.countries)
+  const myCountries = useSelector((state) => state.myCountries)
   return { countries, myCountries }
 }
 
 export const useConfederations = (): ConfederationSelector => {
-  const confederations = useContextSelector((state) => state.confederations)
-  const myConfederations = useContextSelector((state) => state.myConfederations)
+  const confederations = useSelector((state) => state.confederations)
+  const myConfederations = useSelector((state) => state.myConfederations)
   return { confederations, myConfederations }
 }
 
 export const useCompetitions = (): CompetitionSelector => {
   const { myCountries } = useCountries()
   const { myConfederations } = useConfederations()
-  const competitions = useContextSelector((state) => state.competitions).sort(
+  const competitions = useSelector((state) => state.competitions).sort(
     (competitionA: Competition, competitionB: Competition) => {
       const isFromFavoriteCountryA = myCountries.includes(competitionA.IdMemberAssociation?.[0]) ? 0 : 1
       const isFromFavoriteCountryB = myCountries.includes(competitionB.IdMemberAssociation?.[0]) ? 0 : 1
@@ -37,7 +35,7 @@ export const useCompetitions = (): CompetitionSelector => {
       return sortCountry === 0 ? sortConfederation : sortCountry
     }
   )
-  const myCompetitions = useContextSelector((state) => state.myCompetitions)
+  const myCompetitions = useSelector((state) => state.myCompetitions)
   return { competitions, myCompetitions }
 }
 
@@ -45,7 +43,7 @@ export const useTeams = (): TeamSelector => {
   const { myCountries } = useCountries()
   const { myConfederations } = useConfederations()
   const { competitions, myCompetitions } = useCompetitions()
-  const teams = useContextSelector((state) => state.teams).sort((teamA: Team, teamB: Team) => {
+  const teams = useSelector((state) => state.teams).sort((teamA: Team, teamB: Team) => {
     const isFromFavoriteCountryA = myCountries.includes(teamA.IdCountry) ? 0 : 1
     const isFromFavoriteCountryB = myCountries.includes(teamB.IdCountry) ? 0 : 1
     const sortCountry = isFromFavoriteCountryA - isFromFavoriteCountryB
@@ -65,18 +63,16 @@ export const useTeams = (): TeamSelector => {
     const sortCompetition = isFromFavoriteCompetitionA - isFromFavoriteCompetitionB
     return sortCompetition === 0 ? (sortCountry === 0 ? sortConfederation : sortCountry) : sortCompetition
   })
-  const myTeams = useContextSelector((state) => state.myTeams)
+  const myTeams = useSelector((state) => state.myTeams)
   return { teams, myTeams }
 }
 
 export const useSeasons = (): SeasonSelector => {
-  const seasons = useContextSelector((state) => state.seasons)
+  const seasons = useSelector((state) => state.seasons)
   return { seasons }
 }
 
 export const useMatches = (): MatchSelector => {
-  const matches = useContextSelector((state) => state.matches)
+  const matches = useSelector((state) => state.matches)
   return { matches }
 }
-
-const useContextSelector = (selector: Selector) => useContextSelection(Context, selector)

@@ -1,5 +1,4 @@
 import React, { useState, useRef, Fragment, useEffect } from 'react'
-import { isMatchCancelled } from '@utils'
 import { useSearch, useLiveMatchesData, usePopularCompetitions, useFilter, VIEW } from '@services'
 import LiveMatch from '@components/common/match'
 import CompetitionInfo from './competition-info'
@@ -26,7 +25,6 @@ const Live = ({ params = '' }: Props) => {
     const today = new Date().getDay()
     if (currentDay.current !== today) {
       currentDay.current = today
-      setMatches('live', [])
     }
     lastCompetition.current = ''
   })
@@ -64,13 +62,19 @@ const Live = ({ params = '' }: Props) => {
       <>
         {matcheslist ? (
           matcheslist
-            .sort(({ Date: dateA, IdCompetition: idCompetitionA }, { Date: dateB, IdCompetition: idCompetitionB }) => {
-              for (let i = 0; i < populars.length; i++) {
-                if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionA) return -1
-                if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionB) return 1
+            .sort(
+              (
+                { Date: dateA, MatchStatus: MatchStatusA, IdCompetition: idCompetitionA },
+                { Date: dateB, MatchStatus: MatchStatusB, IdCompetition: idCompetitionB }
+              ) => {
+                for (let i = 0; i < populars.length; i++) {
+                  if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionA) return -1
+                  if (idCompetitionA !== idCompetitionB && populars[i].IdCompetition === idCompetitionB) return 1
+                }
+                const status = MatchStatusA === 3 ? -1 : MatchStatusB === 3 ? 1 : 0
+                return status || (new Date(dateA) < new Date(dateB) ? -1 : 1)
               }
-              return new Date(dateA) < new Date(dateB) ? -1 : 1
-            })
+            )
             .map((match) => {
               const {
                 IdMatch,
@@ -84,7 +88,7 @@ const Live = ({ params = '' }: Props) => {
               if (liveMatch && MatchStatus !== 3) return null
               if (selected !== 'ALL' && IdCompetition !== selected && IdHome !== selected && IdAway !== selected)
                 return null
-              if (!TimeDefined || !isMatchCancelled(MatchStatus)) return null
+              if (!TimeDefined) return null
               if (
                 term &&
                 !find(CompetitionName[0].Description) &&

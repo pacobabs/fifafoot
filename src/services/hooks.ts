@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 import debounce from 'lodash/debounce'
 import useSWR from 'swr'
 import { fetcher } from './index'
-import { isMatchplayed, isMatchPollable, getRelativeTime, normalize } from '@utils'
+import { isMatchPollable, getRelativeTime, normalize } from '@utils'
 import { useDispatch } from '@store'
 import { useCompetitions, useTeams, useMatches } from '@store/selectors'
 import { setMatches, setMatch } from '@store/actions'
@@ -13,7 +13,7 @@ const SECONDS_TO_REFRESH = 10
 export const useSearch = () => {
   const [term, setSearch] = useState('')
   const onChange = (term: string) => setSearch(term)
-  const search = useCallback(debounce(onChange, 66.6666666666), [])
+  const search = useCallback(debounce(onChange, 66.6666666666), []) // eslint-disable-line
   const find = (name: string) => normalize(name).includes(normalize(term))
   return { term, search, find }
 }
@@ -82,7 +82,7 @@ export const useMatchData = (IdCompetition: string, IdSeason: string, IdStage: s
 export const useLiveMatchData = (match: Match) => {
   const dispatch = useDispatch()
   const { IdMatch, IdCompetition, IdSeason, IdStage, MatchStatus, TimeDefined, Date: MatchDate } = match
-  const [live, setLive] = useState(MatchStatus === 3)
+  const [live, setLive] = useState(isMatchPollable(MatchStatus))
   const [refreshInterval, setRefreshInterval] = useState(SECONDS_TO_REFRESH * 1000)
   const { data: newMatchData } = useSWR<Match>(
     live ? [`live/football/${IdCompetition}/${IdSeason}/${IdStage}/${IdMatch}`, live, refreshInterval] : null,
@@ -99,6 +99,7 @@ export const useLiveMatchData = (match: Match) => {
       dispatch(setMatch('live', newMatchData))
     }
   }, [newMatchData, dispatch, match.MatchStatus])
+  console.log(match, 'ne')
   return newMatchData || match
 }
 
@@ -138,10 +139,13 @@ const useMatchCountDown = (
     }
     const clockInterval = setInterval(() => {
       setClock(getRelativeTime(MatchDate))
+      remainingMinutes <= 0 && clearClockInterval()
+      console.log('clock ticking')
     }, interval)
+    const clearClockInterval = () => clearInterval(clockInterval)
     return () => {
       timeout && clearTimeout(timeout)
-      clearInterval(clockInterval)
+      clearClockInterval()
     }
   }, [live, TimeDefined, MatchStatus, MatchDate, setLive, setRefreshInterval, clock])
 }
