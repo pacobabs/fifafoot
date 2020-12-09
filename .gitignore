@@ -72,6 +72,3 @@ yarn-error.log
 apollo.config.js
 __types__
 schema.json
-gatsby-node-prod.ts
-src/services/data.tsx
-src/components/app-prod.tsx
