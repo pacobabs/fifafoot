@@ -274,9 +274,10 @@
   }
 
   body {
-    @apply font-crimson scrollbar;
+    @apply text-sm font-crimson scrollbar md:text-base;
     overflow-x: hidden;
     margin: 0;
+    padding: 0;
   }
 
   h1,

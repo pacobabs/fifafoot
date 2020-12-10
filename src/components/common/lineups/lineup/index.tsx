@@ -14,7 +14,7 @@ type Props = {
 
 const Lineup = ({ team, matchStatus, away }: Props) => {
   return (
-    <div className={`flex flex-col w-1/2 text-sm md:text-md justify-between ${away ? 'text-right' : ''}`}>
+    <div className={`flex flex-col w-1/2 justify-between ${away ? 'text-right' : ''}`}>
       <div>
         <br />
         <TeamLogo team={team} className={`w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 ${away ? '-mr-1' : '-ml-1'}`} />

@@ -15,7 +15,9 @@ const getScorer = (Type: number, IdScorer: string, home: TeamMatch, away: TeamMa
 
 const getGoals = (home: TeamMatch, away: TeamMatch) =>
   home.Goals.reduce((goals, { Minute, IdPlayer, Type }) => {
-    const name = `${Type === 3 ? ' (OG)' : ''} ${getScorer(Type, IdPlayer, home, away)?.PlayerName[0].Description}`
+    const name = `${Type === 3 ? ' (OG)' : ''} ${getInitials(
+      getScorer(Type, IdPlayer, home, away)?.PlayerName[0].Description
+    )}`
     return {
       ...goals,
       [name]: goals[name] ? [...goals[name], Minute] : [Minute]
@@ -32,7 +34,7 @@ const TeamGoals = ({ home, away }: Props) => {
         {Object.entries(homeGoals).map(([playerName, goals]) => {
           return (
             <span className="block" key={playerName}>
-              {getInitials(playerName)} {goals.toString().replace(/,/g, ', ')}
+              {playerName} {goals.toString().replace(/,/g, ', ')}
             </span>
           )
         })}
@@ -42,7 +44,7 @@ const TeamGoals = ({ home, away }: Props) => {
         {Object.entries(awayGoals).map(([playerName, goals]) => {
           return (
             <span className="block" key={playerName}>
-              {getInitials(playerName)} {goals.toString().replace(/,/g, ', ')}
+              {playerName} {goals.toString().replace(/,/g, ', ')}
             </span>
           )
         })}

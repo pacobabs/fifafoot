@@ -6,9 +6,9 @@ import playStore from '@assets/images/Play Store.svg'
 const Footer = () => {
   return (
     <footer className="relative flex flex-col px-1 bg-indigo-900 lg:bg-full sm:col-span-12 md:col-start-1 md:col-span-12 font-inter">
-      <div className="flex flex-col justify-between px-2 pt-4">
+      <div className="flex flex-col px-2 pt-4 justify-evenly md:flex-row">
         <img src={logo} alt="Live foot" className="block w-24 h-4 mt-1 mb-4 -ml-1" />
-        <div className="flex gap-1 md:-ml-20">
+        <div className="flex gap-1 mr-8">
           <img src={playStore} alt="playstore" className="object-contain w-20 h-8" />
           <img src={appStore} alt="appstore" className="object-contain w-20 h-8" />
         </div>

@@ -42,7 +42,7 @@ const Table = () => {
         ALL COUNTRIES
       </div>
       <ul className="hidden md:flex flex-col bg-indigo-100 pb-0.5 ">
-        {countries.slice(0, 29).map(({ IdCountry, Name }) => (
+        {countries.slice(0, 28).map(({ IdCountry, Name }) => (
           <Link
             to="/teams"
             className="flex gap-1 px-1 text-indigo-500 ring-1 ring-inset ring-gray-200 bg-gray-50"
