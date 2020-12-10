@@ -3,13 +3,11 @@ import Layout from '@components/layout'
 import Head from '@components/head'
 import Live from '@components/calendar/live'
 
-const LivePage = () => {
-  return (
-    <Layout path="live">
-      <Head title="Live Matches" />
-      <Live />
-    </Layout>
-  )
-}
+const IndexPage = () => (
+  <Layout path="live">
+    <Head title="Live Matches" />
+    <Live />
+  </Layout>
+)
 
-export default LivePage
+export default IndexPage

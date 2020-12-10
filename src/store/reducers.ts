@@ -1,5 +1,5 @@
 import { ActionTypes as _, State, Action } from '@store/types'
-import { Country, Confederation, Competition, Match, Team } from '@services/types'
+import { Country, Confederation, Competition, Match, TeamMatch } from '@services/types'
 
 const globalReducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -88,7 +88,7 @@ const matchReducer = (state: { [key: string]: Match[] }, action: Action) => {
   }
 }
 
-const teamReducer = (state: Team[], action: Action) => {
+const teamReducer = (state: TeamMatch[], action: Action) => {
   switch (action.type) {
     case _.setTeams: {
       return action.payload

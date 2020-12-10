@@ -4,7 +4,7 @@ import Layout from '@components/layout'
 import Head from '@components/head'
 import Calendar from '@components/calendar/matches'
 
-const SecondPage = () => (
+const CalendarPage = () => (
   <Layout path="calendar">
     <Head title="Calendar" />
     <Router>
@@ -13,4 +13,4 @@ const SecondPage = () => (
   </Layout>
 )
 
-export default SecondPage
+export default CalendarPage
