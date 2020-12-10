@@ -8,14 +8,14 @@ export default {
     author: `@pacobabs`
   },
   plugins: [
-    {
-      resolve: 'gatsby-plugin-codegen',
-      options: {
-        output: '__types__',
-        tsFileExtension: 'ts',
-        watch: process.env.WATCH
-      }
-    },
+    // {
+    //   resolve: 'gatsby-plugin-codegen',
+    //   options: {
+    //     output: '__types__',
+    //     tsFileExtension: 'ts',
+    //     watch: process.env.WATCH
+    //   }
+    // },
     {
       resolve: 'gatsby-plugin-alias-imports',
       options: {
