@@ -4,6 +4,8 @@
 @tailwind base;
 body {
   overflow-x: hidden;
+  margin: 0;
+  @apply scrollbar;
 }
 @tailwind components;
 @tailwind utilities;
