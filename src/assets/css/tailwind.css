@@ -7,7 +7,9 @@ body {
   margin: 0;
   @apply scrollbar;
   font-size: 110%;
-  @screen md {
+}
+@screen md {
+  body {
     font-size: 105%;
   }
 }
