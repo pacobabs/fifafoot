@@ -10,11 +10,11 @@ type Props = {
   children: ReactNode
 }
 
-const reducer = typeof window !== undefined ? wrapWithDevtools(rootReducer) : rootReducer
+const reducer = typeof window !== `undefined` ? wrapWithDevtools(rootReducer) : rootReducer
 
 const AppProvider = ({ state, children }: Props) => {
   const [store, dispatch] = createStore(reducer, state)
-  typeof window !== undefined && initDevtools(store, dispatch, { actionCreators })
+  typeof window !== `undefined` && initDevtools(store, dispatch, { actionCreators })
   return (
     <Provider store={store} dispatch={dispatch}>
       {children}
