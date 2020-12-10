@@ -6,11 +6,11 @@ body {
   overflow-x: hidden;
   margin: 0;
   @apply scrollbar;
-  font-size: 110%;
+  font-size: 115%;
 }
 @screen md {
   body {
-    font-size: 105%;
+    font-size: 100%;
   }
 }
 @tailwind components;
