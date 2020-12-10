@@ -181,12 +181,3 @@ export type Coach = {
   IdCountry: string
   Name: Name[]
 }
-
-export type GraphQLQuery = {
-  allCountries: AllCountries
-  allConfederations: AllConfederations
-  allCompetitions: AllCompetitions
-  allSeasons: AllSeasons
-  allTeams: AllTeams
-  allMatches: AllMatches
-}

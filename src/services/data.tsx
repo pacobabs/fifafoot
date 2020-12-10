@@ -1,6 +1,6 @@
-import { useStaticQuery, graphql } from 'gatsby'
+import { graphql } from 'gatsby'
 
-const query = graphql`
+export default graphql`
   query DataQuery {
     allCountries {
       countries: nodes {
@@ -166,66 +166,5 @@ const query = graphql`
         }
       }
     }
-    # allMatches {
-    #   matches: nodes {
-    #     Date
-    #     LocalDate
-    #     MatchDay
-    #     MatchStatus
-    #     OfficialityStatus
-    #     Period
-    #     ResultType
-    #     IdMatch
-    #     IdCompetition
-    #     IdSeason
-    #     IdStage
-    #     AwayTeam {
-    #       IdTeam
-    #       Score
-    #       Tactics
-    #       TeamName {
-    #         Description
-    #       }
-    #       Players {
-    #         IdPlayer
-    #         ShirtNumber
-    #         Status
-    #         FieldStatus
-    #         Position
-    #         Captain
-    #         PlayerName {
-    #           Description
-    #         }
-    #         ShortName {
-    #           Description
-    #         }
-    #       }
-    #     }
-    #     HomeTeam {
-    #       IdTeam
-    #       Score
-    #       Tactics
-    #       TeamName {
-    #         Description
-    #       }
-    #       Players {
-    #         IdPlayer
-    #         ShirtNumber
-    #         Status
-    #         FieldStatus
-    #         Position
-    #         Captain
-    #         PlayerName {
-    #           Description
-    #         }
-    #         ShortName {
-    #           Description
-    #         }
-    #       }
-    #     }
-    #   }
-    # }
   }
 `
-
-export default <T,>(): T => useStaticQuery(query)

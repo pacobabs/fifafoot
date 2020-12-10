@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
-import useData from '@services/data'
+import { StaticQuery } from 'gatsby'
+import query from '@services/data'
 import { Provider } from '@store'
-import { GraphQLQuery } from '@services/types'
 
 type Props = {
   element: ReactNode
@@ -21,26 +21,30 @@ const store = {
 }
 
 const App = ({ element }: Props) => {
-  const {
-    allCountries: { countries },
-    allConfederations: { confederations },
-    allCompetitions: { competitions },
-    allSeasons: { seasons },
-    allTeams: { teams }
-  } = useData<GraphQLQuery>()
   return (
-    <Provider
-      state={{
-        ...store,
-        countries,
-        confederations,
-        competitions,
-        seasons,
-        teams
-      }}
-    >
-      {element}
-    </Provider>
+    <StaticQuery
+      query={query}
+      render={({
+        allCountries: { countries },
+        allConfederations: { confederations },
+        allCompetitions: { competitions },
+        allSeasons: { seasons },
+        allTeams: { teams }
+      }) => (
+        <Provider
+          state={{
+            ...store,
+            countries,
+            confederations,
+            competitions,
+            seasons,
+            teams
+          }}
+        >
+          {element}
+        </Provider>
+      )}
+    />
   )
 }
 
