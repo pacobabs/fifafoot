@@ -6,6 +6,12 @@
 @tailwind utilities;
 
 @layer components {
+  body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    @apply scrollbar;
+  }
   .banner {
     position: relative;
     height: 100%;
@@ -269,15 +275,9 @@
   }
 
   html {
+    @apply text-sm font-crimson md:text-base;
     font-size: 16px;
     line-height: var(--vr-baseline);
-  }
-
-  body {
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-    font-family: 'Crimson Pro', serif;
   }
 
   h1,
