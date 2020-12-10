@@ -274,7 +274,7 @@
   }
 
   body {
-    @apply text-sm scrollbar md:text-base;
+    @apply text-sm;
     overflow-x: hidden;
     margin: 0;
     padding: 0;
