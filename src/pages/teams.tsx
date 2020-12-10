@@ -10,7 +10,7 @@ import Favorites from '@components/favorites'
 const SecondPage = () => (
   <Layout path="teams">
     <Head title="Teams" />
-    <div className="bg-indigo-50">
+    <div className="bg-indigo-50 max-w">
       <Confederations />
       <Countries />
       <Competitions />

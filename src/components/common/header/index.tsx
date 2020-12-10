@@ -16,7 +16,7 @@ const Header = ({ path }: Props) => {
           <img src={logo} alt="live foot" className="absolute w-24 h-4 lg:w-32 lg:h-6 md:mt-1 lg:mt-2" />
         </div>
       </Link>
-      <div className="flex flex-wrap flex-grow justify-center text-sm gap-1 md:text-base mt-2.5 md:ml-16 lg:ml-0 text-yellow-50 sm:gap-2 lg:gap-3 sm:flex-row font-recursive font-cursive font-casual">
+      <div className="flex flex-wrap flex-grow justify-center text-sm gap-4 md:text-base mt-2.5 md:ml-16 lg:ml-0 text-yellow-50 md:gap-3 lg:gap-4 sm:flex-row font-recursive font-cursive font-casual">
         <Link to="/" className={`md:text-base md:block ${path === 'live' ? 'selected' : ''}`}>
           Live Scores
         </Link>
