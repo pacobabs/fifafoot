@@ -29,7 +29,7 @@ const Header = ({ path }: Props) => {
       </div>
       <div className="flex">
         <img src={playStore} alt="playstore" className="object-contain w-16 h-5" />
-        <img src={appStore} alt="appstore" className="object-contain w-16 h-5" />
+        <img src={appStore} className="object-contain w-16 h-5" />
       </div>
     </header>
   )
