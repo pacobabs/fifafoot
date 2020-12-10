@@ -6,7 +6,7 @@
   "author": "Pacobabs <pacobabs@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "cross-env NODE_ENV=production gatsby build",
     "dev": "gatsby develop -p 3000",
     "dev:watch": "cross-env WATCH=true gatsby develop",
     "serve": "gatsby serve",
