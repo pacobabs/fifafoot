@@ -11,6 +11,7 @@
     margin: 0;
     padding: 0;
     @apply scrollbar;
+    @apply text-sm font-crimson md:text-base;
   }
   .banner {
     position: relative;
@@ -275,7 +276,6 @@
   }
 
   html {
-    @apply text-sm font-crimson md:text-base;
     font-size: 16px;
     line-height: var(--vr-baseline);
   }
