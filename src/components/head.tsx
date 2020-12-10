@@ -1,6 +1,5 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { useStaticQuery, graphql } from 'gatsby'
 import favicon from '@assets/images/icon.svg'
 
 type Props = {
@@ -11,34 +10,19 @@ type Props = {
 }
 
 const Head = ({ description = ``, lang = `en`, meta = [], title }: Props) => {
-  const { site } = useStaticQuery(
-    graphql`
-      query SEOQuery {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
-  )
-
-  const metaDescription = description || site.siteMetadata.description
-
+  const siteDescription = description || `Live matches results. All game from all countries via the FIFA API.`
   return (
     <Helmet
       htmlAttributes={{
         lang
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | Livefoot`}
       link={[{ rel: 'icon', type: 'image/png', href: favicon }]}
       meta={[
         {
           name: `description`,
-          content: metaDescription
+          content: siteDescription
         },
         {
           property: `og:title`,
@@ -46,7 +30,7 @@ const Head = ({ description = ``, lang = `en`, meta = [], title }: Props) => {
         },
         {
           property: `og:description`,
-          content: metaDescription
+          content: siteDescription
         },
         {
           property: `og:type`,
@@ -58,7 +42,7 @@ const Head = ({ description = ``, lang = `en`, meta = [], title }: Props) => {
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author
+          content: `pacobabs`
         },
         {
           name: `twitter:title`,
@@ -66,7 +50,7 @@ const Head = ({ description = ``, lang = `en`, meta = [], title }: Props) => {
         },
         {
           name: `twitter:description`,
-          content: metaDescription
+          content: siteDescription
         }
       ].concat(meta)}
     />

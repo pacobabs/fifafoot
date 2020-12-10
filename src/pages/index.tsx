@@ -5,7 +5,7 @@ import Live from '@components/calendar/live'
 
 const IndexPage = () => (
   <Layout path="live">
-    <Head title="Live Matches" />
+    <Head title="Live matches" />
     <Live />
   </Layout>
 )

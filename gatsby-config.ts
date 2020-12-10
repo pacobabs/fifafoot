@@ -1,12 +1,12 @@
 export default {
-  flags: {
-    PRESERVE_WEBPACK_CACHE: true
-  },
-  siteMetadata: {
-    title: `Live Foot`,
-    description: `Live matches results. All game from all countries via the FIFA API.`,
-    author: `@pacobabs`
-  },
+  // flags: {
+  //   PRESERVE_WEBPACK_CACHE: true
+  // },
+  // siteMetadata: {
+  //   title: `Live Foot`,
+  //   description: `Live matches results. All game from all countries via the FIFA API.`,
+  //   author: `@pacobabs`
+  // },
   plugins: [
     // {
     //   resolve: 'gatsby-plugin-codegen',
