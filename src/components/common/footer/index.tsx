@@ -23,7 +23,7 @@ const Footer = () => {
         This service is made disponible by the FIFA API. Copyright © {new Date().getFullYear()}.
       </p>
       <a
-        className="absolute pt-1 text-gray-400 top-4 right-2"
+        className="absolute pt-1 text-sm text-gray-400 top-4 right-2"
         onClick={() =>
           window.scrollTo({
             top: 0,

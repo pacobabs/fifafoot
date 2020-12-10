@@ -107,7 +107,7 @@
     --MONO: 1;
   }
   .font-slant-1 {
-    --slnt: -6;
+    --slnt: -4;
   }
   .max-w {
     max-width: 96vw;
