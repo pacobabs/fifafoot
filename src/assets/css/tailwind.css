@@ -1,18 +1,11 @@
-@tailwind base;
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap');
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
-  body {
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-    @apply scrollbar;
-    @apply text-sm font-crimson md:text-base;
-  }
   .banner {
     position: relative;
     height: 100%;
@@ -131,6 +124,12 @@
   }
   .text-legible {
     max-width: 80ch;
+  }
+  body {
+    @apply text-sm scrollbar font-crimson md:text-base;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
   }
   @responsive {
     .bg-full {
