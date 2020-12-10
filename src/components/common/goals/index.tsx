@@ -1,6 +1,7 @@
 import React from 'react'
 import { TeamMatch } from '@services/types'
 import ballImg from '@assets/images/soccer-ball.svg'
+import { getInitials } from '@utils'
 
 type Props = {
   home: TeamMatch
@@ -31,7 +32,7 @@ const TeamGoals = ({ home, away }: Props) => {
         {Object.entries(homeGoals).map(([playerName, goals]) => {
           return (
             <span className="block" key={playerName}>
-              {playerName} {goals.toString().replace(/,/g, ', ')}
+              {getInitials(playerName)} {goals.toString().replace(/,/g, ', ')}
             </span>
           )
         })}
@@ -41,7 +42,7 @@ const TeamGoals = ({ home, away }: Props) => {
         {Object.entries(awayGoals).map(([playerName, goals]) => {
           return (
             <span className="block" key={playerName}>
-              {playerName} {goals.toString().replace(/,/g, ', ')}
+              {getInitials(playerName)} {goals.toString().replace(/,/g, ', ')}
             </span>
           )
         })}

@@ -164,3 +164,11 @@ export const getMatchStats = (match: Match, events: MatchEvent[]) => {
   })
   return stats
 }
+
+export const getInitials = (names = '') => {
+  return names
+    .split(' ')
+    .map((name, index, names) => (index < names.length - 1 ? `${name.substring(0, 1)}.` : name))
+    .toString()
+    .replace(',', ' ')
+}

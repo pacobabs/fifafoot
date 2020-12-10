@@ -80,7 +80,7 @@ const LiveMatch = ({ match, listView = false, hidden = false }: Props) => {
       <div className={`flex px-1 bg-gray-50 ${listView ? 'py-2 sm:pt-2 sm:pb-0' : 'py-4'}`}>
         <LiveTeam team={Home} opponent={Away} atHome={true} showScore={showScore} listView={listView} />
         <span
-          className={`border-b-4 border-t-2 font-black font-recursive h-6 mt-1.5 px-2 text-gray-300 pt-0.5 border-gray-100 bg-gray-100`}
+          className={`border-b-4 border-t-2 font-black font-recursive h-6 mt-1.5 px-2 text-sm md:text-lg text-gray-300 pt-0.5 border-gray-100 bg-gray-100`}
         >
           -
         </span>

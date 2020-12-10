@@ -26,7 +26,7 @@ const Stats = ({ match, events, hidden }: Props) => {
   } = match
   if (!isMatchplayed(MatchStatus)) {
     return (
-      <div className={`${hidden ? 'hidden' : 'flex items-center justify-center h-64 gap-1'}`}>
+      <div className={`${hidden ? 'hidden' : 'flex items-center justify-center h-32 md:h-64 gap-1'}`}>
         <img src={ballImg} alt="ball" className="w-4 h-4 -mt-0.5 opacity-70 grayscale" />
         <span>Stats are not available.</span>
       </div>

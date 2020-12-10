@@ -4,6 +4,7 @@ import subInImg from '@assets/images/substitution-in.svg'
 import subOutImg from '@assets/images/substitution-out.svg'
 import Image from '@components/common/image'
 import TeamLogo from '@components/common/team-logo'
+import { getInitials } from '@utils'
 
 type Props = {
   team: TeamMatch
@@ -13,7 +14,7 @@ type Props = {
 
 const Lineup = ({ team, matchStatus, away }: Props) => {
   return (
-    <div className={`flex flex-col w-1/2 justify-between ${away ? 'text-right' : ''}`}>
+    <div className={`flex flex-col w-1/2 text-sm md:text-md justify-between ${away ? 'text-right' : ''}`}>
       <div>
         <br />
         <TeamLogo team={team} className={`w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 ${away ? '-mr-1' : '-ml-1'}`} />
@@ -27,7 +28,8 @@ const Lineup = ({ team, matchStatus, away }: Props) => {
           )
           return (
             <span className={`flex gap-0.5 ${away ? 'flex-row-reverse' : ''}`} key={IdPlayer}>
-              <span className="w-4">{ShirtNumber}</span> <span>{PlayerName[0].Description}</span> {PlayerOff}
+              <span className="w-4">{ShirtNumber}</span> <span>{getInitials(PlayerName[0].Description)}</span>{' '}
+              {PlayerOff}
             </span>
           )
         })}
@@ -47,7 +49,8 @@ const Lineup = ({ team, matchStatus, away }: Props) => {
               )
               return (
                 <span className={`flex gap-0.5 ${away ? 'flex-row-reverse' : ''}`} key={IdPlayer}>
-                  <span className="w-4">{ShirtNumber}</span> <span>{PlayerName[0].Description}</span> {PlayerOn}
+                  <span className="w-4">{ShirtNumber}</span> <span>{getInitials(PlayerName[0].Description)}</span>{' '}
+                  {PlayerOn}
                 </span>
               )
             })}{' '}
@@ -62,7 +65,7 @@ const Lineup = ({ team, matchStatus, away }: Props) => {
           <b>MANAGER</b>
           <br />
           <span className={`flex gap-2 ${away ? 'flex-row-reverse' : ''}`}>
-            {team.Coaches[0]?.Name[0].Description}
+            {getInitials(team.Coaches[0]?.Name[0].Description)}
             <span className="relative w-4 h-4">
               <Image
                 className="absolute mt-0.5 object-contain"

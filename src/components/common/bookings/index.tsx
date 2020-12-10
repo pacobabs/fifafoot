@@ -3,6 +3,7 @@ import { TeamMatch } from '@services/types'
 import yellowCardImg from '@assets/images/yellow-card-right.svg'
 import redCardImg from '@assets/images/red-card-right.svg'
 import yellowRedCardImg from '@assets/images/yellow-to-red-right.svg'
+import { getInitials } from '@utils'
 
 type Props = {
   home: TeamMatch
@@ -24,7 +25,8 @@ const Bookings = ({ home, away }: Props) => (
         const player = getBooked(IdPlayer, home)
         return (
           <span key={index}>
-            {player?.PlayerName[0].Description} {Minute} <img className="inline-block" alt="card" src={CARD[Card]} />
+            {getInitials(player?.PlayerName[0].Description)} {Minute}{' '}
+            <img className="inline-block" alt="card" src={CARD[Card]} />
           </span>
         )
       })}
@@ -34,7 +36,8 @@ const Bookings = ({ home, away }: Props) => (
         const player = getBooked(IdPlayer, away)
         return (
           <span key={index}>
-            <img className="inline-block" alt="car" src={CARD[Card]} /> {player?.PlayerName[0].Description} {Minute}
+            <img className="inline-block" alt="car" src={CARD[Card]} /> {getInitials(player?.PlayerName[0].Description)}{' '}
+            {Minute}
           </span>
         )
       })}

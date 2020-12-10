@@ -54,7 +54,7 @@ const Filters = ({ path, filter, type, selected, term, search, live = false, liv
             >
               <span className="w-2 h-2 bg-white border rounded-full shadow-inner"></span>
             </span>
-            <span className={`font-semibold  ${liveMatch ? 'text-pink-400' : 'text-indigo-300'}`}>LIVE</span>
+            <span className={`font-semibold ${liveMatch ? 'text-pink-400' : 'text-indigo-300'}`}>LIVE</span>
           </button>
         )}
       </div>

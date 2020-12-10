@@ -14,7 +14,7 @@ type Props = {
 
 const Layout = ({ path = '', children }: Props) => {
   return (
-    <div className="grid grid-rows-layout sm:grid-rows-layout-2 sm:grid-cols-12 lg:mx-auto lg:max-w-6xl 2xl:max-w-7xl">
+    <div className="grid vr-debug grid-rows-layout sm:grid-rows-layout-2 sm:grid-cols-12 lg:mx-auto lg:max-w-6xl 2xl:max-w-7xl">
       <Header path={path} />
       <Ads />
       <Main>{children}</Main>

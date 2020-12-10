@@ -18,7 +18,7 @@ const Lineups = ({ match, hidden }: Props) => {
           <Lineup team={AwayTeam} away={true} matchStatus={MatchStatus} />
         </div>
       ) : (
-        <div className="flex items-center justify-center h-64 gap-1">
+        <div className="flex items-center justify-center h-32 md:h-64 gap-1">
           <img src={ballImg} alt="ball" className="w-4 h-4 -mt-0.5 opacity-70 grayscale" />
           <span>Lineups are not available.</span>
         </div>
