@@ -43,7 +43,7 @@ const Filters = ({ path, filter, type, selected, term, search, live = false, liv
           Favorites
         </Link>
       </div>
-      <div className=" bg-indigo-700 pl-0.5 sm:pl-1 flex justify-between px-2 py-1">
+      <div className=" bg-indigo-700 pl-0.5 sm:pl-1 flex justify-between px-1 py-1">
         <Search search={search} className="text-indigo-100 bg-indigo-700" />
         {setLiveMatch && (
           <button className="flex items-center gap-1 focus:outline-none" onClick={() => setLiveMatch((live) => !live)}>
