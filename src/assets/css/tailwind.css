@@ -274,7 +274,9 @@
   }
 
   body {
-    @apply overflow-x-hidden font-crimson scrollbar;
+    @apply font-crimson scrollbar;
+    overflow-x: hidden;
+    margin: 0;
   }
 
   h1,
